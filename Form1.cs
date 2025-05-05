@@ -537,9 +537,13 @@ namespace mpegui
                 };
                 presetItem.Click += (presetSender, presetE) =>
                 {
+                    string cropPreset = ((ToolStripMenuItem)presetSender).Tag.ToString();
                     // Cast sender object as menu item, then cast its tag to a string, and set it
-                    SetCrop(((ToolStripMenuItem)presetSender).Tag.ToString());
+                    SetCrop(cropPreset);
+                    txtCrop.Text = cropPreset;
                 };
+                // add preset to the crop presets menu
+                menuCropPresets.Items.Add(presetItem);
             }
         }
 
