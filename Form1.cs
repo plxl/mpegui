@@ -22,6 +22,29 @@ namespace mpegui
             { "1:1 Square", "crop='min(iw\\,ih)':'min(iw\\,ih)':(iw-min(iw\\,ih))/2:(ih-min(iw\\,ih))/2" }, // dynamic for any resolution for a centered square crop
             { "16:9 to 9:16 Vertical", "crop=ih*9/16:ih:(iw-ih*9/16)/2:0" }, // only works with a 16:9 video (i use this for making beat saber reels)
         };
+        private readonly List<string> CPUEncoderPresets = new List<string>()
+        {
+            "ultrafast",
+            "superfast",
+            "veryfast",
+            "faster",
+            "fast",
+            "medium",
+            "slow",
+            "slower",
+            "veryslow",
+            "placebo"
+        };
+        private readonly List<string> GPUEncoderPresets = new List<string>()
+        {
+            "p1",
+            "p2",
+            "p3",
+            "p4",
+            "p5",
+            "p6",
+            "p7"
+        };
         private int copiedIndex = -1;
 
         public Form1()
@@ -59,6 +82,8 @@ namespace mpegui
                             // If the default encoder is libx265 or hevc_nvenc, and the default settings want to support Apple devices, add the hvc1 tag
                             if (requiresHvc1(f.Encoder) && Settings.Default.AlwaysHvc1)
                                 f.Tags = "hvc1";
+                            f.CRF = Settings.Default.DefaultCRF;
+                            f.Preset = FileConversionInfo.isCPUEncoder(f.Encoder) ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
                             queue.Add(f);
                             listFiles.Items.Add(System.IO.Path.GetFileName(file));
                             listFiles.SelectedIndex = listFiles.Items.Count - 1;
@@ -97,9 +122,14 @@ namespace mpegui
                 txtCrop.Text = f.CropFilter;
                 txtStart.Text = f.TrimStart.ToString(@"hh\:mm\:ss\.fff");
                 txtEnd.Text = f.TrimEnd.ToString(@"hh\:mm\:ss\.fff");
+                UpdateEncoderPresets(dropEncoder.Text, f.Encoder);
                 dropEncoder.Text = f.Encoder;
                 chkHvc1.Visible = requiresHvc1(f.Encoder);
                 chkHvc1.Checked = f.Tags == "hvc1";
+                if (cmbPreset.Items.Contains(f.Preset)) cmbPreset.SelectedItem = f.Preset;
+                else cmbPreset.Text = f.Preset;
+                trkCRF.Value = f.CRF;
+                UpdateCRFLabel();
 
                 panelControls.Tag = 0;
 
@@ -210,11 +240,18 @@ namespace mpegui
         {
             if (IsUpdating()) return;
 
+            FileConversionInfo current = queue[listFiles.SelectedIndex];
+            string OldEncoder = current.Encoder;
+            UpdateEncoderPresets(OldEncoder, dropEncoder.Text);
+
             foreach (int i in listFiles.SelectedIndices)
             {
                 FileConversionInfo f = queue[i];
+                f.Preset = ConvertEncoderPreset(f.Preset, f.Encoder, dropEncoder.Text);
                 f.Encoder = dropEncoder.Text;
             }
+            // note that this can change after the above loop
+            cmbPreset.Text = current.Preset;
 
             // Show option to add the hvc1 tag for apple devices if using HEVC encoding
             bool isHevc = requiresHvc1(dropEncoder.Text);
@@ -227,7 +264,43 @@ namespace mpegui
             // recheck hvc1 tag if settings always set it, but ONLY for hevc and libx265, NOT for "NONE" encoder (intentional)
             else if (Settings.Default.AlwaysHvc1) chkHvc1.Checked = true;
 
+            UpdateCRFLabel();
+            
+
             UpdateCommand();
+        }
+
+        string ConvertEncoderPreset(string Preset, string OldEncoder, string NewEncoder)
+        {
+            bool OldIsCPU = FileConversionInfo.isCPUEncoder(OldEncoder);
+            bool NewIsCPU = FileConversionInfo.isCPUEncoder(NewEncoder);
+            if (OldIsCPU == NewIsCPU) return Preset;
+
+            if (NewIsCPU && !OldIsCPU) // from GPU to CPU
+            {
+                return Settings.Default.DefaultPresetCPU;
+            }
+            else // from CPU to GPU
+            {
+                return Settings.Default.DefaultPresetGPU;
+            }
+        }
+
+        void UpdateEncoderPresets(string OldEncoder, string NewEncoder)
+        {
+            bool OldIsCPU = FileConversionInfo.isCPUEncoder(OldEncoder);
+            bool NewIsCPU = FileConversionInfo.isCPUEncoder(NewEncoder);
+            if (OldIsCPU == NewIsCPU) return;
+
+            cmbPreset.Items.Clear();
+            if (NewIsCPU && !OldIsCPU) // from GPU to CPU
+            {
+                cmbPreset.Items.AddRange(CPUEncoderPresets.ToArray());
+            }
+            else // from CPU to GPU
+            {
+                cmbPreset.Items.AddRange(GPUEncoderPresets.ToArray());
+            }
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -252,8 +325,6 @@ namespace mpegui
             if (result == DialogResult.Cancel) return;
             if (result == DialogResult.Yes) copyTrims = true;
 
-
-
             foreach (int i in listFiles.SelectedIndices)
             {
                 FileConversionInfo f = queue[i];
@@ -266,6 +337,11 @@ namespace mpegui
                 f.AudioDelaySeconds = copy.AudioDelaySeconds;
                 f.CropFilter = copy.CropFilter;
                 f.Encoder = copy.Encoder;
+                f.Tags = copy.Tags;
+                f.CRF = copy.CRF;
+                f.Preset = copy.Preset;
+                f.AdditionalOptions = copy.AdditionalOptions;
+                if (Settings.Default.CopyOverwrite) f.OverwriteExisting = copy.OverwriteExisting;
             }
         }
 
@@ -565,6 +641,17 @@ namespace mpegui
                 menuOptionsEncoderDrop.Text = Settings.Default.DefaultEncoder;
 
             menuOptionsHvc1.Checked = Settings.Default.AlwaysHvc1;
+
+            // CRF / CQP
+            menuOptionsCRF.Text = Settings.Default.DefaultCRF.ToString();
+
+            // Default Presets
+            menuOptionsPresetCPU.Text = Settings.Default.DefaultPresetCPU.ToString();
+            menuOptionsPresetGPU.Text = Settings.Default.DefaultPresetGPU.ToString();
+
+            // Copy Overwrite setting (this means if you copy and paste the settings
+            // from one item to others, it will include whether "Overwrite if exists" is checked
+            menuOptionsCopyOverwrite.Checked = Settings.Default.CopyOverwrite;
         }
 
         private void menuHelpAbout_Click(object sender, EventArgs e)
@@ -598,6 +685,73 @@ namespace mpegui
             Settings.Default.DefaultEncoder = menuOptionsEncoderDrop.Text;
             Settings.Default.Save();
         }
+
+        private void trkCRF_Scroll(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.CRF = trkCRF.Value;
+            }
+            UpdateCRFLabel();
+
+            UpdateCommand();
+        }
+
+        private void UpdateCRFLabel()
+        {
+            if (FileConversionInfo.isCPUEncoder(queue[listFiles.SelectedIndex].Encoder))
+            {
+                lblCRF.Text = $"CRF: {trkCRF.Value}";
+            }
+            else
+            {
+                lblCRF.Text = $"CQP: {trkCRF.Value}";
+            }
+        }
+
+        private void cmbPreset_TextChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.Preset = cmbPreset.Text;
+            }
+
+            UpdateCommand();
+        }
+
+        private void menuOptionsCRF_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(menuOptionsCRF.Text, out int crf))
+            {
+                Settings.Default.DefaultCRF = crf;
+                Settings.Default.Save();
+            }
+        }
+
+        private void menuOptionsPresetCPU_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.DefaultPresetCPU = menuOptionsPresetCPU.Text.Trim();
+            Settings.Default.Save();
+        }
+
+        private void menuOptionsPresetGPU_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.DefaultPresetGPU = menuOptionsPresetGPU.Text.Trim();
+            Settings.Default.Save();
+        }
+
+        private void menuOptionsCopyOverwrite_Click(object sender, EventArgs e)
+        {
+            menuOptionsCopyOverwrite.Checked = !menuOptionsCopyOverwrite.Checked;
+            Settings.Default.CopyOverwrite = menuOptionsCopyOverwrite.Checked;
+            Settings.Default.Save();
+        }
     }
 
 
@@ -612,6 +766,9 @@ namespace mpegui
         public string CropFilter { get; set; }
         public string Encoder { get; set; }
         public string Tags { get; set; }
+        public int CRF { get; set; }
+        public string Preset { get; set; }
+        public string AdditionalOptions { get; set; }
         public bool OverwriteExisting { get; set; }
 
         public FileConversionInfo(string filename)
@@ -621,6 +778,9 @@ namespace mpegui
             CropFilter = string.Empty;
             Encoder = "av1_nvenc";
             Tags = string.Empty;
+            AdditionalOptions = string.Empty;
+            Preset = string.Empty;
+            CRF = 22;
         }
 
         public string GetDelay(bool nameless = false)
@@ -666,9 +826,44 @@ namespace mpegui
             return $"-c:v {Encoder} ";
         }
 
+        public string GetCRF()
+        {
+            string crf = string.Empty;
+
+            if (isCPUEncoder(Encoder))
+            {
+                crf = $"-crf {CRF} ";
+            }
+            else if (Encoder.Length > 0)
+            {
+                crf = $"-rc constqp -qp {CRF} ";
+            }
+
+            return crf;
+        }
+
+        public static bool isCPUEncoder(string encoder)
+        {
+            return new[] {
+                "libx264",
+                "libx265"
+            }
+                .Contains(encoder.ToLower());
+        }
+
+        public string GetPreset()
+        {
+            return Preset == string.Empty ? string.Empty : $"-preset {Preset} ";
+        }
+
         public string GetTags()
         {
             return Tags == string.Empty ? string.Empty : $"-tag:v {Tags} ";
+        }
+
+        public string GetAdditionalOptions()
+        {
+            return AdditionalOptions.Trim() == string.Empty ? string.Empty : AdditionalOptions.Trim() + " ";
         }
 
         public string GetOutput(bool filenameOnly = false)
@@ -722,7 +917,10 @@ namespace mpegui
                 + GetGain()
                 + GetTrim()
                 + GetEncoder()
+                + GetCRF()
+                + GetPreset()
                 + GetTags()
+                + GetAdditionalOptions()
                 + GetOutput()
                 + GetOverwrite()
                 ;
@@ -737,7 +935,10 @@ namespace mpegui
                 + GetGain()
                 + GetTrim()
                 + GetEncoder()
+                + GetCRF()
+                + GetPreset()
                 + GetTags()
+                + GetAdditionalOptions()
                 + "[out_file]"
                 + GetOverwrite()
                 ;

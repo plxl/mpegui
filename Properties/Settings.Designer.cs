@@ -46,5 +46,53 @@ namespace mpegui.Properties {
                 this["AlwaysHvc1"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("22")]
+        public int DefaultCRF {
+            get {
+                return ((int)(this["DefaultCRF"]));
+            }
+            set {
+                this["DefaultCRF"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("slow")]
+        public string DefaultPresetCPU {
+            get {
+                return ((string)(this["DefaultPresetCPU"]));
+            }
+            set {
+                this["DefaultPresetCPU"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("p7")]
+        public string DefaultPresetGPU {
+            get {
+                return ((string)(this["DefaultPresetGPU"]));
+            }
+            set {
+                this["DefaultPresetGPU"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CopyOverwrite {
+            get {
+                return ((bool)(this["CopyOverwrite"]));
+            }
+            set {
+                this["CopyOverwrite"] = value;
+            }
+        }
     }
 }

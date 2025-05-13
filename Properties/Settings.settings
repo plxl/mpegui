@@ -8,5 +8,17 @@
     <Setting Name="AlwaysHvc1" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="DefaultCRF" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">22</Value>
+    </Setting>
+    <Setting Name="DefaultPresetCPU" Type="System.String" Scope="User">
+      <Value Profile="(Default)">slow</Value>
+    </Setting>
+    <Setting Name="DefaultPresetGPU" Type="System.String" Scope="User">
+      <Value Profile="(Default)">p7</Value>
+    </Setting>
+    <Setting Name="CopyOverwrite" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
