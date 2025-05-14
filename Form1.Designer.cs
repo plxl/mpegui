@@ -39,6 +39,10 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtAdditionalOptions = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbPreset = new System.Windows.Forms.ComboBox();
             this.lblCRF = new System.Windows.Forms.Label();
@@ -70,20 +74,21 @@
             this.menuOptionsEncoder = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsEncoderDrop = new System.Windows.Forms.ToolStripComboBox();
             this.menuOptionsHvc1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.defaultCRFCQPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsCRF = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.defaultPresetCPUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsPresetCPU = new System.Windows.Forms.ToolStripComboBox();
             this.defaultPresetGPUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsPresetGPU = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuOptionsCopyOverwrite = new System.Windows.Forms.ToolStripMenuItem();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.additionalOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOptionsAdditionalOptions = new System.Windows.Forms.ToolStripTextBox();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -99,7 +104,7 @@
             this.listFiles.Location = new System.Drawing.Point(12, 27);
             this.listFiles.Name = "listFiles";
             this.listFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listFiles.Size = new System.Drawing.Size(162, 445);
+            this.listFiles.Size = new System.Drawing.Size(162, 400);
             this.listFiles.TabIndex = 0;
             this.listFiles.SelectedIndexChanged += new System.EventHandler(this.listFiles_SelectedIndexChanged);
             this.listFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.listFiles_DragDrop);
@@ -111,10 +116,10 @@
             this.textCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textCommand.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textCommand.Location = new System.Drawing.Point(12, 479);
+            this.textCommand.Location = new System.Drawing.Point(12, 433);
             this.textCommand.Name = "textCommand";
             this.textCommand.ReadOnly = true;
-            this.textCommand.Size = new System.Drawing.Size(278, 20);
+            this.textCommand.Size = new System.Drawing.Size(530, 20);
             this.textCommand.TabIndex = 1;
             // 
             // numAudioGain
@@ -212,8 +217,10 @@
             // 
             this.panelControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelControls.Controls.Add(this.label11);
+            this.panelControls.Controls.Add(this.label12);
+            this.panelControls.Controls.Add(this.txtAdditionalOptions);
             this.panelControls.Controls.Add(this.label10);
+            this.panelControls.Controls.Add(this.label11);
             this.panelControls.Controls.Add(this.label7);
             this.panelControls.Controls.Add(this.cmbPreset);
             this.panelControls.Controls.Add(this.lblCRF);
@@ -243,14 +250,56 @@
             this.panelControls.Controls.Add(this.label2);
             this.panelControls.Location = new System.Drawing.Point(183, 27);
             this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(248, 445);
+            this.panelControls.Size = new System.Drawing.Size(500, 400);
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(-3, 216);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(92, 13);
+            this.label12.TabIndex = 40;
+            this.label12.Text = "Additional Options";
+            // 
+            // txtAdditionalOptions
+            // 
+            this.txtAdditionalOptions.AcceptsTab = true;
+            this.txtAdditionalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAdditionalOptions.Location = new System.Drawing.Point(0, 232);
+            this.txtAdditionalOptions.Multiline = true;
+            this.txtAdditionalOptions.Name = "txtAdditionalOptions";
+            this.txtAdditionalOptions.Size = new System.Drawing.Size(500, 50);
+            this.txtAdditionalOptions.TabIndex = 39;
+            this.txtAdditionalOptions.TextChanged += new System.EventHandler(this.txtAdditionalOptions_TextChanged);
+            this.txtAdditionalOptions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(250, 72);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(46, 13);
+            this.label10.TabIndex = 37;
+            this.label10.Text = "Placebo";
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.Location = new System.Drawing.Point(293, 72);
+            this.label11.Name = "label11";
+            this.label11.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label11.Size = new System.Drawing.Size(207, 13);
+            this.label11.TabIndex = 38;
+            this.label11.Text = "Cooked";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(-3, 288);
+            this.label7.Location = new System.Drawing.Point(249, 103);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(37, 13);
             this.label7.TabIndex = 36;
@@ -270,7 +319,7 @@
             "slower",
             "veryslow",
             "placebo"});
-            this.cmbPreset.Location = new System.Drawing.Point(0, 304);
+            this.cmbPreset.Location = new System.Drawing.Point(252, 119);
             this.cmbPreset.Name = "cmbPreset";
             this.cmbPreset.Size = new System.Drawing.Size(121, 21);
             this.cmbPreset.TabIndex = 35;
@@ -279,7 +328,7 @@
             // lblCRF
             // 
             this.lblCRF.AutoSize = true;
-            this.lblCRF.Location = new System.Drawing.Point(-3, 212);
+            this.lblCRF.Location = new System.Drawing.Point(249, 24);
             this.lblCRF.Name = "lblCRF";
             this.lblCRF.Size = new System.Drawing.Size(46, 13);
             this.lblCRF.TabIndex = 34;
@@ -289,7 +338,7 @@
             // 
             this.trkCRF.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trkCRF.Location = new System.Drawing.Point(0, 228);
+            this.trkCRF.Location = new System.Drawing.Point(252, 40);
             this.trkCRF.Maximum = 51;
             this.trkCRF.Name = "trkCRF";
             this.trkCRF.Size = new System.Drawing.Size(248, 45);
@@ -313,7 +362,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(-2, 407);
+            this.label8.Location = new System.Drawing.Point(-2, 361);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(236, 13);
             this.label8.TabIndex = 31;
@@ -332,7 +381,7 @@
             // lblOutputFilename
             // 
             this.lblOutputFilename.AutoSize = true;
-            this.lblOutputFilename.Location = new System.Drawing.Point(-2, 377);
+            this.lblOutputFilename.Location = new System.Drawing.Point(-2, 331);
             this.lblOutputFilename.Name = "lblOutputFilename";
             this.lblOutputFilename.Size = new System.Drawing.Size(69, 13);
             this.lblOutputFilename.TabIndex = 25;
@@ -341,7 +390,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(-3, 338);
+            this.label9.Location = new System.Drawing.Point(-3, 292);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(123, 13);
             this.label9.TabIndex = 24;
@@ -351,16 +400,16 @@
             // 
             this.txtOutName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutName.Location = new System.Drawing.Point(0, 354);
+            this.txtOutName.Location = new System.Drawing.Point(0, 308);
             this.txtOutName.Name = "txtOutName";
-            this.txtOutName.Size = new System.Drawing.Size(248, 20);
+            this.txtOutName.Size = new System.Drawing.Size(500, 20);
             this.txtOutName.TabIndex = 23;
             this.txtOutName.TextChanged += new System.EventHandler(this.txtOutName_TextChanged);
             // 
             // chkOverwrite
             // 
             this.chkOverwrite.AutoSize = true;
-            this.chkOverwrite.Location = new System.Drawing.Point(121, 337);
+            this.chkOverwrite.Location = new System.Drawing.Point(121, 291);
             this.chkOverwrite.Name = "chkOverwrite";
             this.chkOverwrite.Size = new System.Drawing.Size(108, 17);
             this.chkOverwrite.TabIndex = 18;
@@ -370,7 +419,7 @@
             // 
             // btnPaste
             // 
-            this.btnPaste.Location = new System.Drawing.Point(58, 421);
+            this.btnPaste.Location = new System.Drawing.Point(58, 375);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(52, 23);
             this.btnPaste.TabIndex = 17;
@@ -380,7 +429,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(0, 421);
+            this.btnCopy.Location = new System.Drawing.Point(0, 375);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(52, 23);
             this.btnCopy.TabIndex = 16;
@@ -466,7 +515,7 @@
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRun.Location = new System.Drawing.Point(354, 478);
+            this.btnRun.Location = new System.Drawing.Point(606, 432);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(77, 23);
             this.btnRun.TabIndex = 18;
@@ -480,27 +529,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutput.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtOutput.Location = new System.Drawing.Point(12, 505);
+            this.txtOutput.Location = new System.Drawing.Point(12, 461);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOutput.Size = new System.Drawing.Size(419, 128);
+            this.txtOutput.Size = new System.Drawing.Size(671, 97);
             this.txtOutput.TabIndex = 19;
             // 
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(13, 632);
+            this.progressBar1.Location = new System.Drawing.Point(13, 557);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(418, 10);
+            this.progressBar1.Size = new System.Drawing.Size(670, 10);
             this.progressBar1.TabIndex = 20;
             // 
             // btnCopyCommand
             // 
             this.btnCopyCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCopyCommand.Location = new System.Drawing.Point(296, 478);
+            this.btnCopyCommand.Location = new System.Drawing.Point(548, 432);
             this.btnCopyCommand.Name = "btnCopyCommand";
             this.btnCopyCommand.Size = new System.Drawing.Size(52, 23);
             this.btnCopyCommand.TabIndex = 27;
@@ -515,7 +564,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(443, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(695, 24);
             this.menuStrip1.TabIndex = 28;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -530,7 +579,9 @@
             this.defaultPresetCPUToolStripMenuItem,
             this.defaultPresetGPUToolStripMenuItem,
             this.toolStripSeparator3,
-            this.menuOptionsCopyOverwrite});
+            this.menuOptionsCopyOverwrite,
+            this.toolStripSeparator4,
+            this.additionalOptionsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -556,20 +607,10 @@
             this.menuOptionsHvc1.Text = "Always Add \'hvc1\' Tag";
             this.menuOptionsHvc1.Click += new System.EventHandler(this.menuOptionsHvc1_Click);
             // 
-            // helpToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuHelpAbout});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // menuHelpAbout
-            // 
-            this.menuHelpAbout.Name = "menuHelpAbout";
-            this.menuHelpAbout.Size = new System.Drawing.Size(107, 22);
-            this.menuHelpAbout.Text = "About";
-            this.menuHelpAbout.Click += new System.EventHandler(this.menuHelpAbout_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
             // 
             // defaultCRFCQPToolStripMenuItem
             // 
@@ -585,6 +626,11 @@
             this.menuOptionsCRF.Name = "menuOptionsCRF";
             this.menuOptionsCRF.Size = new System.Drawing.Size(100, 23);
             this.menuOptionsCRF.TextChanged += new System.EventHandler(this.menuOptionsCRF_TextChanged);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
             // 
             // defaultPresetCPUToolStripMenuItem
             // 
@@ -633,16 +679,6 @@
             this.menuOptionsPresetGPU.Size = new System.Drawing.Size(121, 23);
             this.menuOptionsPresetGPU.TextChanged += new System.EventHandler(this.menuOptionsPresetGPU_TextChanged);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -655,38 +691,54 @@
             this.menuOptionsCopyOverwrite.Text = "Copy Overwrite Setting";
             this.menuOptionsCopyOverwrite.Click += new System.EventHandler(this.menuOptionsCopyOverwrite_Click);
             // 
-            // label10
+            // toolStripSeparator4
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(-2, 260);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(46, 13);
-            this.label10.TabIndex = 37;
-            this.label10.Text = "Placebo";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(193, 6);
             // 
-            // label11
+            // additionalOptionsToolStripMenuItem
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(206, 260);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(44, 13);
-            this.label11.TabIndex = 38;
-            this.label11.Text = "Cooked";
+            this.additionalOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOptionsAdditionalOptions});
+            this.additionalOptionsToolStripMenuItem.Name = "additionalOptionsToolStripMenuItem";
+            this.additionalOptionsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.additionalOptionsToolStripMenuItem.Text = "Additional Options";
+            // 
+            // menuOptionsAdditionalOptions
+            // 
+            this.menuOptionsAdditionalOptions.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.menuOptionsAdditionalOptions.Name = "menuOptionsAdditionalOptions";
+            this.menuOptionsAdditionalOptions.Size = new System.Drawing.Size(100, 23);
+            this.menuOptionsAdditionalOptions.TextChanged += new System.EventHandler(this.menuOptionsAdditionalOptions_TextChanged);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelpAbout});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // menuHelpAbout
+            // 
+            this.menuHelpAbout.Name = "menuHelpAbout";
+            this.menuHelpAbout.Size = new System.Drawing.Size(107, 22);
+            this.menuHelpAbout.Text = "About";
+            this.menuHelpAbout.Click += new System.EventHandler(this.menuHelpAbout_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 645);
+            this.ClientSize = new System.Drawing.Size(695, 570);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btnCopyCommand);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.panelControls);
             this.Controls.Add(this.textCommand);
             this.Controls.Add(this.listFiles);
+            this.Controls.Add(this.progressBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -761,6 +813,11 @@
         private System.Windows.Forms.ToolStripMenuItem menuOptionsCopyOverwrite;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem additionalOptionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox menuOptionsAdditionalOptions;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtAdditionalOptions;
     }
 }
 

@@ -94,5 +94,17 @@ namespace mpegui.Properties {
                 this["CopyOverwrite"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AdditionalOptions {
+            get {
+                return ((string)(this["AdditionalOptions"]));
+            }
+            set {
+                this["AdditionalOptions"] = value;
+            }
+        }
     }
 }

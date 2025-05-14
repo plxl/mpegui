@@ -84,6 +84,7 @@ namespace mpegui
                                 f.Tags = "hvc1";
                             f.CRF = Settings.Default.DefaultCRF;
                             f.Preset = FileConversionInfo.isCPUEncoder(f.Encoder) ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
+                            f.AdditionalOptions = Settings.Default.AdditionalOptions;
                             queue.Add(f);
                             listFiles.Items.Add(System.IO.Path.GetFileName(file));
                             listFiles.SelectedIndex = listFiles.Items.Count - 1;
@@ -652,6 +653,9 @@ namespace mpegui
             // Copy Overwrite setting (this means if you copy and paste the settings
             // from one item to others, it will include whether "Overwrite if exists" is checked
             menuOptionsCopyOverwrite.Checked = Settings.Default.CopyOverwrite;
+
+            // Additional options
+            menuOptionsAdditionalOptions.Text = Settings.Default.AdditionalOptions;
         }
 
         private void menuHelpAbout_Click(object sender, EventArgs e)
@@ -751,6 +755,40 @@ namespace mpegui
             menuOptionsCopyOverwrite.Checked = !menuOptionsCopyOverwrite.Checked;
             Settings.Default.CopyOverwrite = menuOptionsCopyOverwrite.Checked;
             Settings.Default.Save();
+        }
+
+        private void menuOptionsAdditionalOptions_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.AdditionalOptions = menuOptionsAdditionalOptions.Text.Trim();
+            Settings.Default.Save();
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Stops the user from being able to put newlines in the additional options multiline textbox
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txtAdditionalOptions_TextChanged(object sender, EventArgs e)
+        {
+            // Removes any new lines from the text just in case
+            if (txtAdditionalOptions.Text.Contains(Environment.NewLine))
+            {
+                txtAdditionalOptions.Text = txtAdditionalOptions.Text.Replace(Environment.NewLine, string.Empty);
+            }
+
+            if (IsUpdating()) return;
+
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.AdditionalOptions = txtAdditionalOptions.Text.Trim();
+            }
+
+            UpdateCommand();
         }
     }
 
