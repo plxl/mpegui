@@ -130,6 +130,7 @@ namespace mpegui
                 if (cmbPreset.Items.Contains(f.Preset)) cmbPreset.SelectedItem = f.Preset;
                 else cmbPreset.Text = f.Preset;
                 trkCRF.Value = f.CRF;
+                txtAdditionalOptions.Text = f.AdditionalOptions;
                 UpdateCRFLabel();
 
                 panelControls.Tag = 0;
