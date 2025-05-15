@@ -354,14 +354,15 @@ namespace mpegui
 
         private async void btnRun_Click(object sender, EventArgs e)
         {
+            btnRun.Enabled = false;
             if (btnRun.Text.StartsWith("Run"))
             {
                 ProcessQueue();
                 btnRun.Text = "Stop";
+                btnRun.Enabled = true;
             }
             else
             {
-                btnRun.Enabled = false;
                 while (!process.HasExited)
                 {
                     process.Kill();
@@ -381,14 +382,13 @@ namespace mpegui
                 process = new Process();
                 process.StartInfo.FileName = "ffmpeg";
                 process.StartInfo.Arguments = f.ToString();
-                process.StartInfo.RedirectStandardOutput = true; // Redirects the output
-                process.StartInfo.RedirectStandardError = true;  // Redirects error output
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;        // Do not create a window
+                process.StartInfo.CreateNoWindow = true;
 
                 txtOutput.AppendText("Running: " + "ffmpeg " + f.ToString() + "\r\n");
 
-                // Subscribe to the output events
                 process.OutputDataReceived += (s, e2) =>
                 {
                     if (!string.IsNullOrEmpty(e2.Data))
@@ -417,16 +417,16 @@ namespace mpegui
                 progressBar1.Value = 0;
                 txtOutput.AppendText("Process exited with code: " + process.ExitCode + "\r\n");
             }
+
+            btnRun.Invoke(new Action(() => btnRun.Text = "Run Queue"));
         }
 
         private double ffmpegDuration = 0;
 
         private void ParseFFmpegOutput(string output, int totalFrames)
         {
-            // Example of FFmpeg output line:
             // frame=  250 fps= 24 q=  28.0 size=   102400kB time=00:00:10.50 bitrate=  80.0kbits/s
-
-            // Regex to capture time and frame information
+            // get time and frame information
             if (ffmpegDuration == 0)
             {    
                 var durationRegex = new Regex(@"Duration: (\d+):(\d+):(\d+).(\d+)");
@@ -475,7 +475,6 @@ namespace mpegui
 
         private void UpdateProgressBar(double curTime, double duration)
         {
-            // Update progress bar based on frame count or your own logic
             if (InvokeRequired)
             {
                 Invoke(new Action<double, double>(UpdateProgressBar), curTime, duration);
@@ -523,15 +522,14 @@ namespace mpegui
                 var probe = new Process();
                 probe.StartInfo.FileName = "ffprobe";
                 probe.StartInfo.Arguments = $"\"{f.Filename}\"";
-                probe.StartInfo.RedirectStandardOutput = true; // Redirects the output
-                probe.StartInfo.RedirectStandardError = true;  // Redirects error output
+                probe.StartInfo.RedirectStandardOutput = true;
+                probe.StartInfo.RedirectStandardError = true;
                 probe.StartInfo.UseShellExecute = false;
-                probe.StartInfo.CreateNoWindow = true;        // Do not create a window
+                probe.StartInfo.CreateNoWindow = true;
 
                 txtOutput.AppendText("Running: " + "ffprobe \"" + f.Filename + "\"\r\n");
 
                 TimeSpan duration = TimeSpan.Zero;
-                // Subscribe to the output events
                 probe.OutputDataReceived += (s, e2) =>
                 {
                     if (!string.IsNullOrEmpty(e2.Data))
