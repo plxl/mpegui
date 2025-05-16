@@ -831,9 +831,16 @@ namespace mpegui
             return delay;
         }
 
-        public string GetCrop()
+        public string GetVideoFilters()
         {
-            return CropFilter == string.Empty ? string.Empty : "-vf \"" + CropFilter + "\" ";
+            List<string> filters = new List<string>();
+            // crop filter
+            if (!string.IsNullOrWhiteSpace(CropFilter))
+            {
+                filters.Add(CropFilter);
+            }
+
+            return filters.Count == 0 ? string.Empty : $"-vf \"{string.Join(",", filters)}\" ";
         }
 
         public string GetGain()
@@ -949,7 +956,7 @@ namespace mpegui
             return
                 $"-i \"{Filename}\" "
                 + GetDelay()
-                + GetCrop()
+                + GetVideoFilters()
                 + GetGain()
                 + GetTrim()
                 + GetEncoder()
@@ -967,7 +974,7 @@ namespace mpegui
             return
                 $"ffmpeg -i [in_file] "
                 + GetDelay(nameless: true)
-                + GetCrop()
+                + GetVideoFilters()
                 + GetGain()
                 + GetTrim()
                 + GetEncoder()
