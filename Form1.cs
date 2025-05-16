@@ -123,7 +123,7 @@ namespace mpegui
                 txtCrop.Text = f.CropFilter;
                 txtStart.Text = f.TrimStart.ToString(@"hh\:mm\:ss\.fff");
                 txtEnd.Text = f.TrimEnd.ToString(@"hh\:mm\:ss\.fff");
-                UpdateEncoderPresets(dropEncoder.Text, f.Encoder);
+                UpdateEncoderPresets(f.Encoder);
                 dropEncoder.Text = f.Encoder;
                 chkHvc1.Visible = requiresHvc1(f.Encoder);
                 chkHvc1.Checked = f.Tags == "hvc1";
@@ -243,8 +243,7 @@ namespace mpegui
             if (IsUpdating()) return;
 
             FileConversionInfo current = queue[listFiles.SelectedIndex];
-            string OldEncoder = current.Encoder;
-            UpdateEncoderPresets(OldEncoder, dropEncoder.Text);
+            UpdateEncoderPresets(dropEncoder.Text);
 
             foreach (int i in listFiles.SelectedIndices)
             {
@@ -288,9 +287,9 @@ namespace mpegui
             }
         }
 
-        void UpdateEncoderPresets(string OldEncoder, string NewEncoder)
+        void UpdateEncoderPresets(string NewEncoder)
         {
-            bool OldIsCPU = FileConversionInfo.isCPUEncoder(OldEncoder);
+            bool OldIsCPU = (string)cmbPreset.Items[0] == CPUEncoderPresets[0];
             bool NewIsCPU = FileConversionInfo.isCPUEncoder(NewEncoder);
             if (OldIsCPU == NewIsCPU) return;
 
