@@ -132,6 +132,7 @@ namespace mpegui
                 trkCRF.Value = f.CRF;
                 txtAdditionalOptions.Text = f.AdditionalOptions;
                 UpdateCRFLabel();
+                UpdateFPS(f.FPS);
 
                 panelControls.Tag = 0;
 
@@ -788,6 +789,46 @@ namespace mpegui
 
             UpdateCommand();
         }
+
+        private void UpdateFPS(decimal fps)
+        {
+            if (fps < 1.0m)
+            {
+                cmbFPS.SelectedIndex = 0; // selects "Same as source"
+            }
+            else
+            {
+                cmbFPS.Text = fps.ToString();
+            }
+        }
+
+        private void cmbFPS_TextChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // verify the input text is actually a valid decimal number
+            bool isDecimal = decimal.TryParse(cmbFPS.Text, out decimal fps);
+            // check if "same as source" is selected
+            if (cmbFPS.SelectedIndex == 0)
+            {
+                fps = 0.0m;
+                isDecimal = true;
+            }
+            // update fps if input is a decimal / same as source
+            if (isDecimal)
+            {
+                foreach (int i in listFiles.SelectedIndices)
+                {
+                    FileConversionInfo f = queue[i];
+                    f.FPS = fps;
+                }
+            }
+            // otherwise just do nothing
+            // in theory we could force it to do "same as source" (or 0.0m) here, but it might be
+            // more respectable to the user to leave it as it was originally
+
+            UpdateCommand();
+        }
     }
 
 
@@ -804,6 +845,7 @@ namespace mpegui
         public string Tags { get; set; }
         public int CRF { get; set; }
         public string Preset { get; set; }
+        public decimal FPS { get; set; }
         public string AdditionalOptions { get; set; }
         public bool OverwriteExisting { get; set; }
 
@@ -817,6 +859,7 @@ namespace mpegui
             AdditionalOptions = string.Empty;
             Preset = string.Empty;
             CRF = 22;
+            FPS = 0;
         }
 
         public string GetDelay(bool nameless = false)
@@ -838,6 +881,11 @@ namespace mpegui
             if (!string.IsNullOrWhiteSpace(CropFilter))
             {
                 filters.Add(CropFilter);
+            }
+            // FPS filter (more precise than just doing -r to drop/duplicate frames)
+            if (FPS >= 1.0m)
+            {
+                filters.Add($"fps={FPS}");
             }
 
             return filters.Count == 0 ? string.Empty : $"-vf \"{string.Join(",", filters)}\" ";

@@ -39,6 +39,8 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cmbFPS = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtAdditionalOptions = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -226,6 +228,8 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.label13);
+            this.panelControls.Controls.Add(this.cmbFPS);
             this.panelControls.Controls.Add(this.label12);
             this.panelControls.Controls.Add(this.txtAdditionalOptions);
             this.panelControls.Controls.Add(this.label10);
@@ -263,6 +267,45 @@
             this.panelControls.Size = new System.Drawing.Size(496, 407);
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(249, 148);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(97, 13);
+            this.label13.TabIndex = 42;
+            this.label13.Text = "Frames per second";
+            // 
+            // cmbFPS
+            // 
+            this.cmbFPS.FormattingEnabled = true;
+            this.cmbFPS.Items.AddRange(new object[] {
+            "Same as source",
+            "5",
+            "10",
+            "12",
+            "15",
+            "20",
+            "23.976",
+            "24",
+            "25",
+            "29.97",
+            "30",
+            "48",
+            "50",
+            "59.94",
+            "60",
+            "72",
+            "75",
+            "90",
+            "100",
+            "120"});
+            this.cmbFPS.Location = new System.Drawing.Point(252, 164);
+            this.cmbFPS.Name = "cmbFPS";
+            this.cmbFPS.Size = new System.Drawing.Size(121, 21);
+            this.cmbFPS.TabIndex = 41;
+            this.cmbFPS.TextChanged += new System.EventHandler(this.cmbFPS_TextChanged);
             // 
             // label12
             // 
@@ -874,6 +917,8 @@
         private System.Windows.Forms.TextBox txtAdditionalOptions;
         private System.Windows.Forms.SplitContainer splitList;
         private System.Windows.Forms.SplitContainer splitOutput;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cmbFPS;
     }
 }
 
