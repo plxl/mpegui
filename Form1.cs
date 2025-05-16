@@ -19,8 +19,8 @@ namespace mpegui
         private readonly List<FileConversionInfo> queue = new List<FileConversionInfo>();
         private readonly Dictionary<String, String> cropPresets = new Dictionary<String, String>()
         {
-            { "1:1 Square", "crop='min(iw\\,ih)':'min(iw\\,ih)':(iw-min(iw\\,ih))/2:(ih-min(iw\\,ih))/2" }, // dynamic for any resolution for a centered square crop
-            { "16:9 to 9:16 Vertical", "crop=ih*9/16:ih:(iw-ih*9/16)/2:0" }, // only works with a 16:9 video (i use this for making beat saber reels)
+            { "1:1 Square", "'min(iw\\,ih)':'min(iw\\,ih)':(iw-min(iw\\,ih))/2:(ih-min(iw\\,ih))/2" }, // dynamic for any resolution for a centered square crop
+            { "16:9 to 9:16 Vertical", "ih*9/16:ih:(iw-ih*9/16)/2:0" }, // only works with a 16:9 video (i use this for making beat saber reels)
         };
         private readonly List<string> CPUEncoderPresets = new List<string>()
         {
@@ -880,7 +880,7 @@ namespace mpegui
             // crop filter
             if (!string.IsNullOrWhiteSpace(CropFilter))
             {
-                filters.Add(CropFilter);
+                filters.Add($"crop={CropFilter}");
             }
             // FPS filter (more precise than just doing -r to drop/duplicate frames)
             if (FPS >= 1.0m)
