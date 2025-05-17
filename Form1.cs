@@ -887,6 +887,16 @@ namespace mpegui
             {
                 filters.Add($"fps={FPS}");
             }
+            // add any video filters found in Additional Options, excludes the quotation marks automatically
+            string vf = GetVideoFilterString(AdditionalOptions, false, true);
+            if (vf != null)
+            {
+                foreach (string filter in vf.Split(','))
+                {
+                    // trim to remove spaces
+                    filters.Add(filter.Trim());
+                }
+            }
 
             return filters.Count == 0 ? string.Empty : $"-vf \"{string.Join(",", filters)}\" ";
         }
@@ -952,9 +962,76 @@ namespace mpegui
             return Tags == string.Empty ? string.Empty : $"-tag:v {Tags} ";
         }
 
+        private string GetVideoFilterString(string vf, bool includeVfOption, bool removeQuotes)
+        {
+            if (vf.Contains("-vf "))
+            {
+                // ensure that there is a space after the -vf option
+                vf = vf.Substring(vf.IndexOf("-vf "));
+                string[] vf_parts = vf.Split(new char[] { ' ' });
+                // ensure there is at least one element after the '-vf'
+                if (vf_parts.Length >= 2)
+                {
+                    // assumes video filter is one word
+                    vf = vf_parts[1];
+                    // check if the video filter starts with a quote, because then it could contain spaces
+                    if (vf_parts[1].Length > 1 && vf_parts[1][0] == '"')
+                    {
+                        // find the last part that has the ending quote
+                        int last_part = -1;
+                        for (int i = 1; i < vf_parts.Length; i++)
+                        {
+                            // Length has to be greater than 1 so avoid coutning the first quote also as the last
+                            if (vf_parts[i].Length > 1 && vf_parts[i].Last() == '"')
+                            {
+                                last_part = i;
+                                break;
+                            }
+                        }
+                        if (last_part >= 1)
+                        {
+                            // joins the array by spaces again, only up to the last quote
+                            vf = string.Join(" ", vf_parts.Skip(1).Take(last_part));
+                        }
+                    }
+
+                    // remove any existing quotes from the start/end if needed
+                    if (removeQuotes)
+                    {
+                        if (vf.Length > 1 && vf[0] == '"')
+                        {
+                            vf = vf.Substring(1);
+                        }
+                        if (vf.Length > 1 && vf.Last() == '"')
+                        {
+                            vf = vf.Substring(0, vf.Length - 1);
+                        }
+                    }
+                    // add the -vf text back if needed
+                    return (includeVfOption ? "-vf " : "") + vf;
+                }
+            }
+            
+            return null;
+        }
+
         public string GetAdditionalOptions()
         {
-            return AdditionalOptions.Trim() == string.Empty ? string.Empty : AdditionalOptions.Trim() + " ";
+            string addopts = AdditionalOptions.Trim();
+            string vf = GetVideoFilterString(addopts, true, false);
+            if (!string.IsNullOrWhiteSpace(vf))
+            {
+                // removes video filter from string
+                addopts = addopts.Replace(vf, "");
+                addopts = addopts.Trim();
+                // remove any potential residue double spaces as a result of this removal
+                // this is probably not the best way to handle this, but it'll do
+                while (addopts.Contains("  "))
+                {
+                    addopts = addopts.Replace("  ", " ");
+                }
+            }
+            return addopts == string.Empty ? string.Empty : addopts + " ";
         }
 
         public string GetOutput(bool filenameOnly = false)
