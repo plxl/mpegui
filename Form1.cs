@@ -829,6 +829,22 @@ namespace mpegui
 
             UpdateCommand();
         }
+
+        private void btnCRFinfo_Click(object sender, EventArgs e)
+        {
+            // provide some easy to digest info on crf / cqp
+            MessageBox.Show(
+                "CRF/CQP (Constant Rate Factor/Constant Quantiser Parameter)\n\n" +
+                "These are similar quality-based encoder modes:\n" +
+                "- CRF is used by Software (CPU) encoders for adaptive quality and better efficiency\n" +
+                "- CQP is used by Hardware (GPU) encoders with fixed compression for faster performance\n\n" +
+                "Generally: higher value = lower quality but smaller filesize.\n\n" +
+                "The results will vary across encoders. For example, AV1 works better at lower bitrates: " +
+                "h264_nvenc, CQP 24 ≈ av1_nvenc, CQP 32-34 (roughly).\n",
+
+                "Information about CRF / CQP"
+            );
+        }
     }
 
 

@@ -93,6 +93,7 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
+            this.btnCRFinfo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -228,6 +229,7 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.btnCRFinfo);
             this.panelControls.Controls.Add(this.label13);
             this.panelControls.Controls.Add(this.cmbFPS);
             this.panelControls.Controls.Add(this.label12);
@@ -820,6 +822,16 @@
             this.splitOutput.SplitterDistance = 407;
             this.splitOutput.TabIndex = 30;
             // 
+            // btnCRFinfo
+            // 
+            this.btnCRFinfo.Location = new System.Drawing.Point(298, 19);
+            this.btnCRFinfo.Name = "btnCRFinfo";
+            this.btnCRFinfo.Size = new System.Drawing.Size(35, 23);
+            this.btnCRFinfo.TabIndex = 43;
+            this.btnCRFinfo.Text = "Info";
+            this.btnCRFinfo.UseVisualStyleBackColor = true;
+            this.btnCRFinfo.Click += new System.EventHandler(this.btnCRFinfo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -919,6 +931,7 @@
         private System.Windows.Forms.SplitContainer splitOutput;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cmbFPS;
+        private System.Windows.Forms.Button btnCRFinfo;
     }
 }
 
