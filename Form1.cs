@@ -60,7 +60,7 @@ namespace mpegui
             }
             else
             {
-                e.Effect= DragDropEffects.None;
+                e.Effect = DragDropEffects.None;
             }
         }
 
