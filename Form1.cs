@@ -133,6 +133,8 @@ namespace mpegui
                 txtAdditionalOptions.Text = f.AdditionalOptions;
                 UpdateCRFLabel();
                 UpdateFPS(f.FPS);
+                trkSpeed.Value = (int)(f.Speed * 100.0);
+                trkSpeed_UpdateLabel();
 
                 panelControls.Tag = 0;
 
@@ -343,6 +345,7 @@ namespace mpegui
                 f.CRF = copy.CRF;
                 f.Preset = copy.Preset;
                 f.FPS = copy.FPS;
+                f.Speed = copy.Speed;
                 f.AdditionalOptions = copy.AdditionalOptions;
                 if (Settings.Default.CopyOverwrite) f.OverwriteExisting = copy.OverwriteExisting;
             }
@@ -846,6 +849,80 @@ namespace mpegui
                 "Information about CRF / CQP"
             );
         }
+
+        private void trkSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // snaps the trackbar to SmallChange value
+            var bar = (TrackBar)sender;
+            if (bar.Value > 1 && bar.Value % bar.SmallChange != 0)
+            {
+                bar.Value = bar.SmallChange * ((bar.Value + bar.SmallChange / 2) / bar.SmallChange);
+            }
+
+            // makes sure that the value can't be 0, without setting the minimum to 1 (which shifts the visual ticks slightly, yuck)
+            if (bar.Value <= 0) bar.Value = 1;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.Speed = trkSpeed.Value / 100.0;
+            }
+            trkSpeed_UpdateLabel();
+
+            UpdateCommand();
+        }
+
+        private void trkSpeed_UpdateLabel()
+        {
+            lblSpeed.Text = $"Speed (Video/Audio) | {(double)trkSpeed.Value / 100.0:0.00}x";
+        }
+
+        private void trkSpeed_KeyDown(object sender, KeyEventArgs e)
+        {
+            trkSpeed_KeyUpdate();
+        }
+
+        private void trkSpeed_KeyUp(object sender, KeyEventArgs e)
+        {
+            trkSpeed_KeyUpdate();
+    }
+
+        private void trkSpeed_KeyUpdate()
+        {
+            bool isAltDown = (Control.ModifierKeys & Keys.Alt) == Keys.Alt;
+            bool isShiftDown = (Control.ModifierKeys & Keys.Shift) == Keys.Shift;
+
+            if (isAltDown)
+                // changes in 0.01 (fine grain)
+                trkSpeed.SmallChange = 1;
+            else if (isShiftDown)
+                // changes in 0.10 (better precision, most would only need this)
+                trkSpeed.SmallChange = 10;
+            else
+                // changes in 0.50 (normal, generally fine)
+                trkSpeed.SmallChange = 50;
+        }
+
+        private void btnSpeedInfo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "This sets the speed using the setpts video filter, and the .\n\n" +
+                "IMPORTANT:\n" +
+                "This does not affect audio right now, but you can manually set it in additional options:\n" +
+                "Use '-filter:a atempo=x' where x is your speed multiplier (cannot be less than 0.5 or more than 100).\n\n" +
+                "FURTHER: You may want to set your desired FPS using the '-r (fps)' option in additional options, " +
+                "as FFmpeg will otherwise drop frames it doesn't need.\n\n" +
+                "CONTROLS:\n" +
+                "Hold Shift while sliding for finer control\n" +
+                "Hold Alt while sliding for even finer control"
+                ,
+
+                "Speed Information"
+            );
+        }
     }
 
 
@@ -863,6 +940,7 @@ namespace mpegui
         public int CRF { get; set; }
         public string Preset { get; set; }
         public decimal FPS { get; set; }
+        public double Speed { get; set; }
         public string AdditionalOptions { get; set; }
         public bool OverwriteExisting { get; set; }
 
@@ -877,6 +955,7 @@ namespace mpegui
             Preset = string.Empty;
             CRF = 22;
             FPS = 0;
+            Speed = 1.00;
         }
 
         public string GetDelay(bool nameless = false)
@@ -898,6 +977,12 @@ namespace mpegui
             if (!string.IsNullOrWhiteSpace(CropFilter))
             {
                 filters.Add($"crop={CropFilter}");
+            }
+            // Speed (setpts) filter (may require -r to be set for fps instead of below filter)
+            if (Speed != 1.00)
+            {
+                // note that we need to divide 1 by the speed multiplier to get the PTS multiplier
+                filters.Add($"setpts={1.00 / Speed:0.00}*PTS");
             }
             // FPS filter (more precise than just doing -r to drop/duplicate frames)
             if (FPS >= 1.0m)

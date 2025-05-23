@@ -39,6 +39,7 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.btnCRFinfo = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.cmbFPS = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -93,7 +94,9 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
-            this.btnCRFinfo = new System.Windows.Forms.Button();
+            this.btnSpeedInfo = new System.Windows.Forms.Button();
+            this.lblSpeed = new System.Windows.Forms.Label();
+            this.trkSpeed = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -107,6 +110,7 @@
             this.splitOutput.Panel1.SuspendLayout();
             this.splitOutput.Panel2.SuspendLayout();
             this.splitOutput.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // listFiles
@@ -118,7 +122,7 @@
             this.listFiles.Location = new System.Drawing.Point(0, 0);
             this.listFiles.Name = "listFiles";
             this.listFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listFiles.Size = new System.Drawing.Size(120, 407);
+            this.listFiles.Size = new System.Drawing.Size(120, 438);
             this.listFiles.TabIndex = 0;
             this.listFiles.SelectedIndexChanged += new System.EventHandler(this.listFiles_SelectedIndexChanged);
             this.listFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.listFiles_DragDrop);
@@ -229,6 +233,9 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.btnSpeedInfo);
+            this.panelControls.Controls.Add(this.lblSpeed);
+            this.panelControls.Controls.Add(this.trkSpeed);
             this.panelControls.Controls.Add(this.btnCRFinfo);
             this.panelControls.Controls.Add(this.label13);
             this.panelControls.Controls.Add(this.cmbFPS);
@@ -266,9 +273,19 @@
             this.panelControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControls.Location = new System.Drawing.Point(0, 0);
             this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(496, 407);
+            this.panelControls.Size = new System.Drawing.Size(496, 438);
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
+            // 
+            // btnCRFinfo
+            // 
+            this.btnCRFinfo.Location = new System.Drawing.Point(298, 19);
+            this.btnCRFinfo.Name = "btnCRFinfo";
+            this.btnCRFinfo.Size = new System.Drawing.Size(35, 23);
+            this.btnCRFinfo.TabIndex = 43;
+            this.btnCRFinfo.Text = "Info";
+            this.btnCRFinfo.UseVisualStyleBackColor = true;
+            this.btnCRFinfo.Click += new System.EventHandler(this.btnCRFinfo_Click);
             // 
             // label13
             // 
@@ -311,22 +328,24 @@
             // 
             // label12
             // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(-3, 216);
+            this.label12.Location = new System.Drawing.Point(-3, 246);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(92, 13);
             this.label12.TabIndex = 40;
             this.label12.Text = "Additional Options";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // txtAdditionalOptions
             // 
             this.txtAdditionalOptions.AcceptsTab = true;
-            this.txtAdditionalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtAdditionalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAdditionalOptions.Location = new System.Drawing.Point(0, 232);
+            this.txtAdditionalOptions.Location = new System.Drawing.Point(0, 262);
             this.txtAdditionalOptions.Multiline = true;
             this.txtAdditionalOptions.Name = "txtAdditionalOptions";
-            this.txtAdditionalOptions.Size = new System.Drawing.Size(484, 50);
+            this.txtAdditionalOptions.Size = new System.Drawing.Size(484, 51);
             this.txtAdditionalOptions.TabIndex = 39;
             this.txtAdditionalOptions.TextChanged += new System.EventHandler(this.txtAdditionalOptions_TextChanged);
             this.txtAdditionalOptions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
@@ -416,8 +435,9 @@
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(-2, 361);
+            this.label8.Location = new System.Drawing.Point(-2, 392);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(236, 13);
             this.label8.TabIndex = 31;
@@ -435,8 +455,9 @@
             // 
             // lblOutputFilename
             // 
+            this.lblOutputFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblOutputFilename.AutoSize = true;
-            this.lblOutputFilename.Location = new System.Drawing.Point(-2, 331);
+            this.lblOutputFilename.Location = new System.Drawing.Point(-2, 362);
             this.lblOutputFilename.Name = "lblOutputFilename";
             this.lblOutputFilename.Size = new System.Drawing.Size(69, 13);
             this.lblOutputFilename.TabIndex = 25;
@@ -444,8 +465,9 @@
             // 
             // label9
             // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(-3, 292);
+            this.label9.Location = new System.Drawing.Point(-3, 323);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(123, 13);
             this.label9.TabIndex = 24;
@@ -453,9 +475,9 @@
             // 
             // txtOutName
             // 
-            this.txtOutName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtOutName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutName.Location = new System.Drawing.Point(0, 308);
+            this.txtOutName.Location = new System.Drawing.Point(0, 339);
             this.txtOutName.Name = "txtOutName";
             this.txtOutName.Size = new System.Drawing.Size(484, 20);
             this.txtOutName.TabIndex = 23;
@@ -463,8 +485,9 @@
             // 
             // chkOverwrite
             // 
+            this.chkOverwrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkOverwrite.AutoSize = true;
-            this.chkOverwrite.Location = new System.Drawing.Point(121, 291);
+            this.chkOverwrite.Location = new System.Drawing.Point(121, 322);
             this.chkOverwrite.Name = "chkOverwrite";
             this.chkOverwrite.Size = new System.Drawing.Size(108, 17);
             this.chkOverwrite.TabIndex = 18;
@@ -474,7 +497,8 @@
             // 
             // btnPaste
             // 
-            this.btnPaste.Location = new System.Drawing.Point(58, 375);
+            this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPaste.Location = new System.Drawing.Point(58, 406);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(52, 23);
             this.btnPaste.TabIndex = 17;
@@ -484,7 +508,8 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(0, 375);
+            this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopy.Location = new System.Drawing.Point(0, 406);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(52, 23);
             this.btnCopy.TabIndex = 16;
@@ -795,7 +820,7 @@
             // splitList.Panel2
             // 
             this.splitList.Panel2.Controls.Add(this.panelControls);
-            this.splitList.Size = new System.Drawing.Size(620, 407);
+            this.splitList.Size = new System.Drawing.Size(620, 438);
             this.splitList.SplitterDistance = 120;
             this.splitList.TabIndex = 29;
             // 
@@ -818,25 +843,51 @@
             this.splitOutput.Panel2.Controls.Add(this.btnCopyCommand);
             this.splitOutput.Panel2.Controls.Add(this.txtOutput);
             this.splitOutput.Panel2.Controls.Add(this.progressBar1);
-            this.splitOutput.Size = new System.Drawing.Size(620, 535);
-            this.splitOutput.SplitterDistance = 407;
+            this.splitOutput.Size = new System.Drawing.Size(620, 566);
+            this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
-            // btnCRFinfo
+            // btnSpeedInfo
             // 
-            this.btnCRFinfo.Location = new System.Drawing.Point(298, 19);
-            this.btnCRFinfo.Name = "btnCRFinfo";
-            this.btnCRFinfo.Size = new System.Drawing.Size(35, 23);
-            this.btnCRFinfo.TabIndex = 43;
-            this.btnCRFinfo.Text = "Info";
-            this.btnCRFinfo.UseVisualStyleBackColor = true;
-            this.btnCRFinfo.Click += new System.EventHandler(this.btnCRFinfo_Click);
+            this.btnSpeedInfo.Location = new System.Drawing.Point(385, 193);
+            this.btnSpeedInfo.Name = "btnSpeedInfo";
+            this.btnSpeedInfo.Size = new System.Drawing.Size(35, 23);
+            this.btnSpeedInfo.TabIndex = 46;
+            this.btnSpeedInfo.Text = "Info";
+            this.btnSpeedInfo.UseVisualStyleBackColor = true;
+            this.btnSpeedInfo.Click += new System.EventHandler(this.btnSpeedInfo_Click);
+            // 
+            // lblSpeed
+            // 
+            this.lblSpeed.AutoSize = true;
+            this.lblSpeed.Location = new System.Drawing.Point(249, 198);
+            this.lblSpeed.Name = "lblSpeed";
+            this.lblSpeed.Size = new System.Drawing.Size(130, 13);
+            this.lblSpeed.TabIndex = 45;
+            this.lblSpeed.Text = "Speed (Video only) | 1.00x";
+            // 
+            // trkSpeed
+            // 
+            this.trkSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trkSpeed.LargeChange = 300;
+            this.trkSpeed.Location = new System.Drawing.Point(252, 214);
+            this.trkSpeed.Maximum = 800;
+            this.trkSpeed.Name = "trkSpeed";
+            this.trkSpeed.Size = new System.Drawing.Size(232, 45);
+            this.trkSpeed.SmallChange = 50;
+            this.trkSpeed.TabIndex = 44;
+            this.trkSpeed.TickFrequency = 100;
+            this.trkSpeed.Value = 100;
+            this.trkSpeed.ValueChanged += new System.EventHandler(this.trkSpeed_ValueChanged);
+            this.trkSpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyDown);
+            this.trkSpeed.KeyUp += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyUp);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(620, 559);
+            this.ClientSize = new System.Drawing.Size(620, 590);
             this.Controls.Add(this.splitOutput);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -861,6 +912,7 @@
             this.splitOutput.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOutput)).EndInit();
             this.splitOutput.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -932,6 +984,9 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cmbFPS;
         private System.Windows.Forms.Button btnCRFinfo;
+        private System.Windows.Forms.Button btnSpeedInfo;
+        private System.Windows.Forms.Label lblSpeed;
+        private System.Windows.Forms.TrackBar trkSpeed;
     }
 }
 
