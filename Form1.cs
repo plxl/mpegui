@@ -1096,6 +1096,7 @@ namespace mpegui
         {
             return
                 $"-i \"{Filename}\" "
+                + GetTrim()
                 + GetDelay()
                 + GetVideoFilters()
                 + GetGain()
@@ -1114,10 +1115,10 @@ namespace mpegui
         {
             return
                 $"ffmpeg -i [in_file] "
+                + GetTrim()
                 + GetDelay(nameless: true)
                 + GetVideoFilters()
                 + GetGain()
-                + GetTrim()
                 + GetEncoder()
                 + GetCRF()
                 + GetPreset()
