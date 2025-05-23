@@ -342,6 +342,7 @@ namespace mpegui
                 f.Tags = copy.Tags;
                 f.CRF = copy.CRF;
                 f.Preset = copy.Preset;
+                f.FPS = copy.FPS;
                 f.AdditionalOptions = copy.AdditionalOptions;
                 if (Settings.Default.CopyOverwrite) f.OverwriteExisting = copy.OverwriteExisting;
             }
