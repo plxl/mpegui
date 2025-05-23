@@ -481,7 +481,7 @@ namespace mpegui
             }
             else
             {
-                progressBar1.Value = (int)((curTime / duration) * 100);
+                progressBar1.Value = Math.Min(100, (int)(curTime / duration * 100));
             }
         }
 
