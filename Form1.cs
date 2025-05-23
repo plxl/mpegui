@@ -1117,7 +1117,6 @@ namespace mpegui
                 + GetDelay(nameless: true)
                 + GetVideoFilters()
                 + GetGain()
-                + GetTrim()
                 + GetEncoder()
                 + GetCRF()
                 + GetPreset()
