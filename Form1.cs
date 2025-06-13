@@ -143,7 +143,7 @@ namespace mpegui
             else
             {
                 panelControls.Visible = false;
-            }    
+            }
         }
 
         public bool IsUpdating()
@@ -269,7 +269,7 @@ namespace mpegui
             else if (Settings.Default.AlwaysHvc1) chkHvc1.Checked = true;
 
             UpdateCRFLabel();
-            
+
 
             UpdateCommand();
         }
@@ -432,7 +432,7 @@ namespace mpegui
             // frame=  250 fps= 24 q=  28.0 size=   102400kB time=00:00:10.50 bitrate=  80.0kbits/s
             // get time and frame information
             if (ffmpegDuration == 0)
-            {    
+            {
                 var durationRegex = new Regex(@"Duration: (\d+):(\d+):(\d+).(\d+)");
                 var durationMatch = durationRegex.Match(output);
                 if (durationMatch.Success)
@@ -888,7 +888,7 @@ namespace mpegui
         private void trkSpeed_KeyUp(object sender, KeyEventArgs e)
         {
             trkSpeed_KeyUpdate();
-    }
+        }
 
         private void trkSpeed_KeyUpdate()
         {
@@ -1117,7 +1117,68 @@ namespace mpegui
             return null;
         }
 
-        public string GetAdditionalOptions()
+        public IEnumerable<string> GetAdditionalOptionsBefore(string addopts)
+        {
+            // only to be used in the normal get additional options function
+            if (addopts.Contains("before:"))
+            {
+                List<string> parsedOptions = new List<string>();
+                bool foundStart = false;
+                int startIndex = -1;
+                string[] options = addopts.Split(' ');
+                for (int i = 0; i < options.Length; i++)
+                {
+                    // get this option
+                    string option = options[i];
+                    // get next option (or default start if no next)
+                    string nextOption = i < options.Length - 1 ? options[i + 1] : "-";
+                    if (!foundStart)
+                    {
+                        if (option.StartsWith("before:-"))
+                        {
+                            // check if the next option is also the start of an option
+                            // because that would imply this option does not have a parameter, it is just a toggle
+                            if (nextOption.Replace("before:", "").StartsWith("-"))
+                            {
+                                parsedOptions.Add(option);
+                            }
+                            else
+                            {
+                                foundStart = true;
+                                startIndex = i;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // check if the next option is the start of a new option
+                        // implying the end of this option's arguments
+                        if (nextOption.Replace("before:", "").StartsWith("-"))
+                        {
+                            // joins the elements from the startindex to the current index
+                            parsedOptions.Add(
+                                string.Join(
+                                    " ",
+                                    options.Skip(startIndex).Take(i - startIndex + 1)
+                                )
+                            );
+                            foundStart = false;
+                        }
+                    }
+                }
+
+                if (parsedOptions.Count > 0)
+                {
+                    return parsedOptions;
+                }
+            }
+
+            // if no successful returns, return an empty list
+            // eval on ienumerable.any()
+            return Enumerable.Empty<string>();
+        }
+
+        public string GetAdditionalOptions(bool before = false)
         {
             string addopts = AdditionalOptions.Trim();
             string vf = GetVideoFilterString(addopts, true, false);
@@ -1133,6 +1194,44 @@ namespace mpegui
                     addopts = addopts.Replace("  ", " ");
                 }
             }
+
+            // search for 'before:' options that will be added before any other options (but after input -i)
+            // example use case for this is setting frame rate (with -r method) at the start of options like so:
+            // before:-r 15
+            IEnumerable<string> beforeOptions = GetAdditionalOptionsBefore(addopts);
+            if (before)
+            {
+                if (beforeOptions.Any())
+                {
+                    IEnumerable<string> cleanedOptions =
+                        beforeOptions.Select(s => s.StartsWith("before:") ? s.Substring(7) : s);
+                    return string.Join(" ", cleanedOptions) + " ";
+                }
+
+                return string.Empty;
+            }
+            else if (beforeOptions.Any())
+            {
+                // remove the before options from the after options
+                foreach (string option in beforeOptions)
+                {
+                    int i = addopts.IndexOf(option);
+                    int optLen = option.Length;
+                    if (i > 0 && addopts[i - 1] == ' ')
+                    {
+                        addopts = addopts.Remove(i - 1, optLen + 1);
+                    }
+                    else if (i + optLen < addopts.Length && addopts[i+optLen] == ' ')
+                    {
+                        addopts = addopts.Remove(i, optLen + 1);
+                    }
+                    else
+                    {
+                        addopts = addopts.Remove(i, optLen);
+                    }
+                }
+            }
+
             return addopts == string.Empty ? string.Empty : addopts + " ";
         }
 
@@ -1182,6 +1281,7 @@ namespace mpegui
         {
             return
                 $"-i \"{Filename}\" "
+                + GetAdditionalOptions(before: true)
                 + GetTrim()
                 + GetDelay()
                 + GetVideoFilters()
@@ -1200,6 +1300,7 @@ namespace mpegui
         {
             return
                 $"ffmpeg -i [in_file] "
+                + GetAdditionalOptions(before: true)
                 + GetTrim()
                 + GetDelay(nameless: true)
                 + GetVideoFilters()
