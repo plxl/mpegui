@@ -39,6 +39,9 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.btnSpeedInfo = new System.Windows.Forms.Button();
+            this.lblSpeed = new System.Windows.Forms.Label();
+            this.trkSpeed = new System.Windows.Forms.TrackBar();
             this.btnCRFinfo = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.cmbFPS = new System.Windows.Forms.ComboBox();
@@ -94,12 +97,10 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
-            this.btnSpeedInfo = new System.Windows.Forms.Button();
-            this.lblSpeed = new System.Windows.Forms.Label();
-            this.trkSpeed = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkCRF)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitList)).BeginInit();
@@ -110,7 +111,6 @@
             this.splitOutput.Panel1.SuspendLayout();
             this.splitOutput.Panel2.SuspendLayout();
             this.splitOutput.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // listFiles
@@ -277,6 +277,42 @@
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
             // 
+            // btnSpeedInfo
+            // 
+            this.btnSpeedInfo.Location = new System.Drawing.Point(385, 193);
+            this.btnSpeedInfo.Name = "btnSpeedInfo";
+            this.btnSpeedInfo.Size = new System.Drawing.Size(35, 23);
+            this.btnSpeedInfo.TabIndex = 46;
+            this.btnSpeedInfo.Text = "Info";
+            this.btnSpeedInfo.UseVisualStyleBackColor = true;
+            this.btnSpeedInfo.Click += new System.EventHandler(this.btnSpeedInfo_Click);
+            // 
+            // lblSpeed
+            // 
+            this.lblSpeed.AutoSize = true;
+            this.lblSpeed.Location = new System.Drawing.Point(249, 198);
+            this.lblSpeed.Name = "lblSpeed";
+            this.lblSpeed.Size = new System.Drawing.Size(130, 13);
+            this.lblSpeed.TabIndex = 45;
+            this.lblSpeed.Text = "Speed (Video only) | 1.00x";
+            // 
+            // trkSpeed
+            // 
+            this.trkSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trkSpeed.LargeChange = 300;
+            this.trkSpeed.Location = new System.Drawing.Point(252, 214);
+            this.trkSpeed.Maximum = 800;
+            this.trkSpeed.Name = "trkSpeed";
+            this.trkSpeed.Size = new System.Drawing.Size(232, 45);
+            this.trkSpeed.SmallChange = 50;
+            this.trkSpeed.TabIndex = 44;
+            this.trkSpeed.TickFrequency = 100;
+            this.trkSpeed.Value = 100;
+            this.trkSpeed.ValueChanged += new System.EventHandler(this.trkSpeed_ValueChanged);
+            this.trkSpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyDown);
+            this.trkSpeed.KeyUp += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyUp);
+            // 
             // btnCRFinfo
             // 
             this.btnCRFinfo.Location = new System.Drawing.Point(298, 19);
@@ -342,6 +378,7 @@
             this.txtAdditionalOptions.AcceptsTab = true;
             this.txtAdditionalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAdditionalOptions.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAdditionalOptions.Location = new System.Drawing.Point(0, 262);
             this.txtAdditionalOptions.Multiline = true;
             this.txtAdditionalOptions.Name = "txtAdditionalOptions";
@@ -847,42 +884,6 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
-            // btnSpeedInfo
-            // 
-            this.btnSpeedInfo.Location = new System.Drawing.Point(385, 193);
-            this.btnSpeedInfo.Name = "btnSpeedInfo";
-            this.btnSpeedInfo.Size = new System.Drawing.Size(35, 23);
-            this.btnSpeedInfo.TabIndex = 46;
-            this.btnSpeedInfo.Text = "Info";
-            this.btnSpeedInfo.UseVisualStyleBackColor = true;
-            this.btnSpeedInfo.Click += new System.EventHandler(this.btnSpeedInfo_Click);
-            // 
-            // lblSpeed
-            // 
-            this.lblSpeed.AutoSize = true;
-            this.lblSpeed.Location = new System.Drawing.Point(249, 198);
-            this.lblSpeed.Name = "lblSpeed";
-            this.lblSpeed.Size = new System.Drawing.Size(130, 13);
-            this.lblSpeed.TabIndex = 45;
-            this.lblSpeed.Text = "Speed (Video only) | 1.00x";
-            // 
-            // trkSpeed
-            // 
-            this.trkSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trkSpeed.LargeChange = 300;
-            this.trkSpeed.Location = new System.Drawing.Point(252, 214);
-            this.trkSpeed.Maximum = 800;
-            this.trkSpeed.Name = "trkSpeed";
-            this.trkSpeed.Size = new System.Drawing.Size(232, 45);
-            this.trkSpeed.SmallChange = 50;
-            this.trkSpeed.TabIndex = 44;
-            this.trkSpeed.TickFrequency = 100;
-            this.trkSpeed.Value = 100;
-            this.trkSpeed.ValueChanged += new System.EventHandler(this.trkSpeed_ValueChanged);
-            this.trkSpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyDown);
-            this.trkSpeed.KeyUp += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyUp);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -900,6 +901,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).EndInit();
             this.panelControls.ResumeLayout(false);
             this.panelControls.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkCRF)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -912,7 +914,6 @@
             this.splitOutput.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOutput)).EndInit();
             this.splitOutput.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
