@@ -356,11 +356,13 @@ namespace mpegui
             menuCropPresets.Show(btnCropPresets, new Point(0, btnCropPresets.Height));
         }
 
+        bool isRunning = false;
         private async void btnRun_Click(object sender, EventArgs e)
         {
             btnRun.Enabled = false;
-            if (btnRun.Text.StartsWith("Run"))
+            if (!isRunning)
             {
+                isRunning = true;
                 ProcessQueue();
                 btnRun.Text = "Stop";
                 btnRun.Enabled = true;
@@ -374,6 +376,7 @@ namespace mpegui
                 }
                 btnRun.Enabled = true;
                 btnRun.Text = "Run Queue";
+                isRunning = false;
             }
         }
 
