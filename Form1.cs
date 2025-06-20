@@ -87,6 +87,7 @@ namespace mpegui
                             f.AdditionalOptions = Settings.Default.AdditionalOptions;
                             queue.Add(f);
                             listFiles.Items.Add(System.IO.Path.GetFileName(file));
+                            listFiles.ClearSelected();
                             listFiles.SelectedIndex = listFiles.Items.Count - 1;
                         }
                     }
