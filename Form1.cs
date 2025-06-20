@@ -98,6 +98,7 @@ namespace mpegui
         {
             if (e.KeyCode == Keys.Delete && listFiles.SelectedIndex != -1)
             {
+                queue.RemoveAt(listFiles.SelectedIndex);
                 listFiles.Items.RemoveAt(listFiles.SelectedIndex);
             }
         }
