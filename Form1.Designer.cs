@@ -39,6 +39,8 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.optDuration = new System.Windows.Forms.RadioButton();
+            this.optEndAt = new System.Windows.Forms.RadioButton();
             this.btnSpeedInfo = new System.Windows.Forms.Button();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
@@ -64,7 +66,6 @@
             this.btnCopy = new System.Windows.Forms.Button();
             this.lblFilename = new System.Windows.Forms.Label();
             this.txtEnd = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.txtStart = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCropPresets = new System.Windows.Forms.Button();
@@ -97,6 +98,7 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -111,6 +113,7 @@
             this.splitOutput.Panel1.SuspendLayout();
             this.splitOutput.Panel2.SuspendLayout();
             this.splitOutput.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listFiles
@@ -148,7 +151,7 @@
             0,
             0,
             65536});
-            this.numAudioGain.Location = new System.Drawing.Point(0, 184);
+            this.numAudioGain.Location = new System.Drawing.Point(0, 201);
             this.numAudioGain.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -167,7 +170,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(-3, 168);
+            this.label1.Location = new System.Drawing.Point(-3, 185);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 3;
@@ -176,7 +179,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(62, 168);
+            this.label2.Location = new System.Drawing.Point(62, 185);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 5;
@@ -190,7 +193,7 @@
             0,
             0,
             65536});
-            this.numAudioDelay.Location = new System.Drawing.Point(65, 184);
+            this.numAudioDelay.Location = new System.Drawing.Point(65, 201);
             this.numAudioDelay.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -216,7 +219,7 @@
             "h264_nvenc",
             "libx264",
             "libx265"});
-            this.dropEncoder.Location = new System.Drawing.Point(0, 79);
+            this.dropEncoder.Location = new System.Drawing.Point(0, 96);
             this.dropEncoder.Name = "dropEncoder";
             this.dropEncoder.Size = new System.Drawing.Size(121, 21);
             this.dropEncoder.TabIndex = 6;
@@ -225,7 +228,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(-3, 63);
+            this.label3.Location = new System.Drawing.Point(-3, 80);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 7;
@@ -233,6 +236,7 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.groupBox1);
             this.panelControls.Controls.Add(this.btnSpeedInfo);
             this.panelControls.Controls.Add(this.lblSpeed);
             this.panelControls.Controls.Add(this.trkSpeed);
@@ -249,7 +253,6 @@
             this.panelControls.Controls.Add(this.trkCRF);
             this.panelControls.Controls.Add(this.chkHvc1);
             this.panelControls.Controls.Add(this.label8);
-            this.panelControls.Controls.Add(this.btnGetEnd);
             this.panelControls.Controls.Add(this.lblOutputFilename);
             this.panelControls.Controls.Add(this.label9);
             this.panelControls.Controls.Add(this.txtOutName);
@@ -257,10 +260,6 @@
             this.panelControls.Controls.Add(this.btnPaste);
             this.panelControls.Controls.Add(this.btnCopy);
             this.panelControls.Controls.Add(this.lblFilename);
-            this.panelControls.Controls.Add(this.txtEnd);
-            this.panelControls.Controls.Add(this.label6);
-            this.panelControls.Controls.Add(this.txtStart);
-            this.panelControls.Controls.Add(this.label5);
             this.panelControls.Controls.Add(this.btnCropPresets);
             this.panelControls.Controls.Add(this.label4);
             this.panelControls.Controls.Add(this.txtCrop);
@@ -276,6 +275,29 @@
             this.panelControls.Size = new System.Drawing.Size(496, 438);
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
+            // 
+            // optDuration
+            // 
+            this.optDuration.AutoSize = true;
+            this.optDuration.Location = new System.Drawing.Point(146, 14);
+            this.optDuration.Name = "optDuration";
+            this.optDuration.Size = new System.Drawing.Size(65, 17);
+            this.optDuration.TabIndex = 48;
+            this.optDuration.TabStop = true;
+            this.optDuration.Text = "Duration";
+            this.optDuration.UseVisualStyleBackColor = true;
+            this.optDuration.CheckedChanged += new System.EventHandler(this.optDuration_CheckedChanged);
+            // 
+            // optEndAt
+            // 
+            this.optEndAt.AutoSize = true;
+            this.optEndAt.Location = new System.Drawing.Point(91, 14);
+            this.optEndAt.Name = "optEndAt";
+            this.optEndAt.Size = new System.Drawing.Size(56, 17);
+            this.optEndAt.TabIndex = 47;
+            this.optEndAt.TabStop = true;
+            this.optEndAt.Text = "End at";
+            this.optEndAt.UseVisualStyleBackColor = true;
             // 
             // btnSpeedInfo
             // 
@@ -461,7 +483,7 @@
             // chkHvc1
             // 
             this.chkHvc1.AutoSize = true;
-            this.chkHvc1.Location = new System.Drawing.Point(0, 103);
+            this.chkHvc1.Location = new System.Drawing.Point(0, 120);
             this.chkHvc1.Name = "chkHvc1";
             this.chkHvc1.Size = new System.Drawing.Size(181, 17);
             this.chkHvc1.TabIndex = 32;
@@ -482,9 +504,9 @@
             // 
             // btnGetEnd
             // 
-            this.btnGetEnd.Location = new System.Drawing.Point(164, 39);
+            this.btnGetEnd.Location = new System.Drawing.Point(176, 31);
             this.btnGetEnd.Name = "btnGetEnd";
-            this.btnGetEnd.Size = new System.Drawing.Size(65, 23);
+            this.btnGetEnd.Size = new System.Drawing.Size(57, 23);
             this.btnGetEnd.TabIndex = 26;
             this.btnGetEnd.Text = "Get End";
             this.btnGetEnd.UseVisualStyleBackColor = true;
@@ -565,24 +587,15 @@
             // 
             // txtEnd
             // 
-            this.txtEnd.Location = new System.Drawing.Point(85, 40);
+            this.txtEnd.Location = new System.Drawing.Point(91, 32);
             this.txtEnd.Name = "txtEnd";
             this.txtEnd.Size = new System.Drawing.Size(79, 20);
             this.txtEnd.TabIndex = 14;
             this.txtEnd.TextChanged += new System.EventHandler(this.txtEnd_TextChanged);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(82, 24);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "End at";
-            // 
             // txtStart
             // 
-            this.txtStart.Location = new System.Drawing.Point(0, 40);
+            this.txtStart.Location = new System.Drawing.Point(6, 32);
             this.txtStart.Name = "txtStart";
             this.txtStart.Size = new System.Drawing.Size(79, 20);
             this.txtStart.TabIndex = 12;
@@ -591,7 +604,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(-3, 24);
+            this.label5.Location = new System.Drawing.Point(6, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 11;
@@ -599,7 +612,7 @@
             // 
             // btnCropPresets
             // 
-            this.btnCropPresets.Location = new System.Drawing.Point(127, 138);
+            this.btnCropPresets.Location = new System.Drawing.Point(127, 155);
             this.btnCropPresets.Name = "btnCropPresets";
             this.btnCropPresets.Size = new System.Drawing.Size(52, 23);
             this.btnCropPresets.TabIndex = 10;
@@ -610,7 +623,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-3, 125);
+            this.label4.Location = new System.Drawing.Point(-3, 142);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 9;
@@ -618,7 +631,7 @@
             // 
             // txtCrop
             // 
-            this.txtCrop.Location = new System.Drawing.Point(0, 139);
+            this.txtCrop.Location = new System.Drawing.Point(0, 156);
             this.txtCrop.Name = "txtCrop";
             this.txtCrop.Size = new System.Drawing.Size(128, 20);
             this.txtCrop.TabIndex = 8;
@@ -884,6 +897,21 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.optDuration);
+            this.groupBox1.Controls.Add(this.txtStart);
+            this.groupBox1.Controls.Add(this.optEndAt);
+            this.groupBox1.Controls.Add(this.txtEnd);
+            this.groupBox1.Controls.Add(this.btnGetEnd);
+            this.groupBox1.Location = new System.Drawing.Point(0, 19);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(241, 58);
+            this.groupBox1.TabIndex = 49;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Trim Video";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -914,6 +942,8 @@
             this.splitOutput.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOutput)).EndInit();
             this.splitOutput.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -931,7 +961,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panelControls;
         private System.Windows.Forms.TextBox txtEnd;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtStart;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnCropPresets;
@@ -988,6 +1017,9 @@
         private System.Windows.Forms.Button btnSpeedInfo;
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar trkSpeed;
+        private System.Windows.Forms.RadioButton optDuration;
+        private System.Windows.Forms.RadioButton optEndAt;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

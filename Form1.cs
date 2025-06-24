@@ -125,6 +125,8 @@ namespace mpegui
                 txtCrop.Text = f.CropFilter;
                 txtStart.Text = f.TrimStart.ToString(@"hh\:mm\:ss\.fff");
                 txtEnd.Text = f.TrimEnd.ToString(@"hh\:mm\:ss\.fff");
+                if (f.TrimUseDuration) optDuration.Checked = true;
+                else optEndAt.Checked = true;
                 UpdateEncoderPresets(f.Encoder);
                 dropEncoder.Text = f.Encoder;
                 chkHvc1.Visible = requiresHvc1(f.Encoder);
@@ -928,8 +930,29 @@ namespace mpegui
                 "Speed Information"
             );
         }
-    }
 
+        void updateTrimMode()
+        {
+            // make sure it isn't already updating the trim mode/updating the UI from selection
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.TrimUseDuration = optDuration.Checked;
+            }
+
+            UpdateCommand();
+        }
+
+        private void optDuration_CheckedChanged(object sender, EventArgs e)
+        {
+            // we only need to run this on one radio button's checked changed event because there will only ever be the 2 options
+            // and the checked changed event fires for both when either is selected
+            updateTrimMode();
+        }
+    }
 
     public class FileConversionInfo
     {
@@ -937,6 +960,7 @@ namespace mpegui
         public string OutputName { get; set; }
         public TimeSpan TrimStart { get; set; }
         public TimeSpan TrimEnd { get; set; }
+        public bool TrimUseDuration { get; set; }
         public decimal AudioGain { get; set; }
         public decimal AudioDelaySeconds { get; set; }
         public string CropFilter { get; set; }
@@ -1022,7 +1046,8 @@ namespace mpegui
             }
             if (TrimEnd != TimeSpan.Zero)
             {
-                trim += $"-t {TrimEnd.Subtract(TrimStart)} ";
+                if (TrimUseDuration) trim += $"-t {TrimEnd} ";
+                else trim += $"-t {TrimEnd.Subtract(TrimStart)} ";
             }
             return trim;
         }
