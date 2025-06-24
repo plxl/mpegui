@@ -326,12 +326,11 @@ namespace mpegui
             if (copiedIndex == -1) return;
             FileConversionInfo copy = queue[copiedIndex];
 
-            bool copyTrims = false;
             var result = MessageBox.Show("Do you also want to copy TrimStart and TrimEnd values?",
                 "Copy Settings",
                 MessageBoxButtons.YesNoCancel);
             if (result == DialogResult.Cancel) return;
-            if (result == DialogResult.Yes) copyTrims = true;
+            bool copyTrims = result == DialogResult.Yes;
 
             foreach (int i in listFiles.SelectedIndices)
             {
@@ -340,6 +339,7 @@ namespace mpegui
                 {
                     f.TrimStart = copy.TrimStart;
                     f.TrimEnd = copy.TrimEnd;
+                    f.TrimUseDuration = copy.TrimUseDuration;
                 }
                 f.AudioGain = copy.AudioGain;
                 f.AudioDelaySeconds = copy.AudioDelaySeconds;
