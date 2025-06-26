@@ -353,6 +353,13 @@ namespace mpegui
                 f.AdditionalOptions = copy.AdditionalOptions;
                 if (Settings.Default.CopyOverwrite) f.OverwriteExisting = copy.OverwriteExisting;
             }
+
+            var selected = listFiles.SelectedIndices.Cast<int>().ToList();
+            listFiles.ClearSelected();
+            foreach (int i in selected)
+            {
+                listFiles.SetSelected(i, true);
+            }
         }
 
         private void btnCropPresets_Click(object sender, EventArgs e)
