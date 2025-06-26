@@ -45,7 +45,7 @@ namespace mpegui
             "p6",
             "p7"
         };
-        private int copiedIndex = -1;
+        private FileConversionInfo copiedEdits = null;
 
         public Form1()
         {
@@ -318,13 +318,13 @@ namespace mpegui
                 MessageBox.Show("You must select only one file settings to copy.", "Copy Settings");
                 return;
             }
-            copiedIndex = listFiles.SelectedIndex;
+            copiedEdits = queue[listFiles.SelectedIndex].Clone();
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
         {
-            if (copiedIndex == -1) return;
-            FileConversionInfo copy = queue[copiedIndex];
+            if (copiedEdits == null) return;
+            FileConversionInfo copy = copiedEdits;
 
             var result = MessageBox.Show("Do you also want to copy TrimStart and TrimEnd values?",
                 "Copy Settings",
@@ -985,6 +985,27 @@ namespace mpegui
             CRF = 22;
             FPS = 0;
             Speed = 1.00;
+        }
+
+        public FileConversionInfo Clone()
+        {
+            FileConversionInfo clone = new FileConversionInfo(Filename);
+            clone.OutputName = OutputName;
+            clone.TrimStart = TrimStart;
+            clone.TrimEnd = TrimEnd;
+            clone.TrimUseDuration = TrimUseDuration;
+            clone.AudioGain = AudioGain;
+            clone.AudioDelaySeconds = AudioDelaySeconds;
+            clone.CropFilter = CropFilter;
+            clone.Encoder = Encoder;
+            clone.Tags = Tags;
+            clone.CRF = CRF;
+            clone.Preset = Preset;
+            clone.FPS = FPS;
+            clone.Speed = Speed;
+            clone.AdditionalOptions = AdditionalOptions;
+            clone.OverwriteExisting = OverwriteExisting;
+            return clone;
         }
 
         public string GetDelay(bool nameless = false)
