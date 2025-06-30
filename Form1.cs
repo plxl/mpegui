@@ -321,45 +321,68 @@ namespace mpegui
             copiedEdits = queue[listFiles.SelectedIndex].Clone();
         }
 
+        private void pasteEdits()
+        {
+            // first get the things the user wants to paste
+            using (var dialog = new formPasteEdits())
+            {
+                dialog.copiedEdits = copiedEdits;
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    var edits = dialog.editsToPaste;
+                    FileConversionInfo c = copiedEdits;
+                    /*
+                    0 - trim
+                    1 - encoder
+                    2 - tags
+                    3 - crop filter
+                    4 - audio gain
+                    5 - audio delay
+                    6 - crf
+                    7 - encoder preset
+                    8 - fps
+                    9 - video speed
+                    10 - additional options
+                    11 - output name
+                    12 - overwrite (-y)
+                    */
+                    foreach (int i in listFiles.SelectedIndices)
+                    {
+                        FileConversionInfo f = queue[i];
+                        if (edits[0])
+                        {
+                            f.TrimStart = c.TrimStart;
+                            f.TrimEnd = c.TrimEnd;
+                            f.TrimUseDuration = c.TrimUseDuration;
+                        }
+                        if (edits[1])  f.Encoder = c.Encoder;
+                        if (edits[2])  f.Tags = c.Tags;
+                        if (edits[3])  f.CropFilter = c.CropFilter;
+                        if (edits[4])  f.AudioGain = c.AudioGain;
+                        if (edits[5])  f.AudioDelaySeconds = c.AudioDelaySeconds;
+                        if (edits[6])  f.CRF = c.CRF;
+                        if (edits[7])  f.Preset = c.Preset;
+                        if (edits[8])  f.FPS = c.FPS;
+                        if (edits[9])  f.Speed = c.Speed;
+                        if (edits[10]) f.AdditionalOptions = c.AdditionalOptions;
+                        if (edits[11]) f.OutputName = c.OutputName;
+                        if (edits[12]) f.OverwriteExisting = c.OverwriteExisting;
+                    }
+
+                    var selected = listFiles.SelectedIndices.Cast<int>().ToList();
+                    listFiles.ClearSelected();
+                    foreach (int i in selected)
+                    {
+                        listFiles.SetSelected(i, true);
+                    }
+                }
+            }
+        }
+
         private void btnPaste_Click(object sender, EventArgs e)
         {
-            if (copiedEdits == null) return;
-            FileConversionInfo copy = copiedEdits;
-
-            var result = MessageBox.Show("Do you also want to copy TrimStart and TrimEnd values?",
-                "Copy Settings",
-                MessageBoxButtons.YesNoCancel);
-            if (result == DialogResult.Cancel) return;
-            bool copyTrims = result == DialogResult.Yes;
-
-            foreach (int i in listFiles.SelectedIndices)
-            {
-                FileConversionInfo f = queue[i];
-                if (copyTrims)
-                {
-                    f.TrimStart = copy.TrimStart;
-                    f.TrimEnd = copy.TrimEnd;
-                    f.TrimUseDuration = copy.TrimUseDuration;
-                }
-                f.AudioGain = copy.AudioGain;
-                f.AudioDelaySeconds = copy.AudioDelaySeconds;
-                f.CropFilter = copy.CropFilter;
-                f.Encoder = copy.Encoder;
-                f.Tags = copy.Tags;
-                f.CRF = copy.CRF;
-                f.Preset = copy.Preset;
-                f.FPS = copy.FPS;
-                f.Speed = copy.Speed;
-                f.AdditionalOptions = copy.AdditionalOptions;
-                if (Settings.Default.CopyOverwrite) f.OverwriteExisting = copy.OverwriteExisting;
-            }
-
-            var selected = listFiles.SelectedIndices.Cast<int>().ToList();
-            listFiles.ClearSelected();
-            foreach (int i in selected)
-            {
-                listFiles.SetSelected(i, true);
-            }
+            if (IsUpdating() || copiedEdits == null) return;
+            pasteEdits();
         }
 
         private void btnCropPresets_Click(object sender, EventArgs e)
