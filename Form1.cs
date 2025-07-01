@@ -691,10 +691,6 @@ namespace mpegui
             menuOptionsPresetCPU.Text = Settings.Default.DefaultPresetCPU.ToString();
             menuOptionsPresetGPU.Text = Settings.Default.DefaultPresetGPU.ToString();
 
-            // Copy Overwrite setting (this means if you copy and paste the settings
-            // from one item to others, it will include whether "Overwrite if exists" is checked
-            menuOptionsCopyOverwrite.Checked = Settings.Default.CopyOverwrite;
-
             // Additional options
             menuOptionsAdditionalOptions.Text = Settings.Default.AdditionalOptions;
         }
@@ -788,13 +784,6 @@ namespace mpegui
         private void menuOptionsPresetGPU_TextChanged(object sender, EventArgs e)
         {
             Settings.Default.DefaultPresetGPU = menuOptionsPresetGPU.Text.Trim();
-            Settings.Default.Save();
-        }
-
-        private void menuOptionsCopyOverwrite_Click(object sender, EventArgs e)
-        {
-            menuOptionsCopyOverwrite.Checked = !menuOptionsCopyOverwrite.Checked;
-            Settings.Default.CopyOverwrite = menuOptionsCopyOverwrite.Checked;
             Settings.Default.Save();
         }
 

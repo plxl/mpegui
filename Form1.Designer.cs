@@ -39,8 +39,13 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
+            this.txtStart = new System.Windows.Forms.TextBox();
             this.optEndAt = new System.Windows.Forms.RadioButton();
+            this.txtEnd = new System.Windows.Forms.TextBox();
+            this.btnGetEnd = new System.Windows.Forms.Button();
             this.btnSpeedInfo = new System.Windows.Forms.Button();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
@@ -57,7 +62,6 @@
             this.trkCRF = new System.Windows.Forms.TrackBar();
             this.chkHvc1 = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.btnGetEnd = new System.Windows.Forms.Button();
             this.lblOutputFilename = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtOutName = new System.Windows.Forms.TextBox();
@@ -65,9 +69,6 @@
             this.btnPaste = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
             this.lblFilename = new System.Windows.Forms.Label();
-            this.txtEnd = new System.Windows.Forms.TextBox();
-            this.txtStart = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.btnCropPresets = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtCrop = new System.Windows.Forms.TextBox();
@@ -89,8 +90,6 @@
             this.menuOptionsPresetCPU = new System.Windows.Forms.ToolStripComboBox();
             this.defaultPresetGPUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsPresetGPU = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuOptionsCopyOverwrite = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.additionalOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsAdditionalOptions = new System.Windows.Forms.ToolStripTextBox();
@@ -98,10 +97,10 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkCRF)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -113,7 +112,6 @@
             this.splitOutput.Panel1.SuspendLayout();
             this.splitOutput.Panel2.SuspendLayout();
             this.splitOutput.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listFiles
@@ -276,6 +274,30 @@
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.optDuration);
+            this.groupBox1.Controls.Add(this.txtStart);
+            this.groupBox1.Controls.Add(this.optEndAt);
+            this.groupBox1.Controls.Add(this.txtEnd);
+            this.groupBox1.Controls.Add(this.btnGetEnd);
+            this.groupBox1.Location = new System.Drawing.Point(0, 19);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(241, 58);
+            this.groupBox1.TabIndex = 49;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Trim Video";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(52, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Start from";
+            // 
             // optDuration
             // 
             this.optDuration.AutoSize = true;
@@ -288,6 +310,14 @@
             this.optDuration.UseVisualStyleBackColor = true;
             this.optDuration.CheckedChanged += new System.EventHandler(this.optDuration_CheckedChanged);
             // 
+            // txtStart
+            // 
+            this.txtStart.Location = new System.Drawing.Point(6, 32);
+            this.txtStart.Name = "txtStart";
+            this.txtStart.Size = new System.Drawing.Size(79, 20);
+            this.txtStart.TabIndex = 12;
+            this.txtStart.TextChanged += new System.EventHandler(this.txtStart_TextChanged);
+            // 
             // optEndAt
             // 
             this.optEndAt.AutoSize = true;
@@ -298,6 +328,24 @@
             this.optEndAt.TabStop = true;
             this.optEndAt.Text = "End at";
             this.optEndAt.UseVisualStyleBackColor = true;
+            // 
+            // txtEnd
+            // 
+            this.txtEnd.Location = new System.Drawing.Point(91, 32);
+            this.txtEnd.Name = "txtEnd";
+            this.txtEnd.Size = new System.Drawing.Size(79, 20);
+            this.txtEnd.TabIndex = 14;
+            this.txtEnd.TextChanged += new System.EventHandler(this.txtEnd_TextChanged);
+            // 
+            // btnGetEnd
+            // 
+            this.btnGetEnd.Location = new System.Drawing.Point(176, 31);
+            this.btnGetEnd.Name = "btnGetEnd";
+            this.btnGetEnd.Size = new System.Drawing.Size(57, 23);
+            this.btnGetEnd.TabIndex = 26;
+            this.btnGetEnd.Text = "Get End";
+            this.btnGetEnd.UseVisualStyleBackColor = true;
+            this.btnGetEnd.Click += new System.EventHandler(this.btnGetEnd_Click);
             // 
             // btnSpeedInfo
             // 
@@ -502,16 +550,6 @@
             this.label8.TabIndex = 31;
             this.label8.Text = "Copy/Paste File Settings (pasting works on mulit)";
             // 
-            // btnGetEnd
-            // 
-            this.btnGetEnd.Location = new System.Drawing.Point(176, 31);
-            this.btnGetEnd.Name = "btnGetEnd";
-            this.btnGetEnd.Size = new System.Drawing.Size(57, 23);
-            this.btnGetEnd.TabIndex = 26;
-            this.btnGetEnd.Text = "Get End";
-            this.btnGetEnd.UseVisualStyleBackColor = true;
-            this.btnGetEnd.Click += new System.EventHandler(this.btnGetEnd_Click);
-            // 
             // lblOutputFilename
             // 
             this.lblOutputFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -584,31 +622,6 @@
             this.lblFilename.Size = new System.Drawing.Size(49, 13);
             this.lblFilename.TabIndex = 15;
             this.lblFilename.Text = "Filename";
-            // 
-            // txtEnd
-            // 
-            this.txtEnd.Location = new System.Drawing.Point(91, 32);
-            this.txtEnd.Name = "txtEnd";
-            this.txtEnd.Size = new System.Drawing.Size(79, 20);
-            this.txtEnd.TabIndex = 14;
-            this.txtEnd.TextChanged += new System.EventHandler(this.txtEnd_TextChanged);
-            // 
-            // txtStart
-            // 
-            this.txtStart.Location = new System.Drawing.Point(6, 32);
-            this.txtStart.Name = "txtStart";
-            this.txtStart.Size = new System.Drawing.Size(79, 20);
-            this.txtStart.TabIndex = 12;
-            this.txtStart.TextChanged += new System.EventHandler(this.txtStart_TextChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 13);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Start from";
             // 
             // btnCropPresets
             // 
@@ -708,8 +721,6 @@
             this.toolStripSeparator2,
             this.defaultPresetCPUToolStripMenuItem,
             this.defaultPresetGPUToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.menuOptionsCopyOverwrite,
             this.toolStripSeparator4,
             this.additionalOptionsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
@@ -721,7 +732,7 @@
             this.menuOptionsEncoder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOptionsEncoderDrop});
             this.menuOptionsEncoder.Name = "menuOptionsEncoder";
-            this.menuOptionsEncoder.Size = new System.Drawing.Size(196, 22);
+            this.menuOptionsEncoder.Size = new System.Drawing.Size(192, 22);
             this.menuOptionsEncoder.Text = "Default Encoder";
             // 
             // menuOptionsEncoderDrop
@@ -733,21 +744,21 @@
             // menuOptionsHvc1
             // 
             this.menuOptionsHvc1.Name = "menuOptionsHvc1";
-            this.menuOptionsHvc1.Size = new System.Drawing.Size(196, 22);
+            this.menuOptionsHvc1.Size = new System.Drawing.Size(192, 22);
             this.menuOptionsHvc1.Text = "Always Add \'hvc1\' Tag";
             this.menuOptionsHvc1.Click += new System.EventHandler(this.menuOptionsHvc1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(189, 6);
             // 
             // defaultCRFCQPToolStripMenuItem
             // 
             this.defaultCRFCQPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOptionsCRF});
             this.defaultCRFCQPToolStripMenuItem.Name = "defaultCRFCQPToolStripMenuItem";
-            this.defaultCRFCQPToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.defaultCRFCQPToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.defaultCRFCQPToolStripMenuItem.Text = "Default CRF / CQP";
             // 
             // menuOptionsCRF
@@ -760,14 +771,14 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(189, 6);
             // 
             // defaultPresetCPUToolStripMenuItem
             // 
             this.defaultPresetCPUToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOptionsPresetCPU});
             this.defaultPresetCPUToolStripMenuItem.Name = "defaultPresetCPUToolStripMenuItem";
-            this.defaultPresetCPUToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.defaultPresetCPUToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.defaultPresetCPUToolStripMenuItem.Text = "Default Preset (CPU)";
             // 
             // menuOptionsPresetCPU
@@ -792,7 +803,7 @@
             this.defaultPresetGPUToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOptionsPresetGPU});
             this.defaultPresetGPUToolStripMenuItem.Name = "defaultPresetGPUToolStripMenuItem";
-            this.defaultPresetGPUToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.defaultPresetGPUToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.defaultPresetGPUToolStripMenuItem.Text = "Default Preset (GPU)";
             // 
             // menuOptionsPresetGPU
@@ -809,29 +820,17 @@
             this.menuOptionsPresetGPU.Size = new System.Drawing.Size(121, 23);
             this.menuOptionsPresetGPU.TextChanged += new System.EventHandler(this.menuOptionsPresetGPU_TextChanged);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(193, 6);
-            // 
-            // menuOptionsCopyOverwrite
-            // 
-            this.menuOptionsCopyOverwrite.Name = "menuOptionsCopyOverwrite";
-            this.menuOptionsCopyOverwrite.Size = new System.Drawing.Size(196, 22);
-            this.menuOptionsCopyOverwrite.Text = "Copy Overwrite Setting";
-            this.menuOptionsCopyOverwrite.Click += new System.EventHandler(this.menuOptionsCopyOverwrite_Click);
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(189, 6);
             // 
             // additionalOptionsToolStripMenuItem
             // 
             this.additionalOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuOptionsAdditionalOptions});
             this.additionalOptionsToolStripMenuItem.Name = "additionalOptionsToolStripMenuItem";
-            this.additionalOptionsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.additionalOptionsToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.additionalOptionsToolStripMenuItem.Text = "Additional Options";
             // 
             // menuOptionsAdditionalOptions
@@ -897,21 +896,6 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.optDuration);
-            this.groupBox1.Controls.Add(this.txtStart);
-            this.groupBox1.Controls.Add(this.optEndAt);
-            this.groupBox1.Controls.Add(this.txtEnd);
-            this.groupBox1.Controls.Add(this.btnGetEnd);
-            this.groupBox1.Location = new System.Drawing.Point(0, 19);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(241, 58);
-            this.groupBox1.TabIndex = 49;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Trim Video";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -929,6 +913,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).EndInit();
             this.panelControls.ResumeLayout(false);
             this.panelControls.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkCRF)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -942,8 +928,6 @@
             this.splitOutput.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOutput)).EndInit();
             this.splitOutput.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1000,8 +984,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem defaultPresetGPUToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox menuOptionsPresetGPU;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem menuOptionsCopyOverwrite;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

@@ -17,14 +17,11 @@
     <Setting Name="DefaultPresetGPU" Type="System.String" Scope="User">
       <Value Profile="(Default)">p7</Value>
     </Setting>
-    <Setting Name="CopyOverwrite" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="AdditionalOptions" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PasteEdits" Type="System.Collections.Generic.List&lt;System.Boolean&gt;" Scope="User">
-		<Value Profile="(Default)" />
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
