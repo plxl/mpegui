@@ -139,6 +139,7 @@ namespace mpegui
                 UpdateFPS(f.FPS);
                 trkSpeed.Value = (int)(f.Speed * 100.0);
                 trkSpeed_UpdateLabel();
+                chkOverwrite.Checked = f.OverwriteExisting;
 
                 panelControls.Tag = 0;
 
