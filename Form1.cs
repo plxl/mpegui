@@ -904,7 +904,7 @@ namespace mpegui
 
         private void trkSpeed_UpdateLabel()
         {
-            lblSpeed.Text = $"Speed (Video/Audio) | {(double)trkSpeed.Value / 100.0:0.00}x";
+            lblSpeed.Text = $"Speed (Video only) | {(double)trkSpeed.Value / 100.0:0.00}x";
         }
 
         private void trkSpeed_KeyDown(object sender, KeyEventArgs e)
