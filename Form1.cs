@@ -47,9 +47,13 @@ namespace mpegui
         };
         private FileConversionInfo copiedEdits = null;
 
+
+        public static BalloonToolTip toolTipInfo2;
         public Form1()
         {
             InitializeComponent();
+
+            toolTipInfo2 = new BalloonToolTip(this);
         }
 
         private void listFiles_DragEnter(object sender, DragEventArgs e)
@@ -671,6 +675,8 @@ namespace mpegui
             CropPresets_Load();
             // Load saved defaults
             Settings_Load();
+
+            toolTipInfo2.Create();
         }
 
         private void Settings_Load()
@@ -861,22 +867,6 @@ namespace mpegui
             UpdateCommand();
         }
 
-        private void btnCRFinfo_Click(object sender, EventArgs e)
-        {
-            // provide some easy to digest info on crf / cqp
-            MessageBox.Show(
-                "CRF/CQP (Constant Rate Factor/Constant Quantiser Parameter)\n\n" +
-                "These are similar quality-based encoder modes:\n" +
-                "- CRF is used by Software (CPU) encoders for adaptive quality and better efficiency\n" +
-                "- CQP is used by Hardware (GPU) encoders with fixed compression for faster performance\n\n" +
-                "Generally: higher value = lower quality but smaller filesize.\n\n" +
-                "The results will vary across encoders. For example, AV1 works better at lower bitrates: " +
-                "h264_nvenc, CQP 24 ≈ av1_nvenc, CQP 32-34 (roughly).\n",
-
-                "Information about CRF / CQP"
-            );
-        }
-
         private void trkSpeed_ValueChanged(object sender, EventArgs e)
         {
             if (IsUpdating()) return;
@@ -931,24 +921,6 @@ namespace mpegui
             else
                 // changes in 0.50 (normal, generally fine)
                 trkSpeed.SmallChange = 50;
-        }
-
-        private void btnSpeedInfo_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-                "This sets the speed using the setpts video filter, and the .\n\n" +
-                "IMPORTANT:\n" +
-                "This does not affect audio right now, but you can manually set it in additional options:\n" +
-                "Use '-filter:a atempo=x' where x is your speed multiplier (cannot be less than 0.5 or more than 100).\n\n" +
-                "FURTHER: You may want to set your desired FPS using the '-r (fps)' option in additional options, " +
-                "as FFmpeg will otherwise drop frames it doesn't need.\n\n" +
-                "CONTROLS:\n" +
-                "Hold Shift while sliding for finer control\n" +
-                "Hold Alt while sliding for even finer control"
-                ,
-
-                "Speed Information"
-            );
         }
 
         void updateTrimMode()

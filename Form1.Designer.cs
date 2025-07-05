@@ -46,10 +46,8 @@
             this.optEndAt = new System.Windows.Forms.RadioButton();
             this.txtEnd = new System.Windows.Forms.TextBox();
             this.btnGetEnd = new System.Windows.Forms.Button();
-            this.btnSpeedInfo = new System.Windows.Forms.Button();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.trkSpeed = new System.Windows.Forms.TrackBar();
-            this.btnCRFinfo = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.cmbFPS = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -97,6 +95,8 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
+            this.infoButton2 = new mpegui.InfoButton();
+            this.infoButton1 = new mpegui.InfoButton();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -234,11 +234,11 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.infoButton2);
+            this.panelControls.Controls.Add(this.infoButton1);
             this.panelControls.Controls.Add(this.groupBox1);
-            this.panelControls.Controls.Add(this.btnSpeedInfo);
             this.panelControls.Controls.Add(this.lblSpeed);
             this.panelControls.Controls.Add(this.trkSpeed);
-            this.panelControls.Controls.Add(this.btnCRFinfo);
             this.panelControls.Controls.Add(this.label13);
             this.panelControls.Controls.Add(this.cmbFPS);
             this.panelControls.Controls.Add(this.label12);
@@ -347,16 +347,6 @@
             this.btnGetEnd.UseVisualStyleBackColor = true;
             this.btnGetEnd.Click += new System.EventHandler(this.btnGetEnd_Click);
             // 
-            // btnSpeedInfo
-            // 
-            this.btnSpeedInfo.Location = new System.Drawing.Point(385, 193);
-            this.btnSpeedInfo.Name = "btnSpeedInfo";
-            this.btnSpeedInfo.Size = new System.Drawing.Size(35, 23);
-            this.btnSpeedInfo.TabIndex = 46;
-            this.btnSpeedInfo.Text = "Info";
-            this.btnSpeedInfo.UseVisualStyleBackColor = true;
-            this.btnSpeedInfo.Click += new System.EventHandler(this.btnSpeedInfo_Click);
-            // 
             // lblSpeed
             // 
             this.lblSpeed.AutoSize = true;
@@ -382,16 +372,6 @@
             this.trkSpeed.ValueChanged += new System.EventHandler(this.trkSpeed_ValueChanged);
             this.trkSpeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyDown);
             this.trkSpeed.KeyUp += new System.Windows.Forms.KeyEventHandler(this.trkSpeed_KeyUp);
-            // 
-            // btnCRFinfo
-            // 
-            this.btnCRFinfo.Location = new System.Drawing.Point(298, 19);
-            this.btnCRFinfo.Name = "btnCRFinfo";
-            this.btnCRFinfo.Size = new System.Drawing.Size(35, 23);
-            this.btnCRFinfo.TabIndex = 43;
-            this.btnCRFinfo.Text = "Info";
-            this.btnCRFinfo.UseVisualStyleBackColor = true;
-            this.btnCRFinfo.Click += new System.EventHandler(this.btnCRFinfo_Click);
             // 
             // label13
             // 
@@ -896,6 +876,26 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
+            // infoButton2
+            // 
+            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
+            this.infoButton2.InfoTitle = "Speed Information";
+            this.infoButton2.Location = new System.Drawing.Point(382, 194);
+            this.infoButton2.Name = "infoButton2";
+            this.infoButton2.Size = new System.Drawing.Size(20, 20);
+            this.infoButton2.TabIndex = 51;
+            // 
+            // infoButton1
+            // 
+            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
+            this.infoButton1.InfoTitle = "Information about CRF / CQP";
+            this.infoButton1.Location = new System.Drawing.Point(298, 20);
+            this.infoButton1.Name = "infoButton1";
+            this.infoButton1.Size = new System.Drawing.Size(20, 20);
+            this.infoButton1.TabIndex = 50;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -995,13 +995,13 @@
         private System.Windows.Forms.SplitContainer splitOutput;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cmbFPS;
-        private System.Windows.Forms.Button btnCRFinfo;
-        private System.Windows.Forms.Button btnSpeedInfo;
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.TrackBar trkSpeed;
         private System.Windows.Forms.RadioButton optDuration;
         private System.Windows.Forms.RadioButton optEndAt;
         private System.Windows.Forms.GroupBox groupBox1;
+        private InfoButton infoButton1;
+        private InfoButton infoButton2;
     }
 }
 
