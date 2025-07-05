@@ -117,6 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="infoButton4.InfoText" xml:space="preserve">
+    <value>Additional ffmpeg parameters can go here.
+
+By default your parameters are added to the end of list (i.e. before specifying the output file).
+
+You can specify "before:" to place that particular parameter before other parameters (excluding -ss and -t):
+before:-af "volume=10dB"
+
+Be mindful of the final command in the preview box before running!</value>
+  </data>
+  <data name="infoButton3.InfoText" xml:space="preserve">
+    <value>This multiplies the audio levels on any audio tracks
+
+0.5 would be 50% volume
+1.5 would be 150% volume
+
+In future this will support a dB option as well
+Currently 0.00 = no change, in future this will silence the audio</value>
+  </data>
   <data name="infoButton2.InfoText" xml:space="preserve">
     <value>This sets the speed using the setpts video filter.
 

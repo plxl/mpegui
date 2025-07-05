@@ -95,6 +95,8 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
+            this.infoButton4 = new mpegui.InfoButton();
+            this.infoButton3 = new mpegui.InfoButton();
             this.infoButton2 = new mpegui.InfoButton();
             this.infoButton1 = new mpegui.InfoButton();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
@@ -161,7 +163,7 @@
             0,
             -2147418112});
             this.numAudioGain.Name = "numAudioGain";
-            this.numAudioGain.Size = new System.Drawing.Size(56, 20);
+            this.numAudioGain.Size = new System.Drawing.Size(75, 20);
             this.numAudioGain.TabIndex = 2;
             this.numAudioGain.ValueChanged += new System.EventHandler(this.numAudioGain_ValueChanged);
             // 
@@ -177,7 +179,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(62, 185);
+            this.label2.Location = new System.Drawing.Point(86, 185);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 5;
@@ -191,7 +193,7 @@
             0,
             0,
             65536});
-            this.numAudioDelay.Location = new System.Drawing.Point(65, 201);
+            this.numAudioDelay.Location = new System.Drawing.Point(89, 201);
             this.numAudioDelay.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -203,7 +205,7 @@
             0,
             -2147418112});
             this.numAudioDelay.Name = "numAudioDelay";
-            this.numAudioDelay.Size = new System.Drawing.Size(106, 20);
+            this.numAudioDelay.Size = new System.Drawing.Size(129, 20);
             this.numAudioDelay.TabIndex = 4;
             this.numAudioDelay.ValueChanged += new System.EventHandler(this.numAudioDelay_ValueChanged);
             // 
@@ -234,6 +236,8 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.infoButton4);
+            this.panelControls.Controls.Add(this.infoButton3);
             this.panelControls.Controls.Add(this.infoButton2);
             this.panelControls.Controls.Add(this.infoButton1);
             this.panelControls.Controls.Add(this.groupBox1);
@@ -876,6 +880,26 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
+            // infoButton4
+            // 
+            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
+            this.infoButton4.InfoTitle = "Additional Options / Parameters";
+            this.infoButton4.Location = new System.Drawing.Point(92, 242);
+            this.infoButton4.Name = "infoButton4";
+            this.infoButton4.Size = new System.Drawing.Size(20, 20);
+            this.infoButton4.TabIndex = 52;
+            // 
+            // infoButton3
+            // 
+            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton3.InfoText = resources.GetString("infoButton3.InfoText");
+            this.infoButton3.InfoTitle = "Audio Gain";
+            this.infoButton3.Location = new System.Drawing.Point(55, 181);
+            this.infoButton3.Name = "infoButton3";
+            this.infoButton3.Size = new System.Drawing.Size(20, 20);
+            this.infoButton3.TabIndex = 51;
+            // 
             // infoButton2
             // 
             this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -1002,6 +1026,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private InfoButton infoButton1;
         private InfoButton infoButton2;
+        private InfoButton infoButton3;
+        private InfoButton infoButton4;
     }
 }
 

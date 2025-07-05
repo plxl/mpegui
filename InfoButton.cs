@@ -60,9 +60,9 @@ namespace mpegui
                 mouseOutside = false;
                 if (toolTip != null)
                 {
-                    toolTip.strTitle = infoTitle;
-                    toolTip.strText = infoText;
                     toolTip.icon = ToolTipIcon.Info;
+                    toolTip.strText = infoText;
+                    toolTip.strTitle = infoTitle;
                     toolTip.Show((new Point(Width / 2, Height / 2)));
                 }
             }
