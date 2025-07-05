@@ -249,7 +249,7 @@ namespace mpegui
 
         /// <summary>The maximum width for a ToolTip window.
         /// If a ToolTip string exceeds the maximum width, the control breaks the text into multiple lines.</summary>
-        int m_pxMaxWidth = -1;
+        int m_pxMaxWidth = 440;
 
         TOOLINFO m_toolinfo = new TOOLINFO();
 
