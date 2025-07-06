@@ -108,7 +108,7 @@ namespace mpegui
             }
         }
 
-        private void listFiles_SelectedIndexChanged(object sender, EventArgs e)
+        void UpdateUI()
         {
             if (listFiles.SelectedIndex != -1)
             {
@@ -153,6 +153,11 @@ namespace mpegui
             {
                 panelControls.Visible = false;
             }
+        }
+
+        private void listFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUI();
         }
 
         public bool IsUpdating()
@@ -374,12 +379,7 @@ namespace mpegui
                         if (edits[12]) f.OverwriteExisting = c.OverwriteExisting;
                     }
 
-                    var selected = listFiles.SelectedIndices.Cast<int>().ToList();
-                    listFiles.ClearSelected();
-                    foreach (int i in selected)
-                    {
-                        listFiles.SetSelected(i, true);
-                    }
+                    UpdateUI();
                 }
             }
         }
