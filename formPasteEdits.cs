@@ -44,7 +44,7 @@ namespace mpegui
                 { $"Encoder: {blnkStr(c.Encoder)}",                                             prevStates[1]  },
                 { $"Tags: {blnkStr(c.Tags)}",                                                   prevStates[2]  },
                 { $"Crop Filter: {blnkStr(c.CropFilter)}",                                      prevStates[3]  },
-                { $"Audio Gain: {c.AudioGain}",                                                 prevStates[4]  },
+                { $"Audio Gain: {c.AudioGain}{(c.AudioUseDb ? "dB" : "x")}",                    prevStates[4]  },
                 { $"Audio Delay Seconds: {c.AudioDelaySeconds}",                                prevStates[5]  },
                 { $"CRF/CQP: {c.CRF}",                                                          prevStates[6]  },
                 { $"Encoder Preset: {blnkStr(c.Preset)}",                                       prevStates[7]  },

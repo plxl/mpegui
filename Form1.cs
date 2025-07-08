@@ -124,6 +124,9 @@ namespace mpegui
 
                 txtOutName.Text = f.OutputName;
 
+                // Important: update Audio Gain Mode before setting audio gain
+                // to avoid setting value below minimum
+                cmbAudioMode.SelectedIndex = f.AudioUseDb ? 1 : 0;
                 numAudioGain.Value = f.AudioGain;
                 numAudioDelay.Value = f.AudioDelaySeconds;
                 txtCrop.Text = f.CropFilter;
@@ -368,7 +371,11 @@ namespace mpegui
                         if (edits[1])  f.Encoder = c.Encoder;
                         if (edits[2])  f.Tags = c.Tags;
                         if (edits[3])  f.CropFilter = c.CropFilter;
-                        if (edits[4])  f.AudioGain = c.AudioGain;
+                        if (edits[4])
+                        {
+                            f.AudioGain = c.AudioGain;
+                            f.AudioUseDb = c.AudioUseDb;
+                        }
                         if (edits[5])  f.AudioDelaySeconds = c.AudioDelaySeconds;
                         if (edits[6])  f.CRF = c.CRF;
                         if (edits[7])  f.Preset = c.Preset;
@@ -944,6 +951,32 @@ namespace mpegui
             // and the checked changed event fires for both when either is selected
             updateTrimMode();
         }
+
+        private void cmbAudioMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // i always want changing this to affect the numerical up/down for Audio Gain
+            // that way we never have to do it anywhere else
+            bool nowUsingDb = cmbAudioMode.SelectedIndex == 1;
+            if (nowUsingDb) numAudioGain.Minimum = -99.9m;
+            else numAudioGain.Minimum = 0m;
+
+            // now we can leave if it's currently setting values of things
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                bool prevUsingDb = f.AudioUseDb;
+                f.AudioUseDb = nowUsingDb;
+                // switch between 1.00 and 0.00 because it's different for multiplier mode / dB mode
+                // also multiplier cannot be negative, but dB can
+                if (!prevUsingDb && nowUsingDb && f.AudioGain == 1m) f.AudioGain = 0m;
+                else if (prevUsingDb && !nowUsingDb && f.AudioGain <= 0m) f.AudioGain = 1m;
+            }
+
+            UpdateUI();
+        }
     }
 
     public class FileConversionInfo
@@ -954,6 +987,7 @@ namespace mpegui
         public TimeSpan TrimEnd { get; set; }
         public bool TrimUseDuration { get; set; }
         public decimal AudioGain { get; set; }
+        public bool AudioUseDb { get; set; }
         public decimal AudioDelaySeconds { get; set; }
         public string CropFilter { get; set; }
         public string Encoder { get; set; }
@@ -977,6 +1011,9 @@ namespace mpegui
             CRF = 22;
             FPS = 0;
             Speed = 1.00;
+
+            // by default it's multiplier mode, so 1.00x is no change
+            AudioGain = 1m;
         }
 
         public FileConversionInfo Clone()
@@ -987,6 +1024,7 @@ namespace mpegui
             clone.TrimEnd = TrimEnd;
             clone.TrimUseDuration = TrimUseDuration;
             clone.AudioGain = AudioGain;
+            clone.AudioUseDb = AudioUseDb;
             clone.AudioDelaySeconds = AudioDelaySeconds;
             clone.CropFilter = CropFilter;
             clone.Encoder = Encoder;
@@ -1047,7 +1085,8 @@ namespace mpegui
 
         public string GetGain()
         {
-            return AudioGain == 0 ? string.Empty : $"-af \"volume={AudioGain}\" ";
+            if (AudioUseDb) return AudioGain == 0m ? string.Empty : $"-af \"volume={AudioGain}dB\" ";
+            else return AudioGain == 1m ? string.Empty : $"-af \"volume={AudioGain}\" ";
         }
 
         public string GetTrim()

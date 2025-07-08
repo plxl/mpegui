@@ -127,15 +127,6 @@ before:-af "volume=10dB"
 
 Be mindful of the final command in the preview box before running!</value>
   </data>
-  <data name="infoButton3.InfoText" xml:space="preserve">
-    <value>This multiplies the audio levels on any audio tracks
-
-0.5 would be 50% volume
-1.5 would be 150% volume
-
-In future this will support a dB option as well
-Currently 0.00 = no change, in future this will silence the audio</value>
-  </data>
   <data name="infoButton2.InfoText" xml:space="preserve">
     <value>This sets the speed using the setpts video filter.
 

@@ -39,6 +39,7 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.cmbAudioMode = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
@@ -153,17 +154,12 @@
             65536});
             this.numAudioGain.Location = new System.Drawing.Point(0, 201);
             this.numAudioGain.Maximum = new decimal(new int[] {
-            9999,
+            999,
             0,
             0,
             65536});
-            this.numAudioGain.Minimum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            -2147418112});
             this.numAudioGain.Name = "numAudioGain";
-            this.numAudioGain.Size = new System.Drawing.Size(75, 20);
+            this.numAudioGain.Size = new System.Drawing.Size(58, 20);
             this.numAudioGain.TabIndex = 2;
             this.numAudioGain.ValueChanged += new System.EventHandler(this.numAudioGain_ValueChanged);
             // 
@@ -179,7 +175,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(86, 185);
+            this.label2.Location = new System.Drawing.Point(106, 185);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 5;
@@ -193,7 +189,7 @@
             0,
             0,
             65536});
-            this.numAudioDelay.Location = new System.Drawing.Point(89, 201);
+            this.numAudioDelay.Location = new System.Drawing.Point(109, 201);
             this.numAudioDelay.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -205,7 +201,7 @@
             0,
             -2147418112});
             this.numAudioDelay.Name = "numAudioDelay";
-            this.numAudioDelay.Size = new System.Drawing.Size(129, 20);
+            this.numAudioDelay.Size = new System.Drawing.Size(106, 20);
             this.numAudioDelay.TabIndex = 4;
             this.numAudioDelay.ValueChanged += new System.EventHandler(this.numAudioDelay_ValueChanged);
             // 
@@ -236,6 +232,7 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.cmbAudioMode);
             this.panelControls.Controls.Add(this.infoButton4);
             this.panelControls.Controls.Add(this.infoButton3);
             this.panelControls.Controls.Add(this.infoButton2);
@@ -277,6 +274,19 @@
             this.panelControls.Size = new System.Drawing.Size(496, 438);
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
+            // 
+            // cmbAudioMode
+            // 
+            this.cmbAudioMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAudioMode.FormattingEnabled = true;
+            this.cmbAudioMode.Items.AddRange(new object[] {
+            "X",
+            "dB"});
+            this.cmbAudioMode.Location = new System.Drawing.Point(60, 200);
+            this.cmbAudioMode.Name = "cmbAudioMode";
+            this.cmbAudioMode.Size = new System.Drawing.Size(43, 21);
+            this.cmbAudioMode.TabIndex = 53;
+            this.cmbAudioMode.SelectedIndexChanged += new System.EventHandler(this.cmbAudioMode_SelectedIndexChanged);
             // 
             // groupBox1
             // 
@@ -893,7 +903,9 @@
             // infoButton3
             // 
             this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton3.InfoText = resources.GetString("infoButton3.InfoText");
+            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
+    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
+    "12.0 = +12dB\r\n-5.5 = -5.5dB";
             this.infoButton3.InfoTitle = "Audio Gain";
             this.infoButton3.Location = new System.Drawing.Point(55, 181);
             this.infoButton3.Name = "infoButton3";
@@ -1028,6 +1040,7 @@
         private InfoButton infoButton2;
         private InfoButton infoButton3;
         private InfoButton infoButton4;
+        private System.Windows.Forms.ComboBox cmbAudioMode;
     }
 }
 
