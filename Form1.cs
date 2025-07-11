@@ -135,8 +135,7 @@ namespace mpegui
                 dropEncoder.Text = f.Encoder;
                 chkHvc1.Visible = requiresHvc1(f.Encoder);
                 chkHvc1.Checked = f.Tags == "hvc1";
-                if (cmbPreset.Items.Contains(f.Preset)) cmbPreset.SelectedItem = f.Preset;
-                else cmbPreset.Text = f.Preset;
+                cmbPreset.Text = f.Preset;
                 trkCRF.Value = f.CRF;
                 txtAdditionalOptions.Text = f.AdditionalOptions;
                 UpdateCRFLabel();
