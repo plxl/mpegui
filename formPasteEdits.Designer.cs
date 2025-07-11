@@ -57,6 +57,7 @@
             this.listEdits.Name = "listEdits";
             this.listEdits.Size = new System.Drawing.Size(347, 199);
             this.listEdits.TabIndex = 0;
+            this.listEdits.CheckOnClick = true;
             // 
             // btnCancel
             // 
