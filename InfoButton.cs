@@ -1,15 +1,10 @@
 ﻿using mpegui.Properties;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 /* i'm using a custom implementation of a balloon tooltip because it fixes a
  * tiny bug with the WinForms balloon tooltip where using the .Show() method doesn't
