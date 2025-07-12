@@ -69,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BalloonToolTip.cs" />
+    <Compile Include="CustomCheckedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FileConversionInfo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listEdits = new System.Windows.Forms.CheckedListBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formPasteEdits));
+            this.listEdits = new mpegui.CustomCheckedListBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnConfirm = new System.Windows.Forms.Button();
+            this.lblIncompatibility = new System.Windows.Forms.Label();
+            this.infoIncompatibility = new mpegui.InfoButton();
             this.SuspendLayout();
             // 
             // listEdits
@@ -38,6 +41,7 @@
             this.listEdits.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listEdits.CheckOnClick = true;
             this.listEdits.FormattingEnabled = true;
             this.listEdits.Items.AddRange(new object[] {
             "Trim Settings (Start, End/Duration): none",
@@ -55,9 +59,10 @@
             "Overwrite if exists: NO"});
             this.listEdits.Location = new System.Drawing.Point(12, 12);
             this.listEdits.Name = "listEdits";
+            this.listEdits.RedIndices = ((System.Collections.Generic.List<int>)(resources.GetObject("listEdits.RedIndices")));
             this.listEdits.Size = new System.Drawing.Size(347, 199);
             this.listEdits.TabIndex = 0;
-            this.listEdits.CheckOnClick = true;
+            this.listEdits.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listEdits_ItemCheck);
             // 
             // btnCancel
             // 
@@ -83,11 +88,34 @@
             this.btnConfirm.UseVisualStyleBackColor = true;
             this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
+            // lblIncompatibility
+            // 
+            this.lblIncompatibility.AutoSize = true;
+            this.lblIncompatibility.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIncompatibility.ForeColor = System.Drawing.Color.Red;
+            this.lblIncompatibility.Location = new System.Drawing.Point(12, 222);
+            this.lblIncompatibility.Name = "lblIncompatibility";
+            this.lblIncompatibility.Size = new System.Drawing.Size(146, 13);
+            this.lblIncompatibility.TabIndex = 3;
+            this.lblIncompatibility.Text = "Potential Incompatibility!";
+            // 
+            // infoIncompatibility
+            // 
+            this.infoIncompatibility.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoIncompatibility.InfoText = resources.GetString("infoIncompatibility.InfoText");
+            this.infoIncompatibility.InfoTitle = "Potential Incompatibility";
+            this.infoIncompatibility.Location = new System.Drawing.Point(158, 220);
+            this.infoIncompatibility.Name = "infoIncompatibility";
+            this.infoIncompatibility.Size = new System.Drawing.Size(20, 20);
+            this.infoIncompatibility.TabIndex = 4;
+            // 
             // formPasteEdits
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 252);
+            this.Controls.Add(this.infoIncompatibility);
+            this.Controls.Add(this.lblIncompatibility);
             this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.listEdits);
@@ -99,13 +127,16 @@
             this.Text = "Paste Edits";
             this.Load += new System.EventHandler(this.formPasteEdits_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.CheckedListBox listEdits;
+        private CustomCheckedListBox listEdits;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnConfirm;
+        private System.Windows.Forms.Label lblIncompatibility;
+        private InfoButton infoIncompatibility;
     }
 }

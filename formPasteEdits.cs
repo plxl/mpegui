@@ -82,5 +82,26 @@ namespace mpegui
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        void UpdateIncompatibilityLabel(ItemCheckEventArgs e)
+        {
+            bool pastingEncoder = listEdits.CheckedIndices.Contains(1);
+            bool pastingPreset = listEdits.CheckedIndices.Contains(7);
+            // because the ItemCheck event fires before it actually updates the CheckedIndicies, we need to do another check:
+            if (e.Index == 1) pastingEncoder = e.NewValue == CheckState.Checked;
+            if (e.Index == 7) pastingPreset = e.NewValue == CheckState.Checked;
+
+            // check if one is enabled but not the either
+            bool incompatibility = pastingEncoder ^ pastingPreset;
+            lblIncompatibility.Visible = incompatibility;
+            infoIncompatibility.Visible = incompatibility;
+            if (incompatibility) listEdits.SetRed(new int[] { 1, 7 });
+            else listEdits.ClearRed();
+        }
+
+        private void listEdits_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            UpdateIncompatibilityLabel(e);
+        }
     }
 }

@@ -364,7 +364,25 @@ namespace mpegui
                             f.TrimEnd = c.TrimEnd;
                             f.TrimUseDuration = c.TrimUseDuration;
                         }
-                        if (edits[1])  f.Encoder = c.Encoder;
+                        if (edits[1])
+                        {
+                            // check if it won't be pasting the preset
+                            if (!edits[7])
+                            {
+                                // verify preset eligibility
+                                bool oldIsCPU = FileConversionInfo.isCPUEncoder(f.Encoder);
+                                bool newIsCPU = FileConversionInfo.isCPUEncoder(c.Encoder);
+                                if (oldIsCPU != newIsCPU)
+                                {
+                                    // the new encoder is not the same type as old encoder
+                                    // so we need to assume a matching preset for it since we aren't pasting presets
+                                    // we'll go with the user's default preset for that type
+                                    f.Preset = newIsCPU ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
+                                }
+                            }
+                            // now we can update the encoder
+                            f.Encoder = c.Encoder;
+                        }
                         if (edits[2])  f.Tags = c.Tags;
                         if (edits[3])  f.CropFilter = c.CropFilter;
                         if (edits[4])
@@ -374,7 +392,30 @@ namespace mpegui
                         }
                         if (edits[5])  f.AudioDelaySeconds = c.AudioDelaySeconds;
                         if (edits[6])  f.CRF = c.CRF;
-                        if (edits[7])  f.Preset = c.Preset;
+                        if (edits[7])
+                        {
+                            // check if it won't be pasting the encoder
+                            if (!edits[1])
+                            {
+                                // verify preset eligibility
+                                bool oldIsCPU = FileConversionInfo.isCPUEncoder(f.Encoder);
+                                bool newIsCPU = FileConversionInfo.isCPUEncoder(c.Encoder);
+                                if (oldIsCPU != newIsCPU)
+                                {
+                                    // the current encoder is not the same type as old encoder
+                                    // since the user wants to use this new preset, we have to assume a
+                                    // valid new encoder
+                                    // if the user's default encoder is valid, use that, otherwise...
+                                    // default to hevc_nvenc / libx265
+                                    bool defaultIsCPU = FileConversionInfo.isCPUEncoder(Settings.Default.DefaultEncoder);
+                                    if (defaultIsCPU == newIsCPU) f.Encoder = Settings.Default.DefaultEncoder;
+                                    else if (newIsCPU) f.Encoder = "libx265";
+                                    else f.Encoder = "hevc_nvenc";
+                                }
+                            }
+                            // now we can update preset
+                            f.Preset = c.Preset;
+                        }
                         if (edits[8])  f.FPS = c.FPS;
                         if (edits[9])  f.Speed = c.Speed;
                         if (edits[10]) f.AdditionalOptions = c.AdditionalOptions;
