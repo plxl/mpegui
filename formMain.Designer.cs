@@ -100,6 +100,10 @@
             this.infoButton3 = new mpegui.InfoButton();
             this.infoButton2 = new mpegui.InfoButton();
             this.infoButton1 = new mpegui.InfoButton();
+            this.menuPreset = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetLoad = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -697,6 +701,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPreset,
             this.optionsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -932,6 +937,35 @@
             this.infoButton1.Size = new System.Drawing.Size(20, 20);
             this.infoButton1.TabIndex = 50;
             // 
+            // menuPreset
+            // 
+            this.menuPreset.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPresetSave,
+            this.menuPresetLoad});
+            this.menuPreset.Name = "menuPreset";
+            this.menuPreset.Size = new System.Drawing.Size(51, 20);
+            this.menuPreset.Text = "Preset";
+            // 
+            // menuPresetSave
+            // 
+            this.menuPresetSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPresetSaveAs});
+            this.menuPresetSave.Name = "menuPresetSave";
+            this.menuPresetSave.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetSave.Text = "Save Preset";
+            // 
+            // menuPresetLoad
+            // 
+            this.menuPresetLoad.Name = "menuPresetLoad";
+            this.menuPresetLoad.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetLoad.Text = "Load Preset";
+            // 
+            // menuPresetSaveAs
+            // 
+            this.menuPresetSaveAs.Name = "menuPresetSaveAs";
+            this.menuPresetSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetSaveAs.Text = "Save As New...";
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1041,6 +1075,10 @@
         private InfoButton infoButton3;
         private InfoButton infoButton4;
         private System.Windows.Forms.ComboBox cmbAudioMode;
+        private System.Windows.Forms.ToolStripMenuItem menuPreset;
+        private System.Windows.Forms.ToolStripMenuItem menuPresetSave;
+        private System.Windows.Forms.ToolStripMenuItem menuPresetLoad;
+        private System.Windows.Forms.ToolStripMenuItem menuPresetSaveAs;
     }
 }
 
