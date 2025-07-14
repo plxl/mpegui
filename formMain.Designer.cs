@@ -1,6 +1,6 @@
 ﻿namespace mpegui
 {
-    partial class Form1
+    partial class formMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
             this.listFiles = new System.Windows.Forms.ListBox();
             this.textCommand = new System.Windows.Forms.TextBox();
             this.numAudioGain = new System.Windows.Forms.NumericUpDown();
@@ -932,7 +932,7 @@
             this.infoButton1.Size = new System.Drawing.Size(20, 20);
             this.infoButton1.TabIndex = 50;
             // 
-            // Form1
+            // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -941,10 +941,10 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "formMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "mpegui";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.formMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).EndInit();
             this.panelControls.ResumeLayout(false);

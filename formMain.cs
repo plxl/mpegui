@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace mpegui
 {
-    public partial class Form1 : Form
+    public partial class formMain : Form
     {
         private readonly List<FileConversionInfo> queue = new List<FileConversionInfo>();
         private readonly Dictionary<String, String> cropPresets = new Dictionary<String, String>()
@@ -46,7 +46,7 @@ namespace mpegui
 
 
         public static BalloonToolTip toolTipInfo2;
-        public Form1()
+        public formMain()
         {
             InitializeComponent();
 
@@ -713,7 +713,7 @@ namespace mpegui
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void formMain_Load(object sender, EventArgs e)
         {
             // Initialise crop preset buttons
             CropPresets_Load();
