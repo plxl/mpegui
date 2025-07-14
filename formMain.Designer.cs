@@ -40,6 +40,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
             this.cmbAudioMode = new System.Windows.Forms.ComboBox();
+            this.infoButton4 = new mpegui.InfoButton();
+            this.infoButton3 = new mpegui.InfoButton();
+            this.infoButton2 = new mpegui.InfoButton();
+            this.infoButton1 = new mpegui.InfoButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
@@ -77,6 +81,10 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnCopyCommand = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuPreset = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsEncoder = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOptionsEncoderDrop = new System.Windows.Forms.ToolStripComboBox();
@@ -96,14 +104,6 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
-            this.infoButton4 = new mpegui.InfoButton();
-            this.infoButton3 = new mpegui.InfoButton();
-            this.infoButton2 = new mpegui.InfoButton();
-            this.infoButton1 = new mpegui.InfoButton();
-            this.menuPreset = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPresetSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPresetLoad = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPresetSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -291,6 +291,48 @@
             this.cmbAudioMode.Size = new System.Drawing.Size(43, 21);
             this.cmbAudioMode.TabIndex = 53;
             this.cmbAudioMode.SelectedIndexChanged += new System.EventHandler(this.cmbAudioMode_SelectedIndexChanged);
+            // 
+            // infoButton4
+            // 
+            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
+            this.infoButton4.InfoTitle = "Additional Options / Parameters";
+            this.infoButton4.Location = new System.Drawing.Point(92, 242);
+            this.infoButton4.Name = "infoButton4";
+            this.infoButton4.Size = new System.Drawing.Size(20, 20);
+            this.infoButton4.TabIndex = 52;
+            // 
+            // infoButton3
+            // 
+            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
+    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
+    "12.0 = +12dB\r\n-5.5 = -5.5dB";
+            this.infoButton3.InfoTitle = "Audio Gain";
+            this.infoButton3.Location = new System.Drawing.Point(55, 181);
+            this.infoButton3.Name = "infoButton3";
+            this.infoButton3.Size = new System.Drawing.Size(20, 20);
+            this.infoButton3.TabIndex = 51;
+            // 
+            // infoButton2
+            // 
+            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
+            this.infoButton2.InfoTitle = "Speed Information";
+            this.infoButton2.Location = new System.Drawing.Point(382, 194);
+            this.infoButton2.Name = "infoButton2";
+            this.infoButton2.Size = new System.Drawing.Size(20, 20);
+            this.infoButton2.TabIndex = 51;
+            // 
+            // infoButton1
+            // 
+            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
+            this.infoButton1.InfoTitle = "Information about CRF / CQP";
+            this.infoButton1.Location = new System.Drawing.Point(298, 20);
+            this.infoButton1.Name = "infoButton1";
+            this.infoButton1.Size = new System.Drawing.Size(20, 20);
+            this.infoButton1.TabIndex = 50;
             // 
             // groupBox1
             // 
@@ -710,6 +752,36 @@
             this.menuStrip1.TabIndex = 28;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // menuPreset
+            // 
+            this.menuPreset.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPresetSave,
+            this.menuPresetLoad});
+            this.menuPreset.Name = "menuPreset";
+            this.menuPreset.Size = new System.Drawing.Size(51, 20);
+            this.menuPreset.Text = "Preset";
+            // 
+            // menuPresetSave
+            // 
+            this.menuPresetSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPresetSaveAs});
+            this.menuPresetSave.Name = "menuPresetSave";
+            this.menuPresetSave.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetSave.Text = "Save Preset";
+            // 
+            // menuPresetSaveAs
+            // 
+            this.menuPresetSaveAs.Name = "menuPresetSaveAs";
+            this.menuPresetSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetSaveAs.Text = "Save As New...";
+            this.menuPresetSaveAs.Click += new System.EventHandler(this.menuPresetSaveAs_Click);
+            // 
+            // menuPresetLoad
+            // 
+            this.menuPresetLoad.Name = "menuPresetLoad";
+            this.menuPresetLoad.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetLoad.Text = "Load Preset";
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -894,77 +966,6 @@
             this.splitOutput.Size = new System.Drawing.Size(620, 566);
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
-            // 
-            // infoButton4
-            // 
-            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
-            this.infoButton4.InfoTitle = "Additional Options / Parameters";
-            this.infoButton4.Location = new System.Drawing.Point(92, 242);
-            this.infoButton4.Name = "infoButton4";
-            this.infoButton4.Size = new System.Drawing.Size(20, 20);
-            this.infoButton4.TabIndex = 52;
-            // 
-            // infoButton3
-            // 
-            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
-    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
-    "12.0 = +12dB\r\n-5.5 = -5.5dB";
-            this.infoButton3.InfoTitle = "Audio Gain";
-            this.infoButton3.Location = new System.Drawing.Point(55, 181);
-            this.infoButton3.Name = "infoButton3";
-            this.infoButton3.Size = new System.Drawing.Size(20, 20);
-            this.infoButton3.TabIndex = 51;
-            // 
-            // infoButton2
-            // 
-            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
-            this.infoButton2.InfoTitle = "Speed Information";
-            this.infoButton2.Location = new System.Drawing.Point(382, 194);
-            this.infoButton2.Name = "infoButton2";
-            this.infoButton2.Size = new System.Drawing.Size(20, 20);
-            this.infoButton2.TabIndex = 51;
-            // 
-            // infoButton1
-            // 
-            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
-            this.infoButton1.InfoTitle = "Information about CRF / CQP";
-            this.infoButton1.Location = new System.Drawing.Point(298, 20);
-            this.infoButton1.Name = "infoButton1";
-            this.infoButton1.Size = new System.Drawing.Size(20, 20);
-            this.infoButton1.TabIndex = 50;
-            // 
-            // menuPreset
-            // 
-            this.menuPreset.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuPresetSave,
-            this.menuPresetLoad});
-            this.menuPreset.Name = "menuPreset";
-            this.menuPreset.Size = new System.Drawing.Size(51, 20);
-            this.menuPreset.Text = "Preset";
-            // 
-            // menuPresetSave
-            // 
-            this.menuPresetSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuPresetSaveAs});
-            this.menuPresetSave.Name = "menuPresetSave";
-            this.menuPresetSave.Size = new System.Drawing.Size(180, 22);
-            this.menuPresetSave.Text = "Save Preset";
-            // 
-            // menuPresetLoad
-            // 
-            this.menuPresetLoad.Name = "menuPresetLoad";
-            this.menuPresetLoad.Size = new System.Drawing.Size(180, 22);
-            this.menuPresetLoad.Text = "Load Preset";
-            // 
-            // menuPresetSaveAs
-            // 
-            this.menuPresetSaveAs.Name = "menuPresetSaveAs";
-            this.menuPresetSaveAs.Size = new System.Drawing.Size(180, 22);
-            this.menuPresetSaveAs.Text = "Save As New...";
             // 
             // formMain
             // 
