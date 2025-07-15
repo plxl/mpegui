@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace mpegui
 {
@@ -61,6 +62,20 @@ namespace mpegui
             clone.AdditionalOptions = AdditionalOptions;
             clone.OverwriteExisting = OverwriteExisting;
             return clone;
+        }
+
+        public void SetPreset(Preset preset)
+        {
+            // get all properties included in the toCopy list
+            IEnumerable<PropertyInfo> props = typeof(FileConversionInfo)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead && p.CanWrite && preset.ToCopy.Contains(p.Name));
+
+            foreach (PropertyInfo prop in props)
+            {
+                var value = prop.GetValue(preset.ConversionInfo);
+                prop.SetValue(this, value);
+            }
         }
 
         public string GetDelay(bool nameless = false)

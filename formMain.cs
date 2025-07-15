@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.IO;
 
 namespace mpegui
 {
@@ -719,6 +721,8 @@ namespace mpegui
             CropPresets_Load();
             // Load saved defaults
             Settings_Load();
+            // Load presets
+            UpdatePresets();
 
             toolTipInfo2.Create();
         }
@@ -1013,6 +1017,184 @@ namespace mpegui
             }
 
             UpdateUI();
+        }
+
+        List<string> presets = new List<string>();
+        string presetPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Presets");
+
+        void LoadPresetToSelected(string presetName)
+        {
+            // make sure the preset name exists
+            if (CheckPresets(presetName))
+            {
+                MessageBox.Show("This preset no longer exists. It will be automatically removed.",
+                    "Preset Not Found",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                UpdatePresets();
+                return;
+            }
+
+            // deserialise the json
+            string filename = Path.Combine(presetPath, presetName + ".json");
+            string text = File.ReadAllText(filename);
+            Preset preset = JsonSerializer.Deserialize<Preset>(text);
+
+            if (preset == null)
+            {
+                MessageBox.Show("There was an error while trying to load this preset.\n" +
+                    "No changes have been made.",
+                    "Error Loading Preset",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.SetPreset(preset);
+            }
+
+            UpdateUI();
+
+            MessageBox.Show($"\"{presetName}\" has been applied to the selected files.",
+                "Preset Applied",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        void UpdatePresets()
+        {
+            // make sure the presets list is accurate
+            CheckPresets();
+
+            // clear current load items
+            menuPresetLoad.DropDownItems.Clear();
+            // clear current save items, excluding save as button
+            while (menuPresetSave.DropDownItems.Count > 1)
+                menuPresetSave.DropDownItems.RemoveAt(1);
+            // add separator to save items if there are any presets
+            if (presets.Count > 0) menuPresetSave.DropDownItems.Add(new ToolStripSeparator());
+
+            // add any other items
+            foreach (string preset in presets)
+            {
+                // add load item
+                ToolStripMenuItem btnLoad = new ToolStripMenuItem
+                {
+                    Text = preset
+                };
+                btnLoad.Click += (s, e) => { LoadPresetToSelected(preset); };
+                menuPresetLoad.DropDownItems.Add(btnLoad);
+
+                // add save item
+                ToolStripMenuItem btnSave = new ToolStripMenuItem
+                {
+                    Text = preset
+                };
+                btnSave.Click += (s, e) =>
+                {
+                    if (MessageBox.Show(
+                        "Are you sure you want to overwrite this preset?",
+                        "Save Preset",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        SavePreset(preset);
+                    }
+                };
+                menuPresetSave.DropDownItems.Add(btnSave);
+            }
+        }
+
+        bool CheckPresets(string query = null)
+        {
+            
+            if (!Directory.Exists(presetPath)) Directory.CreateDirectory(presetPath);
+            presets.Clear();
+            foreach (string file in Directory.GetFiles(presetPath, "*.json"))
+                presets.Add(Path.GetFileNameWithoutExtension(file));
+
+            if (!string.IsNullOrWhiteSpace(query))
+                if (presets.Contains(query)) return false;
+            
+            return true;
+        }
+
+        string GetCurrentAsJson()
+        {
+            // can only save the current as a preset if only one item is selected
+            if (listFiles.SelectedItems.Count != 1) return null;
+
+            FileConversionInfo f = queue[listFiles.SelectedIndex].Clone();
+            f.Filename = string.Empty;
+            Preset preset = new Preset(f);
+
+            return JsonSerializer.Serialize(preset, new JsonSerializerOptions() { WriteIndented = true });
+        }
+
+        void SavePreset(string name = null, string json = null)
+        {
+            if (json == null)
+            {
+                json = GetCurrentAsJson();
+                if (json == null)
+                {
+                    MessageBox.Show(
+                        "Select only one file from the list with the settings you want to save in your preset.",
+                        "Save Preset");
+                    return;
+                }
+            }
+
+            // no supplied name typically always means the user clicked SaveAs button
+            // but might not in the future
+            if (name == null)
+            {
+            ASK_FOR_PRESET_NAME:
+                name = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of your preset:", "Save Preset Name");
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    // ensure there are no invalid filename characters in the user inputted name
+                    char[] invalidChars = Path.GetInvalidFileNameChars();
+                    HashSet<char> foundInvalidChars = new HashSet<char>(name.Where(c => invalidChars.Contains(c)));
+                    if (foundInvalidChars.Count > 0)
+                    {
+                        MessageBox.Show(
+                            $"Name contains the following invalid characters:\n{string.Join(" ", foundInvalidChars)}\n\n" +
+                            "Please try again.",
+                            "Preset Name Invalid",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        goto ASK_FOR_PRESET_NAME;
+                    }
+                    // ensure that a preset with the same name definitely does not exist
+                    else if (!CheckPresets(name))
+                    {
+                        MessageBox.Show(
+                            $"There is already a preset with the name \"{name}\".\n\n" +
+                            "Please try again.",
+                            "Preset Name Invalid",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        goto ASK_FOR_PRESET_NAME;
+
+                    }
+                    // TODO in future i will implement a way for the user to check the things that a preset includes
+                    // for now it copies over everything (except filename)
+                }
+            }
+
+            string filename = Path.Combine(presetPath, name + ".json");
+            File.WriteAllText(filename, json);
+            UpdatePresets();
+        }
+
+        private void menuPresetSaveAs_Click(object sender, EventArgs e)
+        {
+            SavePreset();
         }
     }
 }
