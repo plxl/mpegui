@@ -741,7 +741,7 @@ namespace mpegui
             // CRF / CQP
             menuOptionsCRF.Text = Settings.Default.DefaultCRF.ToString();
 
-            // Default Presets
+            // Default Encoder Presets
             menuOptionsPresetCPU.Text = Settings.Default.DefaultPresetCPU.ToString();
             menuOptionsPresetGPU.Text = Settings.Default.DefaultPresetGPU.ToString();
 
