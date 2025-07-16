@@ -1023,6 +1023,18 @@ namespace mpegui
         List<string> presets = new List<string>();
         string presetPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Presets");
 
+        string GetPresetFilename(string presetName)
+        {
+            return Path.Combine(presetPath, presetName + ".json");
+        }
+
+        Preset GetPreset(string presetName)
+        {
+            string filename = GetPresetFilename(presetName);
+            string text = File.ReadAllText(filename);
+            return JsonSerializer.Deserialize<Preset>(text);
+        }
+
         void LoadPresetToSelected(string presetName)
         {
             // check that any files are selected
@@ -1039,10 +1051,7 @@ namespace mpegui
                 return;
             }
 
-            // deserialise the json
-            string filename = Path.Combine(presetPath, presetName + ".json");
-            string text = File.ReadAllText(filename);
-            Preset preset = JsonSerializer.Deserialize<Preset>(text);
+            Preset preset = GetPreset(presetName);
 
             if (preset == null)
             {
