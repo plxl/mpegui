@@ -76,7 +76,7 @@ namespace mpegui
                 {
                     foreach (var file in files)
                     {
-                        if (System.IO.File.Exists(file))
+                        if (File.Exists(file))
                         {
                             // Initialise the file as a FileConversionInfo class
                             FileConversionInfo f = new FileConversionInfo(file);
@@ -89,11 +89,12 @@ namespace mpegui
                             f.Preset = FileConversionInfo.isCPUEncoder(f.Encoder) ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
                             f.AdditionalOptions = Settings.Default.AdditionalOptions;
                             queue.Add(f);
-                            listFiles.Items.Add(System.IO.Path.GetFileName(file));
-                            listFiles.ClearSelected();
-                            listFiles.SelectedIndex = listFiles.Items.Count - 1;
+                            listFiles.Items.Add(Path.GetFileName(file));
                         }
                     }
+                    listFiles.ClearSelected();
+                    // this will just select -1 if no files were added, which is fine
+                    listFiles.SelectedIndex = listFiles.Items.Count - 1;
                 }
             }
         }
