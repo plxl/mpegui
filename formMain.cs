@@ -90,6 +90,12 @@ namespace mpegui
                             f.AdditionalOptions = Settings.Default.AdditionalOptions;
                             queue.Add(f);
                             listFiles.Items.Add(Path.GetFileName(file));
+                            string presetName = Settings.Default.DefaultPreset;
+                            if (!CheckPresets(presetName))
+                            {
+                                Preset preset = GetPreset(presetName);
+                                if (preset != null) f.SetPreset(preset);
+                            }
                         }
                     }
                     listFiles.ClearSelected();
@@ -1088,8 +1094,15 @@ namespace mpegui
             // clear current save items, excluding save as button
             while (menuPresetSave.DropDownItems.Count > 1)
                 menuPresetSave.DropDownItems.RemoveAt(1);
-            // add separator to save items if there are any presets
-            if (presets.Count > 0) menuPresetSave.DropDownItems.Add(new ToolStripSeparator());
+            // clear current default items, excluding reset button
+            while (menuPresetDefault.DropDownItems.Count > 1)
+                menuPresetDefault.DropDownItems.RemoveAt(1);
+            // add separator to save and default items if there are any presets
+            if (presets.Count > 0)
+            {
+                menuPresetSave.DropDownItems.Add(new ToolStripSeparator());
+                menuPresetDefault.DropDownItems.Add(new ToolStripSeparator());
+            }
 
             // add any other items
             foreach (string preset in presets)
@@ -1119,6 +1132,22 @@ namespace mpegui
                     }
                 };
                 menuPresetSave.DropDownItems.Add(btnSave);
+
+                // add default items
+                ToolStripMenuItem btnDefault = new ToolStripMenuItem
+                {
+                    Text = preset,
+                    Checked = preset == Settings.Default.DefaultPreset,
+                };
+                btnDefault.Click += (s, e) =>
+                {
+                    Settings.Default.DefaultPreset = preset;
+                    Settings.Default.Save();
+                    foreach (ToolStripMenuItem item in menuPresetDefault.DropDownItems.OfType<ToolStripMenuItem>())
+                        item.Checked = false;
+                    btnDefault.Checked = true;
+                };
+                menuPresetDefault.DropDownItems.Add(btnDefault);
             }
         }
 
@@ -1208,6 +1237,14 @@ namespace mpegui
         private void menuPresetSaveAs_Click(object sender, EventArgs e)
         {
             SavePreset();
+        }
+
+        private void menuPresetDefaultReset_Click(object sender, EventArgs e)
+        {
+            Settings.Default.DefaultPreset = null;
+            Settings.Default.Save();
+            foreach (ToolStripMenuItem item in menuPresetDefault.DropDownItems.OfType<ToolStripMenuItem>())
+                item.Checked = false;
         }
     }
 }

@@ -104,6 +104,9 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuPresetDefault = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPresetDefaultReset = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -756,7 +759,9 @@
             // 
             this.menuPreset.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuPresetSave,
-            this.menuPresetLoad});
+            this.menuPresetLoad,
+            this.toolStripSeparator3,
+            this.menuPresetDefault});
             this.menuPreset.Name = "menuPreset";
             this.menuPreset.Size = new System.Drawing.Size(51, 20);
             this.menuPreset.Text = "Preset";
@@ -772,7 +777,7 @@
             // menuPresetSaveAs
             // 
             this.menuPresetSaveAs.Name = "menuPresetSaveAs";
-            this.menuPresetSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetSaveAs.Size = new System.Drawing.Size(150, 22);
             this.menuPresetSaveAs.Text = "Save As New...";
             this.menuPresetSaveAs.Click += new System.EventHandler(this.menuPresetSaveAs_Click);
             // 
@@ -967,6 +972,26 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // menuPresetDefault
+            // 
+            this.menuPresetDefault.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPresetDefaultReset});
+            this.menuPresetDefault.Name = "menuPresetDefault";
+            this.menuPresetDefault.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetDefault.Text = "Default Preset";
+            // 
+            // menuPresetDefaultReset
+            // 
+            this.menuPresetDefaultReset.Name = "menuPresetDefaultReset";
+            this.menuPresetDefaultReset.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetDefaultReset.Text = "Reset Default";
+            this.menuPresetDefaultReset.Click += new System.EventHandler(this.menuPresetDefaultReset_Click);
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1080,6 +1105,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuPresetSave;
         private System.Windows.Forms.ToolStripMenuItem menuPresetLoad;
         private System.Windows.Forms.ToolStripMenuItem menuPresetSaveAs;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem menuPresetDefault;
+        private System.Windows.Forms.ToolStripMenuItem menuPresetDefaultReset;
     }
 }
 
