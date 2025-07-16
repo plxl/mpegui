@@ -1024,6 +1024,9 @@ namespace mpegui
 
         void LoadPresetToSelected(string presetName)
         {
+            // check that any files are selected
+            if (listFiles.SelectedItems.Count == 0) return;
+
             // make sure the preset name exists
             if (CheckPresets(presetName))
             {
