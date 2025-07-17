@@ -1097,6 +1097,8 @@ namespace mpegui
             // clear current default items, excluding reset button
             while (menuPresetDefault.DropDownItems.Count > 1)
                 menuPresetDefault.DropDownItems.RemoveAt(1);
+            // clear current delete items
+            menuPresetDelete.DropDownItems.Clear();
             // add separator to save and default items if there are any presets
             if (presets.Count > 0)
             {
@@ -1148,6 +1150,25 @@ namespace mpegui
                     btnDefault.Checked = true;
                 };
                 menuPresetDefault.DropDownItems.Add(btnDefault);
+
+                // add default items
+                ToolStripMenuItem btnDelete = new ToolStripMenuItem
+                {
+                    Text = preset
+                };
+                btnDelete.Click += (s, e) =>
+                {
+                    if (MessageBox.Show($"Are you sure you want to delete your \"{preset}\" preset?",
+                        "Delete Preset",
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string filename = GetPresetFilename(preset);
+                        if (File.Exists(filename))
+                            File.Delete(filename);
+                        UpdatePresets();
+                    }
+                };
+                menuPresetDelete.DropDownItems.Add(btnDelete);
             }
         }
 
@@ -1245,6 +1266,11 @@ namespace mpegui
             Settings.Default.Save();
             foreach (ToolStripMenuItem item in menuPresetDefault.DropDownItems.OfType<ToolStripMenuItem>())
                 item.Checked = false;
+        }
+
+        private void menuPresetReload_Click(object sender, EventArgs e)
+        {
+            UpdatePresets();
         }
     }
 }
