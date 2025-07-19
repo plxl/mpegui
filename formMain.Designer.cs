@@ -31,6 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
             this.listFiles = new System.Windows.Forms.ListBox();
+            this.cmsFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsFilesCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsFilesPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsFilesSet = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsFilesSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsFilesRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsFilesSep2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsFilesClear = new System.Windows.Forms.ToolStripMenuItem();
             this.textCommand = new System.Windows.Forms.TextBox();
             this.numAudioGain = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,10 +49,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
             this.cmbAudioMode = new System.Windows.Forms.ComboBox();
-            this.infoButton4 = new mpegui.InfoButton();
-            this.infoButton3 = new mpegui.InfoButton();
-            this.infoButton2 = new mpegui.InfoButton();
-            this.infoButton1 = new mpegui.InfoButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
@@ -110,15 +115,11 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
-            this.cmsFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmsFilesCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsFilesPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsFilesSet = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsFilesRemove = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsFilesClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsFilesSep1 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmsFilesSep2 = new System.Windows.Forms.ToolStripSeparator();
-            this.resetDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoButton4 = new mpegui.InfoButton();
+            this.infoButton3 = new mpegui.InfoButton();
+            this.infoButton2 = new mpegui.InfoButton();
+            this.infoButton1 = new mpegui.InfoButton();
+            this.cmsFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
             this.panelControls.SuspendLayout();
@@ -134,12 +135,12 @@
             this.splitOutput.Panel1.SuspendLayout();
             this.splitOutput.Panel2.SuspendLayout();
             this.splitOutput.SuspendLayout();
-            this.cmsFiles.SuspendLayout();
             this.SuspendLayout();
             // 
             // listFiles
             // 
             this.listFiles.AllowDrop = true;
+            this.listFiles.ContextMenuStrip = this.cmsFiles;
             this.listFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listFiles.FormattingEnabled = true;
             this.listFiles.IntegralHeight = false;
@@ -153,6 +154,68 @@
             this.listFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.listFiles_DragEnter);
             this.listFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listFiles_KeyDown);
             this.listFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listFiles_MouseDown);
+            // 
+            // cmsFiles
+            // 
+            this.cmsFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsFilesCopy,
+            this.cmsFilesPaste,
+            this.cmsFilesSet,
+            this.cmsFilesSep1,
+            this.cmsFilesRemove,
+            this.cmsFilesSep2,
+            this.cmsFilesClear});
+            this.cmsFiles.Name = "cmsFiles";
+            this.cmsFiles.Size = new System.Drawing.Size(165, 126);
+            this.cmsFiles.Opening += new System.ComponentModel.CancelEventHandler(this.cmsFiles_Opening);
+            // 
+            // cmsFilesCopy
+            // 
+            this.cmsFilesCopy.Name = "cmsFilesCopy";
+            this.cmsFilesCopy.Size = new System.Drawing.Size(164, 22);
+            this.cmsFilesCopy.Text = "Copy Edits";
+            // 
+            // cmsFilesPaste
+            // 
+            this.cmsFilesPaste.Name = "cmsFilesPaste";
+            this.cmsFilesPaste.Size = new System.Drawing.Size(164, 22);
+            this.cmsFilesPaste.Text = "Paste Edits";
+            // 
+            // cmsFilesSet
+            // 
+            this.cmsFilesSet.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetDefaultsToolStripMenuItem});
+            this.cmsFilesSet.Name = "cmsFilesSet";
+            this.cmsFilesSet.Size = new System.Drawing.Size(164, 22);
+            this.cmsFilesSet.Text = "Set Preset";
+            // 
+            // resetDefaultsToolStripMenuItem
+            // 
+            this.resetDefaultsToolStripMenuItem.Name = "resetDefaultsToolStripMenuItem";
+            this.resetDefaultsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.resetDefaultsToolStripMenuItem.Text = "Reset Defaults";
+            // 
+            // cmsFilesSep1
+            // 
+            this.cmsFilesSep1.Name = "cmsFilesSep1";
+            this.cmsFilesSep1.Size = new System.Drawing.Size(161, 6);
+            // 
+            // cmsFilesRemove
+            // 
+            this.cmsFilesRemove.Name = "cmsFilesRemove";
+            this.cmsFilesRemove.Size = new System.Drawing.Size(164, 22);
+            this.cmsFilesRemove.Text = "Remove Selected";
+            // 
+            // cmsFilesSep2
+            // 
+            this.cmsFilesSep2.Name = "cmsFilesSep2";
+            this.cmsFilesSep2.Size = new System.Drawing.Size(161, 6);
+            // 
+            // cmsFilesClear
+            // 
+            this.cmsFilesClear.Name = "cmsFilesClear";
+            this.cmsFilesClear.Size = new System.Drawing.Size(164, 22);
+            this.cmsFilesClear.Text = "Clear List";
             // 
             // textCommand
             // 
@@ -308,48 +371,6 @@
             this.cmbAudioMode.Size = new System.Drawing.Size(43, 21);
             this.cmbAudioMode.TabIndex = 53;
             this.cmbAudioMode.SelectedIndexChanged += new System.EventHandler(this.cmbAudioMode_SelectedIndexChanged);
-            // 
-            // infoButton4
-            // 
-            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
-            this.infoButton4.InfoTitle = "Additional Options / Parameters";
-            this.infoButton4.Location = new System.Drawing.Point(92, 242);
-            this.infoButton4.Name = "infoButton4";
-            this.infoButton4.Size = new System.Drawing.Size(20, 20);
-            this.infoButton4.TabIndex = 52;
-            // 
-            // infoButton3
-            // 
-            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
-    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
-    "12.0 = +12dB\r\n-5.5 = -5.5dB";
-            this.infoButton3.InfoTitle = "Audio Gain";
-            this.infoButton3.Location = new System.Drawing.Point(55, 181);
-            this.infoButton3.Name = "infoButton3";
-            this.infoButton3.Size = new System.Drawing.Size(20, 20);
-            this.infoButton3.TabIndex = 51;
-            // 
-            // infoButton2
-            // 
-            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
-            this.infoButton2.InfoTitle = "Speed Information";
-            this.infoButton2.Location = new System.Drawing.Point(382, 194);
-            this.infoButton2.Name = "infoButton2";
-            this.infoButton2.Size = new System.Drawing.Size(20, 20);
-            this.infoButton2.TabIndex = 51;
-            // 
-            // infoButton1
-            // 
-            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
-            this.infoButton1.InfoTitle = "Information about CRF / CQP";
-            this.infoButton1.Location = new System.Drawing.Point(298, 20);
-            this.infoButton1.Name = "infoButton1";
-            this.infoButton1.Size = new System.Drawing.Size(20, 20);
-            this.infoButton1.TabIndex = 50;
             // 
             // groupBox1
             // 
@@ -1027,66 +1048,47 @@
             this.splitOutput.SplitterDistance = 438;
             this.splitOutput.TabIndex = 30;
             // 
-            // cmsFiles
+            // infoButton4
             // 
-            this.cmsFiles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmsFilesCopy,
-            this.cmsFilesPaste,
-            this.cmsFilesSet,
-            this.cmsFilesSep1,
-            this.cmsFilesRemove,
-            this.cmsFilesSep2,
-            this.cmsFilesClear});
-            this.cmsFiles.Name = "cmsFiles";
-            this.cmsFiles.Size = new System.Drawing.Size(165, 126);
+            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
+            this.infoButton4.InfoTitle = "Additional Options / Parameters";
+            this.infoButton4.Location = new System.Drawing.Point(92, 242);
+            this.infoButton4.Name = "infoButton4";
+            this.infoButton4.Size = new System.Drawing.Size(20, 20);
+            this.infoButton4.TabIndex = 52;
             // 
-            // cmsFilesCopy
+            // infoButton3
             // 
-            this.cmsFilesCopy.Name = "cmsFilesCopy";
-            this.cmsFilesCopy.Size = new System.Drawing.Size(164, 22);
-            this.cmsFilesCopy.Text = "Copy Edits";
+            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
+    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
+    "12.0 = +12dB\r\n-5.5 = -5.5dB";
+            this.infoButton3.InfoTitle = "Audio Gain";
+            this.infoButton3.Location = new System.Drawing.Point(55, 181);
+            this.infoButton3.Name = "infoButton3";
+            this.infoButton3.Size = new System.Drawing.Size(20, 20);
+            this.infoButton3.TabIndex = 51;
             // 
-            // cmsFilesPaste
+            // infoButton2
             // 
-            this.cmsFilesPaste.Name = "cmsFilesPaste";
-            this.cmsFilesPaste.Size = new System.Drawing.Size(164, 22);
-            this.cmsFilesPaste.Text = "Paste Edits";
+            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
+            this.infoButton2.InfoTitle = "Speed Information";
+            this.infoButton2.Location = new System.Drawing.Point(382, 194);
+            this.infoButton2.Name = "infoButton2";
+            this.infoButton2.Size = new System.Drawing.Size(20, 20);
+            this.infoButton2.TabIndex = 51;
             // 
-            // cmsFilesSet
+            // infoButton1
             // 
-            this.cmsFilesSet.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.resetDefaultsToolStripMenuItem});
-            this.cmsFilesSet.Name = "cmsFilesSet";
-            this.cmsFilesSet.Size = new System.Drawing.Size(164, 22);
-            this.cmsFilesSet.Text = "Set Preset";
-            // 
-            // cmsFilesRemove
-            // 
-            this.cmsFilesRemove.Name = "cmsFilesRemove";
-            this.cmsFilesRemove.Size = new System.Drawing.Size(164, 22);
-            this.cmsFilesRemove.Text = "Remove Selected";
-            // 
-            // cmsFilesClear
-            // 
-            this.cmsFilesClear.Name = "cmsFilesClear";
-            this.cmsFilesClear.Size = new System.Drawing.Size(164, 22);
-            this.cmsFilesClear.Text = "Clear List";
-            // 
-            // cmsFilesSep1
-            // 
-            this.cmsFilesSep1.Name = "cmsFilesSep1";
-            this.cmsFilesSep1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // cmsFilesSep2
-            // 
-            this.cmsFilesSep2.Name = "cmsFilesSep2";
-            this.cmsFilesSep2.Size = new System.Drawing.Size(177, 6);
-            // 
-            // resetDefaultsToolStripMenuItem
-            // 
-            this.resetDefaultsToolStripMenuItem.Name = "resetDefaultsToolStripMenuItem";
-            this.resetDefaultsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resetDefaultsToolStripMenuItem.Text = "Reset Defaults";
+            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
+            this.infoButton1.InfoTitle = "Information about CRF / CQP";
+            this.infoButton1.Location = new System.Drawing.Point(298, 20);
+            this.infoButton1.Name = "infoButton1";
+            this.infoButton1.Size = new System.Drawing.Size(20, 20);
+            this.infoButton1.TabIndex = 50;
             // 
             // formMain
             // 
@@ -1101,6 +1103,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "mpegui";
             this.Load += new System.EventHandler(this.formMain_Load);
+            this.cmsFiles.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).EndInit();
             this.panelControls.ResumeLayout(false);
@@ -1120,7 +1123,6 @@
             this.splitOutput.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitOutput)).EndInit();
             this.splitOutput.ResumeLayout(false);
-            this.cmsFiles.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

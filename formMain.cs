@@ -1293,5 +1293,38 @@ namespace mpegui
         {
             UpdatePresets();
         }
+
+        private void cmsFiles_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (listFiles.SelectedItems.Count == 0)
+            {
+                if (listFiles.Items.Count == 0)
+                {
+                    // don't open the cms if there will be nothing to do in it
+                    e.Cancel = true;
+                }
+                else
+                {
+                    cmsFilesCopy  .Visible = false;
+                    cmsFilesPaste .Visible = false;
+                    cmsFilesSet   .Visible = false;
+                    cmsFilesSep1  .Visible = false;
+                    cmsFilesRemove.Visible = false;
+                    cmsFilesSep2  .Visible = false;
+                }
+            }
+            else
+            {
+                cmsFilesCopy  .Visible = true;
+                cmsFilesPaste .Visible = true;
+                cmsFilesSet   .Visible = true;
+                cmsFilesSep1  .Visible = true;
+                cmsFilesRemove.Visible = true;
+                cmsFilesSep2  .Visible = true;
+
+                // allow pasting only if there are edits copied
+                cmsFilesPaste.Enabled = copiedEdits != null;
+            }
+        }
     }
 }
