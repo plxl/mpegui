@@ -1120,11 +1120,15 @@ namespace mpegui
                 menuPresetDefault.DropDownItems.RemoveAt(1);
             // clear current delete items
             menuPresetDelete.DropDownItems.Clear();
-            // add separator to save and default items if there are any presets
+            // clear current right-click cms set preset items, excluding reset button
+            while (cmsFilesSet.DropDownItems.Count > 1)
+                cmsFilesSet.DropDownItems.RemoveAt(1);
+            // add separator to save, default and list CMS set preset items if there are any presets
             if (presets.Count > 0)
             {
                 menuPresetSave.DropDownItems.Add(new ToolStripSeparator());
                 menuPresetDefault.DropDownItems.Add(new ToolStripSeparator());
+                cmsFilesSet.DropDownItems.Add(new ToolStripSeparator());
             }
 
             // add any other items
@@ -1137,6 +1141,8 @@ namespace mpegui
                 };
                 btnLoad.Click += (s, e) => { LoadPresetToSelected(preset); };
                 menuPresetLoad.DropDownItems.Add(btnLoad);
+                // use the same button for right-click cms set preset because it does the same thing
+                cmsFilesSet.DropDownItems.Add(btnLoad);
 
                 // add save item
                 ToolStripMenuItem btnSave = new ToolStripMenuItem
