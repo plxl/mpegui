@@ -105,13 +105,18 @@ namespace mpegui
             }
         }
 
-        private void listFiles_KeyDown(object sender, KeyEventArgs e)
+        void RemoveSelected()
         {
-            if (e.KeyCode == Keys.Delete && listFiles.SelectedIndex != -1)
+            if (listFiles.SelectedIndex != -1)
             {
                 queue.RemoveAt(listFiles.SelectedIndex);
                 listFiles.Items.RemoveAt(listFiles.SelectedIndex);
             }
+        }
+
+        private void listFiles_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete) RemoveSelected();
         }
 
         private void listFiles_MouseDown(object sender, MouseEventArgs e)
@@ -350,7 +355,7 @@ namespace mpegui
             }
         }
 
-        private void btnCopy_Click(object sender, EventArgs e)
+        void CopySelectedEdits()
         {
             if (listFiles.SelectedIndices.Count != 1)
             {
@@ -358,6 +363,11 @@ namespace mpegui
                 return;
             }
             copiedEdits = queue[listFiles.SelectedIndex].Clone();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            CopySelectedEdits();
         }
 
         private void pasteEdits()
@@ -460,8 +470,7 @@ namespace mpegui
 
         private void btnPaste_Click(object sender, EventArgs e)
         {
-            if (IsUpdating() || copiedEdits == null) return;
-            pasteEdits();
+            if (copiedEdits != null) pasteEdits();
         }
 
         private void btnCropPresets_Click(object sender, EventArgs e)
@@ -1330,6 +1339,33 @@ namespace mpegui
 
                 // allow pasting only if there are edits copied
                 cmsFilesPaste.Enabled = copiedEdits != null;
+            }
+        }
+
+        private void cmsFilesCopy_Click(object sender, EventArgs e)
+        {
+            CopySelectedEdits();
+        }
+
+        private void cmsFilesPaste_Click(object sender, EventArgs e)
+        {
+            if (copiedEdits != null) pasteEdits();
+        }
+
+        private void cmsFilesRemove_Click(object sender, EventArgs e)
+        {
+            RemoveSelected();
+        }
+
+        private void cmsFilesClear_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to clear the list of files?\n\nThis cannot be undone.",
+                "Clear All Files",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                queue.Clear();
+                listFiles.Items.Clear();
+                UpdateUI();
             }
         }
     }
