@@ -114,6 +114,27 @@ namespace mpegui
             }
         }
 
+        private void listFiles_MouseDown(object sender, MouseEventArgs e)
+        {
+            // this breaks multi-selection so i only want it to work if:
+            // - the user is left-clicking
+            // - and is selecting -1
+            // OR:
+            // - the user is right-clicking
+            // - 1 or less items are currently selected
+            // - the user is not selecting -1
+            int index = listFiles.IndexFromPoint(e.Location);
+            bool leftClickOOB = e.Button == MouseButtons.Left && index == -1;
+            bool rightClickOneItem = e.Button == MouseButtons.Right && index > -1 && listFiles.SelectedItems.Count <= 1;
+            if (leftClickOOB || rightClickOneItem)
+            {
+                // must clear selected with multi-select listbox, otherwise
+                // right-click will only /add/ to selected indicies instead of reselect
+                listFiles.ClearSelected();
+                listFiles.SelectedIndex = index;
+            }
+        }
+
         void UpdateUI()
         {
             if (listFiles.SelectedIndex != -1)

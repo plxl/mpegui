@@ -152,6 +152,7 @@
             this.listFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.listFiles_DragDrop);
             this.listFiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.listFiles_DragEnter);
             this.listFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listFiles_KeyDown);
+            this.listFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listFiles_MouseDown);
             // 
             // textCommand
             // 
