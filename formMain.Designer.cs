@@ -116,8 +116,8 @@
             this.cmsFilesSet = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsFilesRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsFilesClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsFilesSep1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsFilesSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.resetDefaultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
@@ -1032,9 +1032,9 @@
             this.cmsFilesCopy,
             this.cmsFilesPaste,
             this.cmsFilesSet,
-            this.toolStripSeparator6,
+            this.cmsFilesSep1,
             this.cmsFilesRemove,
-            this.toolStripSeparator7,
+            this.cmsFilesSep2,
             this.cmsFilesClear});
             this.cmsFiles.Name = "cmsFiles";
             this.cmsFiles.Size = new System.Drawing.Size(165, 126);
@@ -1071,15 +1071,15 @@
             this.cmsFilesClear.Size = new System.Drawing.Size(164, 22);
             this.cmsFilesClear.Text = "Clear List";
             // 
-            // toolStripSeparator6
+            // cmsFilesSep1
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(161, 6);
+            this.cmsFilesSep1.Name = "cmsFilesSep1";
+            this.cmsFilesSep1.Size = new System.Drawing.Size(177, 6);
             // 
-            // toolStripSeparator7
+            // cmsFilesSep2
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(161, 6);
+            this.cmsFilesSep2.Name = "cmsFilesSep2";
+            this.cmsFilesSep2.Size = new System.Drawing.Size(177, 6);
             // 
             // resetDefaultsToolStripMenuItem
             // 
@@ -1212,9 +1212,9 @@
         private System.Windows.Forms.ToolStripMenuItem cmsFilesPaste;
         private System.Windows.Forms.ToolStripMenuItem cmsFilesSet;
         private System.Windows.Forms.ToolStripMenuItem resetDefaultsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator cmsFilesSep1;
         private System.Windows.Forms.ToolStripMenuItem cmsFilesRemove;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator cmsFilesSep2;
         private System.Windows.Forms.ToolStripMenuItem cmsFilesClear;
     }
 }
