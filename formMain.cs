@@ -186,6 +186,7 @@ namespace mpegui
             else
             {
                 panelControls.Visible = false;
+                textCommand.Text = string.Empty;
             }
         }
 
