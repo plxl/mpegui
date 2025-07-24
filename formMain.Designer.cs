@@ -119,6 +119,11 @@
             this.infoButton3 = new mpegui.InfoButton();
             this.infoButton2 = new mpegui.InfoButton();
             this.infoButton1 = new mpegui.InfoButton();
+            this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuFileRunSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFileRun = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
@@ -166,20 +171,20 @@
             this.cmsFilesSep2,
             this.cmsFilesClear});
             this.cmsFiles.Name = "cmsFiles";
-            this.cmsFiles.Size = new System.Drawing.Size(181, 148);
+            this.cmsFiles.Size = new System.Drawing.Size(165, 126);
             this.cmsFiles.Opening += new System.ComponentModel.CancelEventHandler(this.cmsFiles_Opening);
             // 
             // cmsFilesCopy
             // 
             this.cmsFilesCopy.Name = "cmsFilesCopy";
-            this.cmsFilesCopy.Size = new System.Drawing.Size(180, 22);
+            this.cmsFilesCopy.Size = new System.Drawing.Size(164, 22);
             this.cmsFilesCopy.Text = "Copy Edits";
             this.cmsFilesCopy.Click += new System.EventHandler(this.cmsFilesCopy_Click);
             // 
             // cmsFilesPaste
             // 
             this.cmsFilesPaste.Name = "cmsFilesPaste";
-            this.cmsFilesPaste.Size = new System.Drawing.Size(180, 22);
+            this.cmsFilesPaste.Size = new System.Drawing.Size(164, 22);
             this.cmsFilesPaste.Text = "Paste Edits";
             this.cmsFilesPaste.Click += new System.EventHandler(this.cmsFilesPaste_Click);
             // 
@@ -188,7 +193,7 @@
             this.cmsFilesSet.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmsFilesReset});
             this.cmsFilesSet.Name = "cmsFilesSet";
-            this.cmsFilesSet.Size = new System.Drawing.Size(180, 22);
+            this.cmsFilesSet.Size = new System.Drawing.Size(164, 22);
             this.cmsFilesSet.Text = "Set Preset";
             // 
             // cmsFilesReset
@@ -200,24 +205,24 @@
             // cmsFilesSep1
             // 
             this.cmsFilesSep1.Name = "cmsFilesSep1";
-            this.cmsFilesSep1.Size = new System.Drawing.Size(177, 6);
+            this.cmsFilesSep1.Size = new System.Drawing.Size(161, 6);
             // 
             // cmsFilesRemove
             // 
             this.cmsFilesRemove.Name = "cmsFilesRemove";
-            this.cmsFilesRemove.Size = new System.Drawing.Size(180, 22);
+            this.cmsFilesRemove.Size = new System.Drawing.Size(164, 22);
             this.cmsFilesRemove.Text = "Remove Selected";
             this.cmsFilesRemove.Click += new System.EventHandler(this.cmsFilesRemove_Click);
             // 
             // cmsFilesSep2
             // 
             this.cmsFilesSep2.Name = "cmsFilesSep2";
-            this.cmsFilesSep2.Size = new System.Drawing.Size(177, 6);
+            this.cmsFilesSep2.Size = new System.Drawing.Size(161, 6);
             // 
             // cmsFilesClear
             // 
             this.cmsFilesClear.Name = "cmsFilesClear";
-            this.cmsFilesClear.Size = new System.Drawing.Size(180, 22);
+            this.cmsFilesClear.Size = new System.Drawing.Size(164, 22);
             this.cmsFilesClear.Text = "Clear List";
             this.cmsFilesClear.Click += new System.EventHandler(this.cmsFilesClear_Click);
             // 
@@ -785,6 +790,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFile,
             this.menuPreset,
             this.optionsToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -1094,6 +1100,40 @@
             this.infoButton1.Size = new System.Drawing.Size(20, 20);
             this.infoButton1.TabIndex = 50;
             // 
+            // menuFile
+            // 
+            this.menuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFileOpen,
+            this.toolStripSeparator6,
+            this.menuFileRunSelected,
+            this.menuFileRun});
+            this.menuFile.Name = "menuFile";
+            this.menuFile.Size = new System.Drawing.Size(37, 20);
+            this.menuFile.Text = "File";
+            // 
+            // menuFileOpen
+            // 
+            this.menuFileOpen.Name = "menuFileOpen";
+            this.menuFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.menuFileOpen.Text = "Open...";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            // 
+            // menuFileRunSelected
+            // 
+            this.menuFileRunSelected.Name = "menuFileRunSelected";
+            this.menuFileRunSelected.Size = new System.Drawing.Size(180, 22);
+            this.menuFileRunSelected.Text = "Run Selected Only";
+            // 
+            // menuFileRun
+            // 
+            this.menuFileRun.Name = "menuFileRun";
+            this.menuFileRun.Size = new System.Drawing.Size(180, 22);
+            this.menuFileRun.Text = "Run Queue";
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1223,6 +1263,11 @@
         private System.Windows.Forms.ToolStripMenuItem cmsFilesRemove;
         private System.Windows.Forms.ToolStripSeparator cmsFilesSep2;
         private System.Windows.Forms.ToolStripMenuItem cmsFilesClear;
+        private System.Windows.Forms.ToolStripMenuItem menuFile;
+        private System.Windows.Forms.ToolStripMenuItem menuFileOpen;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem menuFileRunSelected;
+        private System.Windows.Forms.ToolStripMenuItem menuFileRun;
     }
 }
 
