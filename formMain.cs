@@ -55,6 +55,37 @@ namespace mpegui
             toolTipInfo2 = new BalloonToolTip(this);
         }
 
+        void AddFiles(string[] files)
+        {
+            foreach (var file in files)
+            {
+                if (File.Exists(file))
+                {
+                    // Initialise the file as a FileConversionInfo class
+                    FileConversionInfo f = new FileConversionInfo(file);
+                    // set default encoder according to settings
+                    f.Encoder = Settings.Default.DefaultEncoder;
+                    // If the default encoder is libx265 or hevc_nvenc, and the default settings want to support Apple devices, add the hvc1 tag
+                    if (requiresHvc1(f.Encoder) && Settings.Default.AlwaysHvc1)
+                        f.Tags = "hvc1";
+                    f.CRF = Settings.Default.DefaultCRF;
+                    f.Preset = FileConversionInfo.isCPUEncoder(f.Encoder) ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
+                    f.AdditionalOptions = Settings.Default.AdditionalOptions;
+                    queue.Add(f);
+                    listFiles.Items.Add(Path.GetFileName(file));
+                    string presetName = Settings.Default.DefaultPreset;
+                    if (!CheckPresets(presetName))
+                    {
+                        Preset preset = GetPreset(presetName);
+                        if (preset != null) f.SetPreset(preset);
+                    }
+                }
+            }
+            listFiles.ClearSelected();
+            // this will just select -1 if no files were added, which is fine
+            listFiles.SelectedIndex = listFiles.Items.Count - 1;
+        }
+
         private void listFiles_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -74,33 +105,7 @@ namespace mpegui
                 var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (files.Length > 0)
                 {
-                    foreach (var file in files)
-                    {
-                        if (File.Exists(file))
-                        {
-                            // Initialise the file as a FileConversionInfo class
-                            FileConversionInfo f = new FileConversionInfo(file);
-                            // set default encoder according to settings
-                            f.Encoder = Settings.Default.DefaultEncoder;
-                            // If the default encoder is libx265 or hevc_nvenc, and the default settings want to support Apple devices, add the hvc1 tag
-                            if (requiresHvc1(f.Encoder) && Settings.Default.AlwaysHvc1)
-                                f.Tags = "hvc1";
-                            f.CRF = Settings.Default.DefaultCRF;
-                            f.Preset = FileConversionInfo.isCPUEncoder(f.Encoder) ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
-                            f.AdditionalOptions = Settings.Default.AdditionalOptions;
-                            queue.Add(f);
-                            listFiles.Items.Add(Path.GetFileName(file));
-                            string presetName = Settings.Default.DefaultPreset;
-                            if (!CheckPresets(presetName))
-                            {
-                                Preset preset = GetPreset(presetName);
-                                if (preset != null) f.SetPreset(preset);
-                            }
-                        }
-                    }
-                    listFiles.ClearSelected();
-                    // this will just select -1 if no files were added, which is fine
-                    listFiles.SelectedIndex = listFiles.Items.Count - 1;
+                    AddFiles(files);
                 }
             }
         }
@@ -1367,6 +1372,14 @@ namespace mpegui
                 queue.Clear();
                 listFiles.Items.Clear();
                 UpdateUI();
+            }
+        }
+
+        private void menuFileOpen_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                AddFiles(openFileDialog.FileNames);
             }
         }
     }
