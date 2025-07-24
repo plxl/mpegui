@@ -485,34 +485,42 @@ namespace mpegui
         }
 
         bool isRunning = false;
-        private async void btnRun_Click(object sender, EventArgs e)
+        async void RunQueue(List<FileConversionInfo> files)
         {
             btnRun.Enabled = false;
+            menuFileRun.Enabled = false;
+            menuFileRunSelected.Enabled = false;
             if (!isRunning)
             {
                 isRunning = true;
-                ProcessQueue();
                 btnRun.Text = "Stop";
                 btnRun.Enabled = true;
+                ProcessQueue(files);
             }
             else
             {
-                while (!process.HasExited)
+                while (process != null && !process.HasExited)
                 {
                     process.Kill();
                     await Task.Delay(100);
                 }
                 btnRun.Enabled = true;
+                menuFileRun.Enabled = true;
+                menuFileRunSelected.Enabled = true;
                 btnRun.Text = "Run Queue";
                 isRunning = false;
             }
         }
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            RunQueue(queue);
+        }
 
         Process process = null;
 
-        private async void ProcessQueue()
+        private async void ProcessQueue(List<FileConversionInfo> files)
         {
-            foreach (FileConversionInfo f in queue)
+            foreach (FileConversionInfo f in files)
             {
                 process = new Process();
                 process.StartInfo.FileName = "ffmpeg";
@@ -553,7 +561,14 @@ namespace mpegui
                 txtOutput.AppendText("Process exited with code: " + process.ExitCode + "\r\n");
             }
 
-            btnRun.Invoke(new Action(() => btnRun.Text = "Run Queue"));
+            Invoke(new Action(() =>
+            {
+                btnRun.Text = "Run Queue";
+                menuFileRun.Enabled = true;
+                menuFileRunSelected.Enabled = true;
+            }));
+
+            isRunning = false;
         }
 
         private double ffmpegDuration = 0;
@@ -1381,6 +1396,20 @@ namespace mpegui
             {
                 AddFiles(openFileDialog.FileNames);
             }
+        }
+
+        private void menuFileRunSelected_Click(object sender, EventArgs e)
+        {
+            List<FileConversionInfo> files = listFiles.SelectedIndices
+                .Cast<int>()
+                .Select(i => queue[i])
+                .ToList();
+            RunQueue(files);
+        }
+
+        private void menuFileRun_Click(object sender, EventArgs e)
+        {
+            RunQueue(queue);
         }
     }
 }

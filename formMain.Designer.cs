@@ -49,10 +49,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
             this.cmbAudioMode = new System.Windows.Forms.ComboBox();
-            this.infoButton4 = new mpegui.InfoButton();
-            this.infoButton3 = new mpegui.InfoButton();
-            this.infoButton2 = new mpegui.InfoButton();
-            this.infoButton1 = new mpegui.InfoButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
@@ -125,6 +121,10 @@
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.infoButton4 = new mpegui.InfoButton();
+            this.infoButton3 = new mpegui.InfoButton();
+            this.infoButton2 = new mpegui.InfoButton();
+            this.infoButton1 = new mpegui.InfoButton();
             this.cmsFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
@@ -381,48 +381,6 @@
             this.cmbAudioMode.Size = new System.Drawing.Size(43, 21);
             this.cmbAudioMode.TabIndex = 53;
             this.cmbAudioMode.SelectedIndexChanged += new System.EventHandler(this.cmbAudioMode_SelectedIndexChanged);
-            // 
-            // infoButton4
-            // 
-            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
-            this.infoButton4.InfoTitle = "Additional Options / Parameters";
-            this.infoButton4.Location = new System.Drawing.Point(92, 242);
-            this.infoButton4.Name = "infoButton4";
-            this.infoButton4.Size = new System.Drawing.Size(20, 20);
-            this.infoButton4.TabIndex = 52;
-            // 
-            // infoButton3
-            // 
-            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
-    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
-    "12.0 = +12dB\r\n-5.5 = -5.5dB";
-            this.infoButton3.InfoTitle = "Audio Gain";
-            this.infoButton3.Location = new System.Drawing.Point(55, 181);
-            this.infoButton3.Name = "infoButton3";
-            this.infoButton3.Size = new System.Drawing.Size(20, 20);
-            this.infoButton3.TabIndex = 51;
-            // 
-            // infoButton2
-            // 
-            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
-            this.infoButton2.InfoTitle = "Speed Information";
-            this.infoButton2.Location = new System.Drawing.Point(382, 194);
-            this.infoButton2.Name = "infoButton2";
-            this.infoButton2.Size = new System.Drawing.Size(20, 20);
-            this.infoButton2.TabIndex = 51;
-            // 
-            // infoButton1
-            // 
-            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
-            this.infoButton1.InfoTitle = "Information about CRF / CQP";
-            this.infoButton1.Location = new System.Drawing.Point(298, 20);
-            this.infoButton1.Name = "infoButton1";
-            this.infoButton1.Size = new System.Drawing.Size(20, 20);
-            this.infoButton1.TabIndex = 50;
             // 
             // groupBox1
             // 
@@ -871,12 +829,14 @@
             this.menuFileRunSelected.Name = "menuFileRunSelected";
             this.menuFileRunSelected.Size = new System.Drawing.Size(180, 22);
             this.menuFileRunSelected.Text = "Run Selected Only";
+            this.menuFileRunSelected.Click += new System.EventHandler(this.menuFileRunSelected_Click);
             // 
             // menuFileRun
             // 
             this.menuFileRun.Name = "menuFileRun";
             this.menuFileRun.Size = new System.Drawing.Size(180, 22);
             this.menuFileRun.Text = "Run Queue";
+            this.menuFileRun.Click += new System.EventHandler(this.menuFileRun_Click);
             // 
             // menuPreset
             // 
@@ -1141,6 +1101,48 @@
             this.openFileDialog.Filter = resources.GetString("openFileDialog.Filter");
             this.openFileDialog.Multiselect = true;
             this.openFileDialog.Title = "Open File";
+            // 
+            // infoButton4
+            // 
+            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
+            this.infoButton4.InfoTitle = "Additional Options / Parameters";
+            this.infoButton4.Location = new System.Drawing.Point(92, 242);
+            this.infoButton4.Name = "infoButton4";
+            this.infoButton4.Size = new System.Drawing.Size(20, 20);
+            this.infoButton4.TabIndex = 52;
+            // 
+            // infoButton3
+            // 
+            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
+    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
+    "12.0 = +12dB\r\n-5.5 = -5.5dB";
+            this.infoButton3.InfoTitle = "Audio Gain";
+            this.infoButton3.Location = new System.Drawing.Point(55, 181);
+            this.infoButton3.Name = "infoButton3";
+            this.infoButton3.Size = new System.Drawing.Size(20, 20);
+            this.infoButton3.TabIndex = 51;
+            // 
+            // infoButton2
+            // 
+            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
+            this.infoButton2.InfoTitle = "Speed Information";
+            this.infoButton2.Location = new System.Drawing.Point(382, 194);
+            this.infoButton2.Name = "infoButton2";
+            this.infoButton2.Size = new System.Drawing.Size(20, 20);
+            this.infoButton2.TabIndex = 51;
+            // 
+            // infoButton1
+            // 
+            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
+            this.infoButton1.InfoTitle = "Information about CRF / CQP";
+            this.infoButton1.Location = new System.Drawing.Point(298, 20);
+            this.infoButton1.Name = "infoButton1";
+            this.infoButton1.Size = new System.Drawing.Size(20, 20);
+            this.infoButton1.TabIndex = 50;
             // 
             // formMain
             // 
