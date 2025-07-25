@@ -1411,5 +1411,13 @@ namespace mpegui
         {
             RunQueue(queue);
         }
+
+        private void btnBrowseFilename_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                txtOutName.Text = saveFileDialog.FileName;
+            }
+        }
     }
 }

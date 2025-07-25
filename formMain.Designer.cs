@@ -121,6 +121,8 @@
             this.splitList = new System.Windows.Forms.SplitContainer();
             this.splitOutput = new System.Windows.Forms.SplitContainer();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnBrowseFilename = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.infoButton4 = new mpegui.InfoButton();
             this.infoButton3 = new mpegui.InfoButton();
             this.infoButton2 = new mpegui.InfoButton();
@@ -326,6 +328,7 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.btnBrowseFilename);
             this.panelControls.Controls.Add(this.cmbAudioMode);
             this.panelControls.Controls.Add(this.infoButton4);
             this.panelControls.Controls.Add(this.infoButton3);
@@ -664,7 +667,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutName.Location = new System.Drawing.Point(0, 339);
             this.txtOutName.Name = "txtOutName";
-            this.txtOutName.Size = new System.Drawing.Size(484, 20);
+            this.txtOutName.Size = new System.Drawing.Size(413, 20);
             this.txtOutName.TabIndex = 23;
             this.txtOutName.TextChanged += new System.EventHandler(this.txtOutName_TextChanged);
             // 
@@ -815,26 +818,26 @@
             // menuFileOpen
             // 
             this.menuFileOpen.Name = "menuFileOpen";
-            this.menuFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.menuFileOpen.Size = new System.Drawing.Size(170, 22);
             this.menuFileOpen.Text = "Open...";
             this.menuFileOpen.Click += new System.EventHandler(this.menuFileOpen_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
             // 
             // menuFileRunSelected
             // 
             this.menuFileRunSelected.Name = "menuFileRunSelected";
-            this.menuFileRunSelected.Size = new System.Drawing.Size(180, 22);
+            this.menuFileRunSelected.Size = new System.Drawing.Size(170, 22);
             this.menuFileRunSelected.Text = "Run Selected Only";
             this.menuFileRunSelected.Click += new System.EventHandler(this.menuFileRunSelected_Click);
             // 
             // menuFileRun
             // 
             this.menuFileRun.Name = "menuFileRun";
-            this.menuFileRun.Size = new System.Drawing.Size(180, 22);
+            this.menuFileRun.Size = new System.Drawing.Size(170, 22);
             this.menuFileRun.Text = "Run Queue";
             this.menuFileRun.Click += new System.EventHandler(this.menuFileRun_Click);
             // 
@@ -1102,6 +1105,21 @@
             this.openFileDialog.Multiselect = true;
             this.openFileDialog.Title = "Open File";
             // 
+            // btnBrowseFilename
+            // 
+            this.btnBrowseFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowseFilename.Location = new System.Drawing.Point(419, 337);
+            this.btnBrowseFilename.Name = "btnBrowseFilename";
+            this.btnBrowseFilename.Size = new System.Drawing.Size(65, 23);
+            this.btnBrowseFilename.TabIndex = 54;
+            this.btnBrowseFilename.Text = "Browse...";
+            this.btnBrowseFilename.UseVisualStyleBackColor = true;
+            this.btnBrowseFilename.Click += new System.EventHandler(this.btnBrowseFilename_Click);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = resources.GetString("saveFileDialog.Filter");
+            // 
             // infoButton4
             // 
             this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -1279,6 +1297,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuFileRunSelected;
         private System.Windows.Forms.ToolStripMenuItem menuFileRun;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button btnBrowseFilename;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 
