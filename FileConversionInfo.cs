@@ -386,13 +386,13 @@ namespace mpegui
                 file = file.Replace(fnstr, replaceWith);
             }
 
-            if (filenameOnly) return $"\"{file}\"";
-            return '"' +
-                System.IO.Path.Combine(
-                    System.IO.Path.GetDirectoryName(Filename),
-                    file
-                ) +
-                '"';
+            // determine if the filename is a specific path and not just relative
+            bool isFullPath = Path.IsPathRooted(file) && !string.IsNullOrWhiteSpace(Path.GetPathRoot(file));
+            // only return the user-inputted filename
+            if (filenameOnly || isFullPath) return $"\"{file}\"";
+
+            // else return the file relative the input file's directory
+            return $"\"{Path.Combine(Path.GetDirectoryName(Filename), file)}\"";
         }
 
         public string GetOverwrite()
