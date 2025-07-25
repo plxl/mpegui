@@ -377,6 +377,7 @@ namespace mpegui
                     {
                         if (int.TryParse(segments[1].Substring(0, segments[1].Length - 1), out int i))
                         {
+                            if (i > replaceWith.Length) i = replaceWith.Length;
                             replaceWith = replaceWith.Substring(0, replaceWith.Length - i);
                         }
                     }
