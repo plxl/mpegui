@@ -1122,6 +1122,7 @@
             // 
             // infoButton4
             // 
+            this.infoButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
             this.infoButton4.InfoTitle = "Additional Options / Parameters";
