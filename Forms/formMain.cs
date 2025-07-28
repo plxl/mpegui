@@ -522,9 +522,12 @@ namespace mpegui
         {
             foreach (FileConversionInfo f in files)
             {
+                string overwrite = f.outputFileAlreadyExists();
+                if (overwrite == null) continue;
+
                 process = new Process();
                 process.StartInfo.FileName = "ffmpeg";
-                process.StartInfo.Arguments = f.ToString();
+                process.StartInfo.Arguments = f.ToString() + overwrite;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
@@ -559,6 +562,12 @@ namespace mpegui
                 ffmpegDuration = 0;
                 progressBar1.Value = 0;
                 txtOutput.AppendText("Process exited with code: " + process.ExitCode + "\r\n");
+
+                if (f.TempFilename != null)
+                {
+                    File.Delete(f.TempFilename);
+                    f.TempFilename = null;
+                }
             }
 
             Invoke(new Action(() =>

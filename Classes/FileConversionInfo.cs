@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace mpegui
 {
@@ -25,6 +26,7 @@ namespace mpegui
         public double Speed { get; set; }
         public string AdditionalOptions { get; set; }
         public bool OverwriteExisting { get; set; }
+        public string TempFilename { get; set; }
 
         public FileConversionInfo(string filename)
         {
@@ -401,10 +403,65 @@ namespace mpegui
             return OverwriteExisting ? " -y" : string.Empty;
         }
 
+        public string outputFileAlreadyExists()
+        {
+            // checks if the output file will already exist
+            // if it does, it will prompt the user asking if they want to overwrite it
+            string outFilename = GetOutput().Trim('"');
+            if (!OverwriteExisting && File.Exists(outFilename))
+            {
+                // check if the output filename is exactly the same as the input filename
+                // because ffmpeg does not have built-in support for overwriting files in-place
+                // we need to move the input file to a temporary location to replace it
+                string fullFilename = Path.GetFullPath(Filename);
+                string fullOutname = Path.GetFullPath(outFilename);
+                if (string.Equals(fullFilename, fullOutname, StringComparison.OrdinalIgnoreCase))
+                {
+                    string tempPath = Path.GetTempFileName();
+                    if (File.Exists(tempPath)) File.Delete(tempPath);
+                    if (MessageBox.Show("The output file destination matches the input file for this item:\n\n" +
+                        $"In File: {fullFilename}\n" +
+                        $"Out File: {fullOutname}\n\n" +
+                        $"Are you sure you want to replace the input file? This will be permanent.\n" +
+                        $"If you select 'No', this file will be skipped and the remainder of the queue will be processed.",
+                        
+                        "Overwrite Input File",
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        Console.WriteLine($"Moving input file to temporary file: {tempPath}");
+                        File.Move(fullFilename, tempPath);
+                        TempFilename = tempPath;
+                        return " -y";
+                    }
+                    return null;
+                }
+                else if (MessageBox.Show("The output filename for the current item in the queue already exists.\n\n" +
+                    "Do you want to replace it?\n\n" +
+                    $"In File: {Filename}\n" +
+                    $"Out File: {outFilename}\n\n" +
+                    "If you select 'No', this file will be skipped and the remainder of the queue will be processed.",
+                    
+                    "Overwrite File",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    return " -y";
+                }
+                else
+                {
+                    // user does not want to overwrite the file, so
+                    // return null to say it already exists and can't proceed
+                    return null;
+                }
+            } 
+            
+            // empty string means process the file without overwriting
+            return string.Empty;
+        }
+
         public override string ToString()
         {
             return
-                $"-i \"{Filename}\" "
+                $"-i \"{TempFilename ?? Filename}\" "
                 + GetAdditionalOptions(before: true)
                 + GetTrim()
                 + GetDelay()
