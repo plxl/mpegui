@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
+using Microsoft.VisualBasic;
 
 namespace mpegui
 {
@@ -1286,40 +1287,42 @@ namespace mpegui
 
             // no supplied name typically always means the user clicked SaveAs button
             // but might not in the future
-            if (name == null)
+            while (name == null)
             {
-            ASK_FOR_PRESET_NAME:
-                name = Microsoft.VisualBasic.Interaction.InputBox("Enter the name of your preset:", "Save Preset Name");
-                if (!string.IsNullOrWhiteSpace(name))
-                {
-                    // ensure there are no invalid filename characters in the user inputted name
-                    char[] invalidChars = Path.GetInvalidFileNameChars();
-                    HashSet<char> foundInvalidChars = new HashSet<char>(name.Where(c => invalidChars.Contains(c)));
-                    if (foundInvalidChars.Count > 0)
-                    {
-                        MessageBox.Show(
-                            $"Name contains the following invalid characters:\n{string.Join(" ", foundInvalidChars)}\n\n" +
-                            "Please try again.",
-                            "Preset Name Invalid",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        goto ASK_FOR_PRESET_NAME;
-                    }
-                    // ensure that a preset with the same name definitely does not exist
-                    else if (!CheckPresets(name))
-                    {
-                        MessageBox.Show(
-                            $"There is already a preset with the name \"{name}\".\n\n" +
-                            "Please try again.",
-                            "Preset Name Invalid",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        goto ASK_FOR_PRESET_NAME;
+                string input = Interaction.InputBox("Enter the name of your preset:", "Save Preset Name");
 
-                    }
-                    // TODO in future i will implement a way for the user to check the things that a preset includes
-                    // for now it copies over everything (except filename)
+                // return on empty input/cancel pressed
+                if (string.IsNullOrWhiteSpace(input)) return;
+
+                // check if user inputted invalid filename characters
+                char[] invalidChars = Path.GetInvalidFileNameChars();
+                var foundInvalidChars = input.Where(c => invalidChars.Contains(c)).ToArray();
+                if (foundInvalidChars.Length > 0)
+                {
+                    MessageBox.Show(
+                        "Name contains the following invalid characters:\n" +
+                        string.Join(" ", foundInvalidChars) + "\n\n" +
+                        "Please try again.",
+
+                        "Preset Name Invalid",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
+
+                // check if user inputted a name that is taken
+                else if (!CheckPresets(input))
+                {
+                    MessageBox.Show(
+                        $"There is already a preset with the name \"{input}\".\n\n" +
+                        "Please try again.",
+
+                        "Preset Name Taken",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+
+                // else the name is valid
+                else name = input;
             }
 
             string filename = Path.Combine(presetPath, name + ".json");
