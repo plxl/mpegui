@@ -1180,7 +1180,13 @@ namespace mpegui
                 };
                 btnLoad.Click += (s, e) => { LoadPresetToSelected(preset); };
                 menuPresetLoad.DropDownItems.Add(btnLoad);
-                // use the same button for right-click cms set preset because it does the same thing
+
+                // add load item for right-click cms menu
+                btnLoad = new ToolStripMenuItem
+                {
+                    Text = preset
+                };
+                btnLoad.Click += (s, e) => { LoadPresetToSelected(preset); };
                 cmsFilesSet.DropDownItems.Add(btnLoad);
 
                 // add save item
