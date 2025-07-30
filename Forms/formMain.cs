@@ -567,6 +567,7 @@ namespace mpegui
                 if (f.TempFilename != null)
                 {
                     File.Delete(f.TempFilename);
+                    Console.WriteLine($"Deleted temp file: {f.TempFilename}");
                     f.TempFilename = null;
                 }
             }
