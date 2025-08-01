@@ -117,5 +117,17 @@ namespace mpegui.Properties {
                 this["DefaultPreset"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{filename}_out.mp4")]
+        public string DefaultOutput {
+            get {
+                return ((string)(this["DefaultOutput"]));
+            }
+            set {
+                this["DefaultOutput"] = value;
+            }
+        }
     }
 }

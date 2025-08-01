@@ -72,6 +72,7 @@ namespace mpegui
                     f.CRF = Settings.Default.DefaultCRF;
                     f.Preset = FileConversionInfo.isCPUEncoder(f.Encoder) ? Settings.Default.DefaultPresetCPU : Settings.Default.DefaultPresetGPU;
                     f.AdditionalOptions = Settings.Default.AdditionalOptions;
+                    f.OutputName = Settings.Default.DefaultOutput;
                     queue.Add(f);
                     listFiles.Items.Add(Path.GetFileName(file));
                     string presetName = Settings.Default.DefaultPreset;
@@ -816,6 +817,9 @@ namespace mpegui
 
             // Additional options
             menuOptionsAdditionalOptions.Text = Settings.Default.AdditionalOptions;
+
+            // Output Name
+            menuOptionsDefaultOut.Text = Settings.Default.DefaultOutput;
         }
 
         private void menuHelpAbout_Click(object sender, EventArgs e)
@@ -1437,6 +1441,12 @@ namespace mpegui
             {
                 txtOutName.Text = saveFileDialog.FileName;
             }
+        }
+
+        private void menuOptionsDefaultOut_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.DefaultOutput = menuOptionsDefaultOut.Text.Trim();
+            Settings.Default.Save();
         }
     }
 }

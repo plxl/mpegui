@@ -26,5 +26,8 @@
     <Setting Name="DefaultPreset" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DefaultOutput" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{filename}_out.mp4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
