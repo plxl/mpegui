@@ -1448,5 +1448,19 @@ namespace mpegui
             Settings.Default.DefaultOutput = menuOptionsDefaultOut.Text.Trim();
             Settings.Default.Save();
         }
+
+        private void chkNormaliseAudio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.AudioNormalise = chkNormaliseAudio.Checked;
+            }
+
+            UpdateCommand();
+        }
     }
 }
