@@ -17,6 +17,7 @@ namespace mpegui
         public decimal AudioGain { get; set; }
         public bool AudioUseDb { get; set; }
         public decimal AudioDelaySeconds { get; set; }
+        public bool AudioNormalise { get; set; }
         public string CropFilter { get; set; }
         public string Encoder { get; set; }
         public string Tags { get; set; }
@@ -93,43 +94,68 @@ namespace mpegui
             return delay;
         }
 
-        public string GetVideoFilters()
+        public string GetFilters()
         {
-            List<string> filters = new List<string>();
+            List<string> vfilters = new List<string>();
+            List<string> afilters = new List<string>();
             // crop filter
             if (!string.IsNullOrWhiteSpace(CropFilter))
             {
-                filters.Add($"crop={CropFilter}");
+                vfilters.Add($"crop={CropFilter}");
             }
             // Speed (setpts) filter (may require -r to be set for fps instead of below filter)
             if (Speed != 1.00)
             {
                 // note that we need to divide 1 by the speed multiplier to get the PTS multiplier
-                filters.Add($"setpts={1.00 / Speed:0.00}*PTS");
+                vfilters.Add($"setpts={1.00 / Speed:0.00}*PTS");
             }
             // FPS filter (more precise than just doing -r to drop/duplicate frames)
             if (FPS >= 1.0m)
             {
-                filters.Add($"fps={FPS}");
+                vfilters.Add($"fps={FPS}");
             }
             // add any video filters found in Additional Options, excludes the quotation marks automatically
-            string vf = GetVideoFilterString(AdditionalOptions, false, true);
+            string vf = GetFilterString("-vf", AdditionalOptions, false, true);
             if (vf != null)
             {
                 foreach (string filter in vf.Split(','))
                 {
                     // trim to remove spaces
-                    filters.Add(filter.Trim());
+                    vfilters.Add(filter.Trim());
                 }
             }
 
-            return filters.Count == 0 ? string.Empty : $"-vf \"{string.Join(",", filters)}\" ";
-        }
+            // audio gain
+            if (AudioUseDb && AudioGain != 0m)
+            {
+                afilters.Add($"volume={AudioGain}dB");
+            }
+            else if (AudioGain != 1m)
+            {
+                afilters.Add($"volume={AudioGain}");
+            }
 
-        public string GetGain()
-        {
-            if (AudioUseDb) return AudioGain == 0m ? string.Empty : $"-af \"volume={AudioGain}dB\" ";
-            else return AudioGain == 1m ? string.Empty : $"-af \"volume={AudioGain}\" ";
+            // audio normalisation filter (true peak = -1dB, integrated loudness = -16 LUFS, loudness range = 11)
+            if (AudioNormalise)
+            {
+                afilters.Add("loudnorm=I=-16:TP=-1.0:LRA=11");
+            }
+
+            // add any audio filters found in Additional Options, excludes the quotation marks automatically
+            string af = GetFilterString("-af", AdditionalOptions, false, true);
+            if (af != null)
+            {
+                foreach (string filter in af.Split(','))
+                {
+                    // trim to remove spaces
+                    afilters.Add(filter.Trim());
+                }
+            }
+
+            // combine video and audio filters into single string
+            string sout = vfilters.Count == 0 ? string.Empty : $"-vf \"{string.Join(",", vfilters)}\" ";
+            sout += afilters.Count == 0 ? string.Empty : $"-af \"{string.Join(",", afilters)}\" ";
+            return sout;
         }
 
         public string GetTrim()
@@ -189,18 +215,18 @@ namespace mpegui
             return Tags == string.Empty ? string.Empty : $"-tag:v {Tags} ";
         }
 
-        private string GetVideoFilterString(string vf, bool includeVfOption, bool removeQuotes)
+        private string GetFilterString(string ftype, string s, bool includeVfOption, bool removeQuotes)
         {
-            if (vf.Contains("-vf "))
+            if (s.Contains(ftype))
             {
                 // ensure that there is a space after the -vf option
-                vf = vf.Substring(vf.IndexOf("-vf "));
-                string[] vf_parts = vf.Split(new char[] { ' ' });
+                s = s.Substring(s.IndexOf(ftype));
+                string[] vf_parts = s.Split(new char[] { ' ' });
                 // ensure there is at least one element after the '-vf'
                 if (vf_parts.Length >= 2)
                 {
                     // assumes video filter is one word
-                    vf = vf_parts[1];
+                    s = vf_parts[1];
                     // check if the video filter starts with a quote, because then it could contain spaces
                     if (vf_parts[1].Length > 1 && vf_parts[1][0] == '"')
                     {
@@ -218,24 +244,24 @@ namespace mpegui
                         if (last_part >= 1)
                         {
                             // joins the array by spaces again, only up to the last quote
-                            vf = string.Join(" ", vf_parts.Skip(1).Take(last_part));
+                            s = string.Join(" ", vf_parts.Skip(1).Take(last_part));
                         }
                     }
 
                     // remove any existing quotes from the start/end if needed
                     if (removeQuotes)
                     {
-                        if (vf.Length > 1 && vf[0] == '"')
+                        if (s.Length > 1 && s[0] == '"')
                         {
-                            vf = vf.Substring(1);
+                            s = s.Substring(1);
                         }
-                        if (vf.Length > 1 && vf.Last() == '"')
+                        if (s.Length > 1 && s.Last() == '"')
                         {
-                            vf = vf.Substring(0, vf.Length - 1);
+                            s = s.Substring(0, s.Length - 1);
                         }
                     }
-                    // add the -vf text back if needed
-                    return (includeVfOption ? "-vf " : "") + vf;
+                    // add the -vf/-af text back if needed
+                    return (includeVfOption ? ftype + " " : "") + s;
                 }
             }
 
@@ -306,11 +332,24 @@ namespace mpegui
         public string GetAdditionalOptions(bool before = false)
         {
             string addopts = AdditionalOptions.Trim();
-            string vf = GetVideoFilterString(addopts, true, false);
+            string vf = GetFilterString("-vf", addopts, true, false);
+            string af = GetFilterString("-af", addopts, true, false);
             if (!string.IsNullOrWhiteSpace(vf))
             {
                 // removes video filter from string
                 addopts = addopts.Replace(vf, "");
+                addopts = addopts.Trim();
+                // remove any potential residue double spaces as a result of this removal
+                // this is probably not the best way to handle this, but it'll do
+                while (addopts.Contains("  "))
+                {
+                    addopts = addopts.Replace("  ", " ");
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(af))
+            {
+                // removes audio filter from string
+                addopts = addopts.Replace(af, "");
                 addopts = addopts.Trim();
                 // remove any potential residue double spaces as a result of this removal
                 // this is probably not the best way to handle this, but it'll do
@@ -465,8 +504,7 @@ namespace mpegui
                 + GetAdditionalOptions(before: true)
                 + GetTrim()
                 + GetDelay()
-                + GetVideoFilters()
-                + GetGain()
+                + GetFilters()
                 + GetEncoder()
                 + GetCRF()
                 + GetPreset()
@@ -484,8 +522,7 @@ namespace mpegui
                 + GetAdditionalOptions(before: true)
                 + GetTrim()
                 + GetDelay(nameless: true)
-                + GetVideoFilters()
-                + GetGain()
+                + GetFilters()
                 + GetEncoder()
                 + GetCRF()
                 + GetPreset()
