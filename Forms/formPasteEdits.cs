@@ -105,5 +105,21 @@ namespace mpegui
         {
             UpdateIncompatibilityLabel(e);
         }
+
+        private void lnkAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < listEdits.Items.Count; i++)
+            {
+                listEdits.SetItemChecked(i, true);
+            }
+        }
+
+        private void lnkNone_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < listEdits.Items.Count; i++)
+            {
+                listEdits.SetItemChecked(i, false);
+            }
+        }
     }
 }
