@@ -88,7 +88,7 @@ namespace mpegui
         void UpdateIncompatibilityLabel(ItemCheckEventArgs e)
         {
             bool pastingEncoder = listEdits.CheckedIndices.Contains(1);
-            bool pastingPreset = listEdits.CheckedIndices.Contains(7);
+            bool pastingPreset = listEdits.CheckedIndices.Contains(8);
             // because the ItemCheck event fires before it actually updates the CheckedIndicies, we need to do another check:
             if (e.Index == 1) pastingEncoder = e.NewValue == CheckState.Checked;
             if (e.Index == 8) pastingPreset = e.NewValue == CheckState.Checked;
