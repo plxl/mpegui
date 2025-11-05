@@ -50,6 +50,7 @@
             "Crop Filter: none",
             "Audio Gain: 0.00",
             "Audio Delay Seconds: 0.00",
+            "Audio Normalisation: False",
             "CRF/CQP: 22",
             "Encoder Preset: p7",
             "Frames per second: Same as source",
@@ -60,7 +61,7 @@
             this.listEdits.Location = new System.Drawing.Point(12, 12);
             this.listEdits.Name = "listEdits";
             this.listEdits.RedIndices = ((System.Collections.Generic.List<int>)(resources.GetObject("listEdits.RedIndices")));
-            this.listEdits.Size = new System.Drawing.Size(347, 199);
+            this.listEdits.Size = new System.Drawing.Size(347, 214);
             this.listEdits.TabIndex = 0;
             this.listEdits.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listEdits_ItemCheck);
             // 
@@ -68,7 +69,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(284, 217);
+            this.btnCancel.Location = new System.Drawing.Point(284, 233);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -80,7 +81,7 @@
             // 
             this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConfirm.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnConfirm.Location = new System.Drawing.Point(203, 217);
+            this.btnConfirm.Location = new System.Drawing.Point(203, 233);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(75, 23);
             this.btnConfirm.TabIndex = 2;
@@ -90,10 +91,11 @@
             // 
             // lblIncompatibility
             // 
+            this.lblIncompatibility.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblIncompatibility.AutoSize = true;
             this.lblIncompatibility.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIncompatibility.ForeColor = System.Drawing.Color.Red;
-            this.lblIncompatibility.Location = new System.Drawing.Point(12, 222);
+            this.lblIncompatibility.Location = new System.Drawing.Point(12, 238);
             this.lblIncompatibility.Name = "lblIncompatibility";
             this.lblIncompatibility.Size = new System.Drawing.Size(146, 13);
             this.lblIncompatibility.TabIndex = 3;
@@ -101,10 +103,11 @@
             // 
             // infoIncompatibility
             // 
+            this.infoIncompatibility.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.infoIncompatibility.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.infoIncompatibility.InfoText = resources.GetString("infoIncompatibility.InfoText");
             this.infoIncompatibility.InfoTitle = "Potential Incompatibility";
-            this.infoIncompatibility.Location = new System.Drawing.Point(158, 220);
+            this.infoIncompatibility.Location = new System.Drawing.Point(158, 236);
             this.infoIncompatibility.Name = "infoIncompatibility";
             this.infoIncompatibility.Size = new System.Drawing.Size(20, 20);
             this.infoIncompatibility.TabIndex = 4;
@@ -113,7 +116,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 252);
+            this.ClientSize = new System.Drawing.Size(371, 268);
             this.Controls.Add(this.infoIncompatibility);
             this.Controls.Add(this.lblIncompatibility);
             this.Controls.Add(this.btnConfirm);
