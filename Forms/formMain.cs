@@ -168,6 +168,7 @@ namespace mpegui
                 cmbAudioMode.SelectedIndex = f.AudioUseDb ? 1 : 0;
                 numAudioGain.Value = f.AudioGain;
                 numAudioDelay.Value = f.AudioDelaySeconds;
+                chkNormaliseAudio.Checked = f.AudioNormalise;
                 txtCrop.Text = f.CropFilter;
                 txtStart.Text = f.TrimStart.ToString(@"hh\:mm\:ss\.fff");
                 txtEnd.Text = f.TrimEnd.ToString(@"hh\:mm\:ss\.fff");
