@@ -56,6 +56,7 @@ namespace mpegui
             clone.AudioGain = AudioGain;
             clone.AudioUseDb = AudioUseDb;
             clone.AudioDelaySeconds = AudioDelaySeconds;
+            clone.AudioNormalise = AudioNormalise;
             clone.CropFilter = CropFilter;
             clone.Encoder = Encoder;
             clone.Tags = Tags;
