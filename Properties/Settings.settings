@@ -20,7 +20,7 @@
     <Setting Name="AdditionalOptions" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PasteEdits" Type="System.Collections.Generic.List&lt;System.Boolean&gt;" Scope="User">
+    <Setting Name="PasteEdits" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultPreset" Type="System.String" Scope="User">

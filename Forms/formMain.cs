@@ -407,16 +407,18 @@ namespace mpegui
                     foreach (int i in listFiles.SelectedIndices)
                     {
                         FileConversionInfo f = queue[i];
-                        if (edits[0])
+                        if (edits["Trim"])
                         {
                             f.TrimStart = c.TrimStart;
                             f.TrimEnd = c.TrimEnd;
                             f.TrimUseDuration = c.TrimUseDuration;
                         }
-                        if (edits[1])
+                        if (edits["Tags"])  f.Tags = c.Tags;
+
+                        if (edits["Encoder"])
                         {
                             // check if it won't be pasting the preset
-                            if (!edits[7])
+                            if (!edits["Encoder Preset"])
                             {
                                 // verify preset eligibility
                                 bool oldIsCPU = FileConversionInfo.isCPUEncoder(f.Encoder);
@@ -432,19 +434,10 @@ namespace mpegui
                             // now we can update the encoder
                             f.Encoder = c.Encoder;
                         }
-                        if (edits[2])  f.Tags = c.Tags;
-                        if (edits[3])  f.CropFilter = c.CropFilter;
-                        if (edits[4])
-                        {
-                            f.AudioGain = c.AudioGain;
-                            f.AudioUseDb = c.AudioUseDb;
-                        }
-                        if (edits[5])  f.AudioDelaySeconds = c.AudioDelaySeconds;
-                        if (edits[6])  f.CRF = c.CRF;
-                        if (edits[7])
+                        if (edits["Encoder Preset"])
                         {
                             // check if it won't be pasting the encoder
-                            if (!edits[1])
+                            if (!edits["Encoder"])
                             {
                                 // verify preset eligibility
                                 bool oldIsCPU = FileConversionInfo.isCPUEncoder(f.Encoder);
@@ -465,11 +458,23 @@ namespace mpegui
                             // now we can update preset
                             f.Preset = c.Preset;
                         }
-                        if (edits[8])  f.FPS = c.FPS;
-                        if (edits[9])  f.Speed = c.Speed;
-                        if (edits[10]) f.AdditionalOptions = c.AdditionalOptions;
-                        if (edits[11]) f.OutputName = c.OutputName;
-                        if (edits[12]) f.OverwriteExisting = c.OverwriteExisting;
+
+                        if (edits["CRF/CQP"])  f.CRF = c.CRF;
+                        if (edits["Crop Filter"])  f.CropFilter = c.CropFilter;
+                        if (edits["Frames Per Second"])  f.FPS = c.FPS;
+                        if (edits["Video Speed"])  f.Speed = c.Speed;
+
+                        if (edits["Audio Gain"])
+                        {
+                            f.AudioGain = c.AudioGain;
+                            f.AudioUseDb = c.AudioUseDb;
+                        }
+                        if (edits["Audio Delay"])  f.AudioDelaySeconds = c.AudioDelaySeconds;
+                        if (edits["Audio Normalisation"]) f.AudioNormalise = c.AudioNormalise;
+                        
+                        if (edits["Additional Options"]) f.AdditionalOptions = c.AdditionalOptions;
+                        if (edits["Output Name"]) f.OutputName = c.OutputName;
+                        if (edits["Overwrite If Exists"]) f.OverwriteExisting = c.OverwriteExisting;
                     }
 
                     UpdateUI();

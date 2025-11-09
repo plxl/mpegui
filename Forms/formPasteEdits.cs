@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text.Json;
 
 namespace mpegui
 {
     public partial class formPasteEdits : Form
     {
-        public List<bool> editsToPaste { get; private set; }
+        public Dictionary<string, bool> editsToPaste { get; set; }
         public FileConversionInfo copiedEdits { get; set; }
         public formPasteEdits()
         {
@@ -17,12 +18,13 @@ namespace mpegui
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            editsToPaste = new List<bool>();
-            foreach (var item in listEdits.Items)
-            {
-                editsToPaste.Add(listEdits.GetItemChecked(listEdits.Items.IndexOf(item)));
-            }
-            Settings.Default.PasteEdits = editsToPaste;
+            if (copiedEdits == null) return;
+            var options = getOptions(copiedEdits);
+            editsToPaste = options.Keys
+                .Select((key, index) => new { key, isChecked = listEdits.GetItemChecked(index) })
+                .ToDictionary(x => x.key, x => x.isChecked);
+
+            Settings.Default.PasteEdits = JsonSerializer.Serialize(editsToPaste);
             Settings.Default.Save();
             DialogResult = DialogResult.OK;
             Close();
@@ -31,36 +33,51 @@ namespace mpegui
         private void formPasteEdits_Load(object sender, EventArgs e)
         {
             if (copiedEdits == null) return;
-            FileConversionInfo c = copiedEdits;
+            var options = getOptions(copiedEdits);
 
-            var prevStates = Settings.Default.PasteEdits;
-            if (prevStates is null || prevStates.Count != 14)
-                prevStates = Enumerable.Repeat(false, 14).ToList();
-            Settings.Default.PasteEdits = prevStates;
+            var json = Settings.Default.PasteEdits;
+            var prevStates = new Dictionary<string, bool>();
+            try
+            {
+                prevStates = JsonSerializer.Deserialize<Dictionary<string, bool>>(json);
+            }
+            catch { Console.WriteLine("WARNING: Failed to deserialise settings for edits to paste."); }
+            
+            if (prevStates.Count != options.Count)
+                prevStates = options
+                    .Keys
+                    .Select((key, index) => new { key, value = index != 0 })
+                    .ToDictionary(x => x.key, x => x.value);
+
+            Settings.Default.PasteEdits = JsonSerializer.Serialize(prevStates);
 
             listEdits.Items.Clear();
-            var edits = new Dictionary<string, bool>
-            {
-                { $"Trim: {getTrimString()}",                                                   prevStates[0]  },
-                { $"Encoder: {blnkStr(c.Encoder)}",                                             prevStates[1]  },
-                { $"Tags: {blnkStr(c.Tags)}",                                                   prevStates[2]  },
-                { $"Crop Filter: {blnkStr(c.CropFilter)}",                                      prevStates[3]  },
-                { $"Audio Normalisation: {c.AudioNormalise}",                                   prevStates[4]  },
-                { $"Audio Gain: {c.AudioGain}{(c.AudioUseDb ? "dB" : "x")}",                    prevStates[5]  },
-                { $"Audio Delay Seconds: {c.AudioDelaySeconds}",                                prevStates[6]  },
-                { $"CRF/CQP: {c.CRF}",                                                          prevStates[7]  },
-                { $"Encoder Preset: {blnkStr(c.Preset)}",                                       prevStates[8]  },
-                { $"Frames per second: {(c.FPS < 1.0m ? "Same as source" : c.FPS.ToString())}", prevStates[9]  },
-                { $"Video Speed: {c.Speed:0.00}x",                                              prevStates[10]  },
-                { $"Additional Options: {blnkStr(c.AdditionalOptions)}",                        prevStates[11] },
-                { $"Output Name: {c.OutputName}",                                               prevStates[12] },
-                { $"Overwrite if exists: {ynb(c.OverwriteExisting)}",                           prevStates[13] },
-            };
+            foreach (var kvp in options)
+                listEdits.Items.Add($"{kvp.Key}: {kvp.Value}", prevStates[kvp.Key]);
+        }
 
-            foreach (var kvp in edits)
+        Dictionary<string, string> getOptions(FileConversionInfo c)
+        {
+            return new Dictionary<string, string>
             {
-                listEdits.Items.Add(kvp.Key, kvp.Value);
-            }
+                ["Trim"]                = getTrimString(),
+                ["Tags"]                = blnkStr(c.Tags),
+
+                ["Encoder"]             = blnkStr(c.Encoder),
+                ["Encoder Preset"]      = blnkStr(c.Preset),
+                ["CRF/CQP"]             = c.CRF.ToString(),
+                ["Crop Filter"]         = blnkStr(c.CropFilter),
+                ["Frames Per Second"]   = c.FPS < 1.0m ? "Same as source" : c.FPS.ToString(),
+                ["Video Speed"]         = $"{c.Speed:0.00}x",
+
+                ["Audio Gain"]          = $"{c.AudioGain}{(c.AudioUseDb ? "dB" : "x")}",
+                ["Audio Delay"]         = $"{c.AudioDelaySeconds.ToString()} seconds",
+                ["Audio Normalisation"] = ynb(c.AudioNormalise),
+
+                ["Additional Options"]  = blnkStr(c.AdditionalOptions),
+                ["Output Name"]         = c.OutputName,
+                ["Overwrite If Exists"] = ynb(c.OverwriteExisting)
+            };
         }
         private string blnkStr(string s)
         {

@@ -97,9 +97,10 @@ namespace mpegui.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Generic.List<System.Boolean> PasteEdits {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PasteEdits {
             get {
-                return ((global::System.Collections.Generic.List<System.Boolean>)(this["PasteEdits"]));
+                return ((string)(this["PasteEdits"]));
             }
             set {
                 this["PasteEdits"] = value;
