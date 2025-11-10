@@ -23,5 +23,10 @@ namespace mpegui.Classes
             Mode = mode;
             Milliseconds = milliseconds;
         }
+
+        public FadeInfo Clone()
+        {
+            return new FadeInfo(Mode, Milliseconds);
+        }
     }
 }
