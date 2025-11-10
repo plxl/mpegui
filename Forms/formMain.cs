@@ -1235,7 +1235,7 @@ namespace mpegui
                 };
                 menuPresetDefault.DropDownItems.Add(btnDefault);
 
-                // add default items
+                // add delete items
                 ToolStripMenuItem btnDelete = new ToolStripMenuItem
                 {
                     Text = preset
@@ -1246,6 +1246,9 @@ namespace mpegui
                         "Delete Preset",
                         MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
+                        // if the preset being deleted is currently the default, then reset the default as well
+                        if (Settings.Default.DefaultPreset == preset) PresetResetDefault();
+
                         string filename = GetPresetFilename(preset);
                         if (File.Exists(filename))
                             File.Delete(filename);
@@ -1347,6 +1350,11 @@ namespace mpegui
         }
 
         private void menuPresetDefaultReset_Click(object sender, EventArgs e)
+        {
+            PresetResetDefault();
+        }
+
+        private void PresetResetDefault()
         {
             Settings.Default.DefaultPreset = null;
             Settings.Default.Save();
