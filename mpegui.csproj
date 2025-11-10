@@ -104,6 +104,7 @@
     <Compile Include="Classes\CustomCheckedListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\FadeInfo.cs" />
     <Compile Include="Classes\FileConversionInfo.cs" />
     <Compile Include="Forms\formMain.cs">
       <SubType>Form</SubType>
