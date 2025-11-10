@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
 using Microsoft.VisualBasic;
+using mpegui.Classes;
 
 namespace mpegui
 {
@@ -186,6 +187,7 @@ namespace mpegui
                 trkSpeed.Value = (int)(f.Speed * 100.0);
                 trkSpeed_UpdateLabel();
                 chkOverwrite.Checked = f.OverwriteExisting;
+                UpdateFadeInAndOut();
 
                 panelControls.Tag = 0;
 
@@ -212,6 +214,25 @@ namespace mpegui
         {
             FileConversionInfo f = queue[listFiles.SelectedIndex];
             textCommand.Text = f.ToStringNameless();
+        }
+
+        public void UpdateFadeInAndOut()
+        {
+            FileConversionInfo f = queue[listFiles.SelectedIndex];
+
+            chkFadeIn.Checked = f.FadeIn.Enabled;
+            chkFadeOut.Checked = f.FadeOut.Enabled;
+
+            cmbFadeInMode.Enabled = chkFadeIn.Checked;
+            txtFadeInDuration.Enabled = chkFadeIn.Checked;
+            cmbFadeOutMode.Enabled = chkFadeOut.Checked;
+            txtFadeOutDuration.Enabled = chkFadeOut.Checked;
+
+            cmbFadeInMode.SelectedIndex = (int)f.FadeIn.Mode;
+            cmbFadeOutMode.SelectedIndex = (int)f.FadeOut.Mode;
+
+            txtFadeInDuration.Text = f.FadeIn.Milliseconds.ToString();
+            txtFadeOutDuration.Text = f.FadeOut.Milliseconds.ToString();
         }
 
         private void numAudioGain_ValueChanged(object sender, EventArgs e)
@@ -625,22 +646,6 @@ namespace mpegui
             }
         }
 
-        private TimeSpan GetFfprobeDuration(string output)
-        {
-            var durationRegex = new Regex(@"Duration: (\d+):(\d+):(\d+).(\d+)");
-            var durationMatch = durationRegex.Match(output);
-            if (durationMatch.Success)
-            {
-                int hours = int.Parse(durationMatch.Groups[1].Value);
-                int minutes = int.Parse(durationMatch.Groups[2].Value);
-                int seconds = int.Parse(durationMatch.Groups[3].Value);
-                int milliseconds = int.Parse(durationMatch.Groups[4].Value);
-                return new TimeSpan(0, hours, minutes, seconds, milliseconds);
-            }
-
-            return TimeSpan.Zero;
-        }
-
         private void UpdateProgressBar(double curTime, double duration)
         {
             if (InvokeRequired)
@@ -681,50 +686,13 @@ namespace mpegui
             UpdateCommand();
         }
 
-        private async void btnGetEnd_Click(object sender, EventArgs e)
+        private void btnGetEnd_Click(object sender, EventArgs e)
         {
             foreach (int i in listFiles.SelectedIndices)
             {
                 FileConversionInfo f = queue[i];
 
-                var probe = new Process();
-                probe.StartInfo.FileName = "ffprobe";
-                probe.StartInfo.Arguments = $"\"{f.Filename}\"";
-                probe.StartInfo.RedirectStandardOutput = true;
-                probe.StartInfo.RedirectStandardError = true;
-                probe.StartInfo.UseShellExecute = false;
-                probe.StartInfo.CreateNoWindow = true;
-
-                txtOutput.AppendText("Running: " + "ffprobe \"" + f.Filename + "\"\r\n");
-
-                TimeSpan duration = TimeSpan.Zero;
-                probe.OutputDataReceived += (s, e2) =>
-                {
-                    if (!string.IsNullOrEmpty(e2.Data))
-                    {
-                        txtOutput.Invoke(new Action(() => txtOutput.AppendText(e2.Data + "\r\n")));
-                        if (duration == TimeSpan.Zero)
-                            duration = GetFfprobeDuration(e2.Data);
-                    }
-                };
-
-                probe.ErrorDataReceived += (s, e2) =>
-                {
-                    if (!string.IsNullOrEmpty(e2.Data))
-                    {
-                        txtOutput.Invoke(new Action(() => txtOutput.AppendText(e2.Data + "\r\n")));
-                        if (duration == TimeSpan.Zero)
-                            duration = GetFfprobeDuration(e2.Data);
-                    }
-                };
-
-                probe.Start();
-                probe.BeginOutputReadLine();
-                probe.BeginErrorReadLine();
-
-                await Task.Run(() => probe.WaitForExit());
-
-                f.TrimEnd = duration;
+                f.TrimEnd = f.VideoDuration;
                 if (i == listFiles.SelectedIndex)
                 {
                     txtEnd.Text = f.TrimEnd.ToString(@"hh\:mm\:ss\.fff");
@@ -1472,6 +1440,112 @@ namespace mpegui
             {
                 FileConversionInfo f = queue[i];
                 f.AudioNormalise = chkNormaliseAudio.Checked;
+            }
+
+            UpdateCommand();
+        }
+
+        private void chkFadeIn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.FadeIn.Enabled = chkFadeIn.Checked;
+            }
+
+            UpdateFadeInAndOut();
+            UpdateCommand();
+        }
+
+        private void chkFadeOut_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.FadeOut.Enabled = chkFadeOut.Checked;
+            }
+
+            UpdateFadeInAndOut();
+            UpdateCommand();
+        }
+
+        private void cmbFadeInMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.FadeIn.Mode = (FadeMode)cmbFadeInMode.SelectedIndex;
+            }
+
+            UpdateFadeInAndOut();
+            UpdateCommand();
+        }
+
+        private void cmbFadeOutMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (IsUpdating()) return;
+
+            // update file conversion info
+            foreach (int i in listFiles.SelectedIndices)
+            {
+                FileConversionInfo f = queue[i];
+                f.FadeOut.Mode = (FadeMode)cmbFadeOutMode.SelectedIndex;
+            }
+
+            UpdateFadeInAndOut();
+            UpdateCommand();
+        }
+
+        private void txtFadeInDuration_TextChanged(object sender, EventArgs e)
+        {
+            txtFadeInDuration.ForeColor = Color.Black;
+
+            if (IsUpdating()) return;
+
+            if (int.TryParse(txtFadeInDuration.Text, out int duration))
+            {
+                // update file conversion info
+                foreach (int i in listFiles.SelectedIndices)
+                {
+                    FileConversionInfo f = queue[i];
+                    f.FadeIn.Milliseconds = duration;
+                }
+            }
+            else
+            {
+                txtFadeInDuration.ForeColor = Color.Red;
+            }
+
+            UpdateCommand();
+        }
+
+        private void txtFadeOutDuration_TextChanged(object sender, EventArgs e)
+        {
+            txtFadeOutDuration.ForeColor = Color.Black;
+
+            if (IsUpdating()) return;
+
+            if (int.TryParse(txtFadeOutDuration.Text, out int duration))
+            {
+                // update file conversion info
+                foreach (int i in listFiles.SelectedIndices)
+                {
+                    FileConversionInfo f = queue[i];
+                    f.FadeOut.Milliseconds = duration;
+                }
+            }
+            else
+            {
+                txtFadeOutDuration.ForeColor = Color.Red;
             }
 
             UpdateCommand();

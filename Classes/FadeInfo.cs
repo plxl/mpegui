@@ -8,25 +8,26 @@ namespace mpegui.Classes
 {
     public enum FadeMode
     {
-        None,
         Video,
         Audio,
         Both,
     }
     public class FadeInfo
     {
+        public bool Enabled { get; set; }
         public FadeMode Mode { get; set; }
         public int Milliseconds { get; set; }
 
-        public FadeInfo(FadeMode mode, int milliseconds)
+        public FadeInfo(FadeMode mode, int milliseconds, bool enabled)
         {
             Mode = mode;
             Milliseconds = milliseconds;
+            Enabled = enabled;
         }
 
         public FadeInfo Clone()
         {
-            return new FadeInfo(Mode, Milliseconds);
+            return new FadeInfo(Mode, Milliseconds, Enabled);
         }
     }
 }

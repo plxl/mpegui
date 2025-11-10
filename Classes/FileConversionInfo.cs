@@ -1,8 +1,12 @@
-﻿using System;
+﻿using mpegui.Classes;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mpegui
@@ -25,6 +29,9 @@ namespace mpegui
         public string Preset { get; set; }
         public decimal FPS { get; set; }
         public double Speed { get; set; }
+        public FadeInfo FadeIn { get; set; }
+        public FadeInfo FadeOut { get; set; }
+        public TimeSpan VideoDuration { get; set; }
         public string AdditionalOptions { get; set; }
         public bool OverwriteExisting { get; set; }
         public string TempFilename { get; set; }
@@ -41,6 +48,9 @@ namespace mpegui
             CRF = 22;
             FPS = 0;
             Speed = 1.00;
+            FadeIn = new FadeInfo(FadeMode.Both, 500, false);
+            FadeOut = new FadeInfo(FadeMode.Both, 500, false);
+            GetDuration();
 
             // by default it's multiplier mode, so 1.00x is no change
             AudioGain = 1m;
@@ -48,25 +58,82 @@ namespace mpegui
 
         public FileConversionInfo Clone()
         {
-            FileConversionInfo clone = new FileConversionInfo(Filename);
-            clone.OutputName = OutputName;
-            clone.TrimStart = TrimStart;
-            clone.TrimEnd = TrimEnd;
-            clone.TrimUseDuration = TrimUseDuration;
-            clone.AudioGain = AudioGain;
-            clone.AudioUseDb = AudioUseDb;
-            clone.AudioDelaySeconds = AudioDelaySeconds;
-            clone.AudioNormalise = AudioNormalise;
-            clone.CropFilter = CropFilter;
-            clone.Encoder = Encoder;
-            clone.Tags = Tags;
-            clone.CRF = CRF;
-            clone.Preset = Preset;
-            clone.FPS = FPS;
-            clone.Speed = Speed;
-            clone.AdditionalOptions = AdditionalOptions;
-            clone.OverwriteExisting = OverwriteExisting;
-            return clone;
+            return new FileConversionInfo(Filename)
+            {
+                OutputName = OutputName,
+                TrimStart = TrimStart,
+                TrimEnd = TrimEnd,
+                TrimUseDuration = TrimUseDuration,
+                AudioGain = AudioGain,
+                AudioUseDb = AudioUseDb,
+                AudioDelaySeconds = AudioDelaySeconds,
+                AudioNormalise = AudioNormalise,
+                CropFilter = CropFilter,
+                Encoder = Encoder,
+                Tags = Tags,
+                CRF = CRF,
+                Preset = Preset,
+                FPS = FPS,
+                Speed = Speed,
+                FadeIn = FadeIn.Clone(),
+                FadeOut = FadeOut.Clone(),
+                AdditionalOptions = AdditionalOptions,
+                OverwriteExisting = OverwriteExisting
+            };
+        }
+
+        private async void GetDuration()
+        {
+            var probe = new Process();
+            probe.StartInfo.FileName = "ffprobe";
+            probe.StartInfo.Arguments = $"\"{Filename}\"";
+            probe.StartInfo.RedirectStandardOutput = true;
+            probe.StartInfo.RedirectStandardError = true;
+            probe.StartInfo.UseShellExecute = false;
+            probe.StartInfo.CreateNoWindow = true;
+
+            TimeSpan duration = TimeSpan.Zero;
+            probe.OutputDataReceived += (s, e2) =>
+            {
+                if (!string.IsNullOrEmpty(e2.Data))
+                {
+                    if (duration == TimeSpan.Zero)
+                        duration = GetFfprobeDuration(e2.Data);
+                }
+            };
+
+            probe.ErrorDataReceived += (s, e2) =>
+            {
+                if (!string.IsNullOrEmpty(e2.Data))
+                {
+                    if (duration == TimeSpan.Zero)
+                        duration = GetFfprobeDuration(e2.Data);
+                }
+            };
+
+            probe.Start();
+            probe.BeginOutputReadLine();
+            probe.BeginErrorReadLine();
+
+            await Task.Run(() => probe.WaitForExit());
+
+            VideoDuration = duration;
+        }
+
+        private TimeSpan GetFfprobeDuration(string output)
+        {
+            var durationRegex = new Regex(@"Duration: (\d+):(\d+):(\d+).(\d+)");
+            var durationMatch = durationRegex.Match(output);
+            if (durationMatch.Success)
+            {
+                int hours = int.Parse(durationMatch.Groups[1].Value);
+                int minutes = int.Parse(durationMatch.Groups[2].Value);
+                int seconds = int.Parse(durationMatch.Groups[3].Value);
+                int milliseconds = int.Parse(durationMatch.Groups[4].Value);
+                return new TimeSpan(0, hours, minutes, seconds, milliseconds);
+            }
+
+            return TimeSpan.Zero;
         }
 
         public void SetPreset(Preset preset)
@@ -151,6 +218,38 @@ namespace mpegui
                     // trim to remove spaces
                     afilters.Add(filter.Trim());
                 }
+            }
+
+            // Handle Video and Audio Fading
+            if (FadeIn.Enabled)
+            {
+                bool fadev = FadeIn.Mode == FadeMode.Video || FadeIn.Mode == FadeMode.Both;
+                bool fadea = FadeIn.Mode == FadeMode.Audio || FadeIn.Mode == FadeMode.Both;
+
+                if (fadev)
+                    vfilters.Add($"fade=t=in:st={TrimStart.TotalSeconds:F3}:d={FadeIn.Milliseconds / 1000m}");
+
+                if (fadea)
+                    afilters.Add($"afade=t=in:st={TrimStart.TotalSeconds:F3}:d={FadeIn.Milliseconds / 1000m}");
+            }
+
+            if (FadeOut.Enabled)
+            {
+                bool fadev = FadeOut.Mode == FadeMode.Video || FadeOut.Mode == FadeMode.Both;
+                bool fadea = FadeOut.Mode == FadeMode.Audio || FadeOut.Mode == FadeMode.Both;
+
+                var outDur = TimeSpan.FromMilliseconds(FadeOut.Milliseconds);
+                string end = TrimEnd == TimeSpan.Zero
+                    ? $"{(VideoDuration - outDur).TotalSeconds:F3}"
+                    : TrimUseDuration
+                    ? $"{(TrimStart + TrimEnd - outDur).TotalSeconds:F3}"
+                    : $"{(TrimEnd - outDur).TotalSeconds:F3}";
+
+                if (fadev)
+                    vfilters.Add($"fade=t=out:st={end}:d={FadeOut.Milliseconds / 1000m}");
+
+                if (fadea)
+                    afilters.Add($"afade=t=out:st={end}:d={FadeOut.Milliseconds / 1000m}");
             }
 
             // combine video and audio filters into single string

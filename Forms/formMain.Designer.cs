@@ -51,10 +51,6 @@
             this.chkNormaliseAudio = new System.Windows.Forms.CheckBox();
             this.btnBrowseFilename = new System.Windows.Forms.Button();
             this.cmbAudioMode = new System.Windows.Forms.ComboBox();
-            this.infoButton4 = new mpegui.InfoButton();
-            this.infoButton3 = new mpegui.InfoButton();
-            this.infoButton2 = new mpegui.InfoButton();
-            this.infoButton1 = new mpegui.InfoButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
@@ -138,6 +134,10 @@
             this.txtFadeOutDuration = new System.Windows.Forms.TextBox();
             this.cmbFadeOutMode = new System.Windows.Forms.ComboBox();
             this.chkFadeOut = new System.Windows.Forms.CheckBox();
+            this.infoButton4 = new mpegui.InfoButton();
+            this.infoButton3 = new mpegui.InfoButton();
+            this.infoButton2 = new mpegui.InfoButton();
+            this.infoButton1 = new mpegui.InfoButton();
             this.cmsFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
@@ -426,49 +426,6 @@
             this.cmbAudioMode.Size = new System.Drawing.Size(43, 21);
             this.cmbAudioMode.TabIndex = 53;
             this.cmbAudioMode.SelectedIndexChanged += new System.EventHandler(this.cmbAudioMode_SelectedIndexChanged);
-            // 
-            // infoButton4
-            // 
-            this.infoButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
-            this.infoButton4.InfoTitle = "Additional Options / Parameters";
-            this.infoButton4.Location = new System.Drawing.Point(92, 308);
-            this.infoButton4.Name = "infoButton4";
-            this.infoButton4.Size = new System.Drawing.Size(20, 20);
-            this.infoButton4.TabIndex = 52;
-            // 
-            // infoButton3
-            // 
-            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
-    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
-    "12.0 = +12dB\r\n-5.5 = -5.5dB";
-            this.infoButton3.InfoTitle = "Audio Gain";
-            this.infoButton3.Location = new System.Drawing.Point(55, 181);
-            this.infoButton3.Name = "infoButton3";
-            this.infoButton3.Size = new System.Drawing.Size(20, 20);
-            this.infoButton3.TabIndex = 51;
-            // 
-            // infoButton2
-            // 
-            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
-            this.infoButton2.InfoTitle = "Speed Information";
-            this.infoButton2.Location = new System.Drawing.Point(382, 194);
-            this.infoButton2.Name = "infoButton2";
-            this.infoButton2.Size = new System.Drawing.Size(20, 20);
-            this.infoButton2.TabIndex = 51;
-            // 
-            // infoButton1
-            // 
-            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
-            this.infoButton1.InfoTitle = "Information about CRF / CQP";
-            this.infoButton1.Location = new System.Drawing.Point(298, 20);
-            this.infoButton1.Name = "infoButton1";
-            this.infoButton1.Size = new System.Drawing.Size(20, 20);
-            this.infoButton1.TabIndex = 50;
             // 
             // groupBox1
             // 
@@ -945,7 +902,7 @@
             this.menuPresetSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuPresetSaveAs});
             this.menuPresetSave.Name = "menuPresetSave";
-            this.menuPresetSave.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetSave.Size = new System.Drawing.Size(150, 22);
             this.menuPresetSave.Text = "Save Preset";
             // 
             // menuPresetSaveAs
@@ -958,44 +915,44 @@
             // menuPresetLoad
             // 
             this.menuPresetLoad.Name = "menuPresetLoad";
-            this.menuPresetLoad.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetLoad.Size = new System.Drawing.Size(150, 22);
             this.menuPresetLoad.Text = "Load Preset";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
             // 
             // menuPresetDefault
             // 
             this.menuPresetDefault.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuPresetDefaultReset});
             this.menuPresetDefault.Name = "menuPresetDefault";
-            this.menuPresetDefault.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetDefault.Size = new System.Drawing.Size(150, 22);
             this.menuPresetDefault.Text = "Default Preset";
             // 
             // menuPresetDefaultReset
             // 
             this.menuPresetDefaultReset.Name = "menuPresetDefaultReset";
-            this.menuPresetDefaultReset.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetDefaultReset.Size = new System.Drawing.Size(143, 22);
             this.menuPresetDefaultReset.Text = "Reset Default";
             this.menuPresetDefaultReset.Click += new System.EventHandler(this.menuPresetDefaultReset_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(147, 6);
             // 
             // menuPresetDelete
             // 
             this.menuPresetDelete.Name = "menuPresetDelete";
-            this.menuPresetDelete.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetDelete.Size = new System.Drawing.Size(150, 22);
             this.menuPresetDelete.Text = "Delete Preset";
             // 
             // menuPresetReload
             // 
             this.menuPresetReload.Name = "menuPresetReload";
-            this.menuPresetReload.Size = new System.Drawing.Size(180, 22);
+            this.menuPresetReload.Size = new System.Drawing.Size(150, 22);
             this.menuPresetReload.Text = "Reload Presets";
             this.menuPresetReload.Click += new System.EventHandler(this.menuPresetReload_Click);
             // 
@@ -1219,6 +1176,7 @@
             this.chkFadeIn.TabIndex = 56;
             this.chkFadeIn.Text = "Fade In";
             this.chkFadeIn.UseVisualStyleBackColor = true;
+            this.chkFadeIn.CheckedChanged += new System.EventHandler(this.chkFadeIn_CheckedChanged);
             // 
             // cmbFadeInMode
             // 
@@ -1232,38 +1190,41 @@
             this.cmbFadeInMode.Name = "cmbFadeInMode";
             this.cmbFadeInMode.Size = new System.Drawing.Size(75, 21);
             this.cmbFadeInMode.TabIndex = 58;
+            this.cmbFadeInMode.SelectedIndexChanged += new System.EventHandler(this.cmbFadeInMode_SelectedIndexChanged);
             // 
             // txtFadeInDuration
             // 
             this.txtFadeInDuration.Location = new System.Drawing.Point(81, 278);
             this.txtFadeInDuration.Name = "txtFadeInDuration";
-            this.txtFadeInDuration.Size = new System.Drawing.Size(60, 20);
+            this.txtFadeInDuration.Size = new System.Drawing.Size(66, 20);
             this.txtFadeInDuration.TabIndex = 49;
+            this.txtFadeInDuration.TextChanged += new System.EventHandler(this.txtFadeInDuration_TextChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(78, 262);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.Size = new System.Drawing.Size(69, 13);
             this.label6.TabIndex = 61;
-            this.label6.Text = "Duration (s)";
+            this.label6.Text = "Duration (ms)";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(236, 262);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(61, 13);
+            this.label14.Size = new System.Drawing.Size(69, 13);
             this.label14.TabIndex = 65;
-            this.label14.Text = "Duration (s)";
+            this.label14.Text = "Duration (ms)";
             // 
             // txtFadeOutDuration
             // 
             this.txtFadeOutDuration.Location = new System.Drawing.Point(239, 278);
             this.txtFadeOutDuration.Name = "txtFadeOutDuration";
-            this.txtFadeOutDuration.Size = new System.Drawing.Size(60, 20);
+            this.txtFadeOutDuration.Size = new System.Drawing.Size(66, 20);
             this.txtFadeOutDuration.TabIndex = 62;
+            this.txtFadeOutDuration.TextChanged += new System.EventHandler(this.txtFadeOutDuration_TextChanged);
             // 
             // cmbFadeOutMode
             // 
@@ -1277,6 +1238,7 @@
             this.cmbFadeOutMode.Name = "cmbFadeOutMode";
             this.cmbFadeOutMode.Size = new System.Drawing.Size(75, 21);
             this.cmbFadeOutMode.TabIndex = 64;
+            this.cmbFadeOutMode.SelectedIndexChanged += new System.EventHandler(this.cmbFadeOutMode_SelectedIndexChanged);
             // 
             // chkFadeOut
             // 
@@ -1287,6 +1249,50 @@
             this.chkFadeOut.TabIndex = 63;
             this.chkFadeOut.Text = "Fade Out";
             this.chkFadeOut.UseVisualStyleBackColor = true;
+            this.chkFadeOut.CheckedChanged += new System.EventHandler(this.chkFadeOut_CheckedChanged);
+            // 
+            // infoButton4
+            // 
+            this.infoButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
+            this.infoButton4.InfoTitle = "Additional Options / Parameters";
+            this.infoButton4.Location = new System.Drawing.Point(92, 308);
+            this.infoButton4.Name = "infoButton4";
+            this.infoButton4.Size = new System.Drawing.Size(20, 20);
+            this.infoButton4.TabIndex = 52;
+            // 
+            // infoButton3
+            // 
+            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
+    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
+    "12.0 = +12dB\r\n-5.5 = -5.5dB";
+            this.infoButton3.InfoTitle = "Audio Gain";
+            this.infoButton3.Location = new System.Drawing.Point(55, 181);
+            this.infoButton3.Name = "infoButton3";
+            this.infoButton3.Size = new System.Drawing.Size(20, 20);
+            this.infoButton3.TabIndex = 51;
+            // 
+            // infoButton2
+            // 
+            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
+            this.infoButton2.InfoTitle = "Speed Information";
+            this.infoButton2.Location = new System.Drawing.Point(382, 194);
+            this.infoButton2.Name = "infoButton2";
+            this.infoButton2.Size = new System.Drawing.Size(20, 20);
+            this.infoButton2.TabIndex = 51;
+            // 
+            // infoButton1
+            // 
+            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
+            this.infoButton1.InfoTitle = "Information about CRF / CQP";
+            this.infoButton1.Location = new System.Drawing.Point(298, 20);
+            this.infoButton1.Name = "infoButton1";
+            this.infoButton1.Size = new System.Drawing.Size(20, 20);
+            this.infoButton1.TabIndex = 50;
             // 
             // formMain
             // 
