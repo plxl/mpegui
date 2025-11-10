@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace mpegui.Classes
 {
-    internal enum FadeMode
+    public enum FadeMode
     {
         None,
         Video,
         Audio,
         Both,
     }
-    internal class FadeInfo
+    public class FadeInfo
     {
         public FadeMode Mode { get; set; }
         public int Milliseconds { get; set; }
