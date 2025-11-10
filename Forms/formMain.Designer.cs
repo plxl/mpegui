@@ -48,8 +48,13 @@
             this.dropEncoder = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.chkNormaliseAudio = new System.Windows.Forms.CheckBox();
             this.btnBrowseFilename = new System.Windows.Forms.Button();
             this.cmbAudioMode = new System.Windows.Forms.ComboBox();
+            this.infoButton4 = new mpegui.InfoButton();
+            this.infoButton3 = new mpegui.InfoButton();
+            this.infoButton2 = new mpegui.InfoButton();
+            this.infoButton1 = new mpegui.InfoButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.optDuration = new System.Windows.Forms.RadioButton();
@@ -125,11 +130,14 @@
             this.splitOutput = new System.Windows.Forms.SplitContainer();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.chkNormaliseAudio = new System.Windows.Forms.CheckBox();
-            this.infoButton4 = new mpegui.InfoButton();
-            this.infoButton3 = new mpegui.InfoButton();
-            this.infoButton2 = new mpegui.InfoButton();
-            this.infoButton1 = new mpegui.InfoButton();
+            this.chkFadeIn = new System.Windows.Forms.CheckBox();
+            this.cmbFadeInMode = new System.Windows.Forms.ComboBox();
+            this.txtFadeInDuration = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtFadeOutDuration = new System.Windows.Forms.TextBox();
+            this.cmbFadeOutMode = new System.Windows.Forms.ComboBox();
+            this.chkFadeOut = new System.Windows.Forms.CheckBox();
             this.cmsFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioGain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAudioDelay)).BeginInit();
@@ -158,7 +166,7 @@
             this.listFiles.Location = new System.Drawing.Point(0, 0);
             this.listFiles.Name = "listFiles";
             this.listFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listFiles.Size = new System.Drawing.Size(120, 466);
+            this.listFiles.Size = new System.Drawing.Size(120, 504);
             this.listFiles.TabIndex = 0;
             this.listFiles.SelectedIndexChanged += new System.EventHandler(this.listFiles_SelectedIndexChanged);
             this.listFiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.listFiles_DragDrop);
@@ -331,6 +339,14 @@
             // 
             // panelControls
             // 
+            this.panelControls.Controls.Add(this.label14);
+            this.panelControls.Controls.Add(this.txtFadeOutDuration);
+            this.panelControls.Controls.Add(this.cmbFadeOutMode);
+            this.panelControls.Controls.Add(this.chkFadeOut);
+            this.panelControls.Controls.Add(this.label6);
+            this.panelControls.Controls.Add(this.txtFadeInDuration);
+            this.panelControls.Controls.Add(this.cmbFadeInMode);
+            this.panelControls.Controls.Add(this.chkFadeIn);
             this.panelControls.Controls.Add(this.chkNormaliseAudio);
             this.panelControls.Controls.Add(this.btnBrowseFilename);
             this.panelControls.Controls.Add(this.cmbAudioMode);
@@ -372,14 +388,25 @@
             this.panelControls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControls.Location = new System.Drawing.Point(0, 0);
             this.panelControls.Name = "panelControls";
-            this.panelControls.Size = new System.Drawing.Size(496, 466);
+            this.panelControls.Size = new System.Drawing.Size(496, 504);
             this.panelControls.TabIndex = 8;
             this.panelControls.Visible = false;
+            // 
+            // chkNormaliseAudio
+            // 
+            this.chkNormaliseAudio.AutoSize = true;
+            this.chkNormaliseAudio.Location = new System.Drawing.Point(3, 227);
+            this.chkNormaliseAudio.Name = "chkNormaliseAudio";
+            this.chkNormaliseAudio.Size = new System.Drawing.Size(138, 17);
+            this.chkNormaliseAudio.TabIndex = 55;
+            this.chkNormaliseAudio.Text = "Normalise audio to -1dB";
+            this.chkNormaliseAudio.UseVisualStyleBackColor = true;
+            this.chkNormaliseAudio.CheckedChanged += new System.EventHandler(this.chkNormaliseAudio_CheckedChanged);
             // 
             // btnBrowseFilename
             // 
             this.btnBrowseFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowseFilename.Location = new System.Drawing.Point(419, 365);
+            this.btnBrowseFilename.Location = new System.Drawing.Point(419, 403);
             this.btnBrowseFilename.Name = "btnBrowseFilename";
             this.btnBrowseFilename.Size = new System.Drawing.Size(65, 23);
             this.btnBrowseFilename.TabIndex = 54;
@@ -399,6 +426,49 @@
             this.cmbAudioMode.Size = new System.Drawing.Size(43, 21);
             this.cmbAudioMode.TabIndex = 53;
             this.cmbAudioMode.SelectedIndexChanged += new System.EventHandler(this.cmbAudioMode_SelectedIndexChanged);
+            // 
+            // infoButton4
+            // 
+            this.infoButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
+            this.infoButton4.InfoTitle = "Additional Options / Parameters";
+            this.infoButton4.Location = new System.Drawing.Point(92, 308);
+            this.infoButton4.Name = "infoButton4";
+            this.infoButton4.Size = new System.Drawing.Size(20, 20);
+            this.infoButton4.TabIndex = 52;
+            // 
+            // infoButton3
+            // 
+            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
+    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
+    "12.0 = +12dB\r\n-5.5 = -5.5dB";
+            this.infoButton3.InfoTitle = "Audio Gain";
+            this.infoButton3.Location = new System.Drawing.Point(55, 181);
+            this.infoButton3.Name = "infoButton3";
+            this.infoButton3.Size = new System.Drawing.Size(20, 20);
+            this.infoButton3.TabIndex = 51;
+            // 
+            // infoButton2
+            // 
+            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
+            this.infoButton2.InfoTitle = "Speed Information";
+            this.infoButton2.Location = new System.Drawing.Point(382, 194);
+            this.infoButton2.Name = "infoButton2";
+            this.infoButton2.Size = new System.Drawing.Size(20, 20);
+            this.infoButton2.TabIndex = 51;
+            // 
+            // infoButton1
+            // 
+            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
+            this.infoButton1.InfoTitle = "Information about CRF / CQP";
+            this.infoButton1.Location = new System.Drawing.Point(298, 20);
+            this.infoButton1.Name = "infoButton1";
+            this.infoButton1.Size = new System.Drawing.Size(20, 20);
+            this.infoButton1.TabIndex = 50;
             // 
             // groupBox1
             // 
@@ -542,7 +612,7 @@
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(-3, 274);
+            this.label12.Location = new System.Drawing.Point(-3, 312);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(92, 13);
             this.label12.TabIndex = 40;
@@ -555,7 +625,7 @@
             this.txtAdditionalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAdditionalOptions.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAdditionalOptions.Location = new System.Drawing.Point(0, 290);
+            this.txtAdditionalOptions.Location = new System.Drawing.Point(0, 328);
             this.txtAdditionalOptions.Multiline = true;
             this.txtAdditionalOptions.Name = "txtAdditionalOptions";
             this.txtAdditionalOptions.Size = new System.Drawing.Size(484, 51);
@@ -650,7 +720,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(-2, 420);
+            this.label8.Location = new System.Drawing.Point(-2, 458);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(236, 13);
             this.label8.TabIndex = 31;
@@ -660,7 +730,7 @@
             // 
             this.lblOutputFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblOutputFilename.AutoSize = true;
-            this.lblOutputFilename.Location = new System.Drawing.Point(-2, 390);
+            this.lblOutputFilename.Location = new System.Drawing.Point(-2, 428);
             this.lblOutputFilename.Name = "lblOutputFilename";
             this.lblOutputFilename.Size = new System.Drawing.Size(69, 13);
             this.lblOutputFilename.TabIndex = 25;
@@ -670,7 +740,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(-3, 351);
+            this.label9.Location = new System.Drawing.Point(-3, 389);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(123, 13);
             this.label9.TabIndex = 24;
@@ -680,7 +750,7 @@
             // 
             this.txtOutName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutName.Location = new System.Drawing.Point(0, 367);
+            this.txtOutName.Location = new System.Drawing.Point(0, 405);
             this.txtOutName.Name = "txtOutName";
             this.txtOutName.Size = new System.Drawing.Size(413, 20);
             this.txtOutName.TabIndex = 23;
@@ -690,7 +760,7 @@
             // 
             this.chkOverwrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkOverwrite.AutoSize = true;
-            this.chkOverwrite.Location = new System.Drawing.Point(121, 350);
+            this.chkOverwrite.Location = new System.Drawing.Point(121, 388);
             this.chkOverwrite.Name = "chkOverwrite";
             this.chkOverwrite.Size = new System.Drawing.Size(108, 17);
             this.chkOverwrite.TabIndex = 18;
@@ -701,7 +771,7 @@
             // btnPaste
             // 
             this.btnPaste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnPaste.Location = new System.Drawing.Point(58, 434);
+            this.btnPaste.Location = new System.Drawing.Point(58, 472);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(52, 23);
             this.btnPaste.TabIndex = 17;
@@ -712,7 +782,7 @@
             // btnCopy
             // 
             this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCopy.Location = new System.Drawing.Point(0, 434);
+            this.btnCopy.Location = new System.Drawing.Point(0, 472);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(52, 23);
             this.btnCopy.TabIndex = 16;
@@ -875,7 +945,7 @@
             this.menuPresetSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuPresetSaveAs});
             this.menuPresetSave.Name = "menuPresetSave";
-            this.menuPresetSave.Size = new System.Drawing.Size(150, 22);
+            this.menuPresetSave.Size = new System.Drawing.Size(180, 22);
             this.menuPresetSave.Text = "Save Preset";
             // 
             // menuPresetSaveAs
@@ -888,44 +958,44 @@
             // menuPresetLoad
             // 
             this.menuPresetLoad.Name = "menuPresetLoad";
-            this.menuPresetLoad.Size = new System.Drawing.Size(150, 22);
+            this.menuPresetLoad.Size = new System.Drawing.Size(180, 22);
             this.menuPresetLoad.Text = "Load Preset";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // menuPresetDefault
             // 
             this.menuPresetDefault.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuPresetDefaultReset});
             this.menuPresetDefault.Name = "menuPresetDefault";
-            this.menuPresetDefault.Size = new System.Drawing.Size(150, 22);
+            this.menuPresetDefault.Size = new System.Drawing.Size(180, 22);
             this.menuPresetDefault.Text = "Default Preset";
             // 
             // menuPresetDefaultReset
             // 
             this.menuPresetDefaultReset.Name = "menuPresetDefaultReset";
-            this.menuPresetDefaultReset.Size = new System.Drawing.Size(143, 22);
+            this.menuPresetDefaultReset.Size = new System.Drawing.Size(180, 22);
             this.menuPresetDefaultReset.Text = "Reset Default";
             this.menuPresetDefaultReset.Click += new System.EventHandler(this.menuPresetDefaultReset_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // menuPresetDelete
             // 
             this.menuPresetDelete.Name = "menuPresetDelete";
-            this.menuPresetDelete.Size = new System.Drawing.Size(150, 22);
+            this.menuPresetDelete.Size = new System.Drawing.Size(180, 22);
             this.menuPresetDelete.Text = "Delete Preset";
             // 
             // menuPresetReload
             // 
             this.menuPresetReload.Name = "menuPresetReload";
-            this.menuPresetReload.Size = new System.Drawing.Size(150, 22);
+            this.menuPresetReload.Size = new System.Drawing.Size(180, 22);
             this.menuPresetReload.Text = "Reload Presets";
             this.menuPresetReload.Click += new System.EventHandler(this.menuPresetReload_Click);
             // 
@@ -1103,7 +1173,7 @@
             // splitList.Panel2
             // 
             this.splitList.Panel2.Controls.Add(this.panelControls);
-            this.splitList.Size = new System.Drawing.Size(620, 466);
+            this.splitList.Size = new System.Drawing.Size(620, 504);
             this.splitList.SplitterDistance = 120;
             this.splitList.TabIndex = 29;
             // 
@@ -1126,8 +1196,8 @@
             this.splitOutput.Panel2.Controls.Add(this.btnCopyCommand);
             this.splitOutput.Panel2.Controls.Add(this.txtOutput);
             this.splitOutput.Panel2.Controls.Add(this.progressBar1);
-            this.splitOutput.Size = new System.Drawing.Size(620, 594);
-            this.splitOutput.SplitterDistance = 466;
+            this.splitOutput.Size = new System.Drawing.Size(620, 632);
+            this.splitOutput.SplitterDistance = 504;
             this.splitOutput.TabIndex = 30;
             // 
             // openFileDialog
@@ -1140,65 +1210,89 @@
             // 
             this.saveFileDialog.Filter = resources.GetString("saveFileDialog.Filter");
             // 
-            // chkNormaliseAudio
+            // chkFadeIn
             // 
-            this.chkNormaliseAudio.AutoSize = true;
-            this.chkNormaliseAudio.Location = new System.Drawing.Point(3, 227);
-            this.chkNormaliseAudio.Name = "chkNormaliseAudio";
-            this.chkNormaliseAudio.Size = new System.Drawing.Size(138, 17);
-            this.chkNormaliseAudio.TabIndex = 55;
-            this.chkNormaliseAudio.Text = "Normalise audio to -1dB";
-            this.chkNormaliseAudio.UseVisualStyleBackColor = true;
-            this.chkNormaliseAudio.CheckedChanged += new System.EventHandler(this.chkNormaliseAudio_CheckedChanged);
+            this.chkFadeIn.AutoSize = true;
+            this.chkFadeIn.Location = new System.Drawing.Point(0, 259);
+            this.chkFadeIn.Name = "chkFadeIn";
+            this.chkFadeIn.Size = new System.Drawing.Size(62, 17);
+            this.chkFadeIn.TabIndex = 56;
+            this.chkFadeIn.Text = "Fade In";
+            this.chkFadeIn.UseVisualStyleBackColor = true;
             // 
-            // infoButton4
+            // cmbFadeInMode
             // 
-            this.infoButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.infoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton4.InfoText = resources.GetString("infoButton4.InfoText");
-            this.infoButton4.InfoTitle = "Additional Options / Parameters";
-            this.infoButton4.Location = new System.Drawing.Point(92, 270);
-            this.infoButton4.Name = "infoButton4";
-            this.infoButton4.Size = new System.Drawing.Size(20, 20);
-            this.infoButton4.TabIndex = 52;
+            this.cmbFadeInMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFadeInMode.FormattingEnabled = true;
+            this.cmbFadeInMode.Items.AddRange(new object[] {
+            "Video",
+            "Audio",
+            "Both"});
+            this.cmbFadeInMode.Location = new System.Drawing.Point(0, 278);
+            this.cmbFadeInMode.Name = "cmbFadeInMode";
+            this.cmbFadeInMode.Size = new System.Drawing.Size(75, 21);
+            this.cmbFadeInMode.TabIndex = 58;
             // 
-            // infoButton3
+            // txtFadeInDuration
             // 
-            this.infoButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton3.InfoText = "Increase or decrease the audio volume.\r\n\r\nIf you use the \"x\" mode (multiplier), t" +
-    "hen:\r\n1.50 = 150% volume\r\n0.50 = 50% volume\r\n\r\nIf you use the \"dB\" mode, then:\r\n" +
-    "12.0 = +12dB\r\n-5.5 = -5.5dB";
-            this.infoButton3.InfoTitle = "Audio Gain";
-            this.infoButton3.Location = new System.Drawing.Point(55, 181);
-            this.infoButton3.Name = "infoButton3";
-            this.infoButton3.Size = new System.Drawing.Size(20, 20);
-            this.infoButton3.TabIndex = 51;
+            this.txtFadeInDuration.Location = new System.Drawing.Point(81, 278);
+            this.txtFadeInDuration.Name = "txtFadeInDuration";
+            this.txtFadeInDuration.Size = new System.Drawing.Size(60, 20);
+            this.txtFadeInDuration.TabIndex = 49;
             // 
-            // infoButton2
+            // label6
             // 
-            this.infoButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton2.InfoText = resources.GetString("infoButton2.InfoText");
-            this.infoButton2.InfoTitle = "Speed Information";
-            this.infoButton2.Location = new System.Drawing.Point(382, 194);
-            this.infoButton2.Name = "infoButton2";
-            this.infoButton2.Size = new System.Drawing.Size(20, 20);
-            this.infoButton2.TabIndex = 51;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(78, 262);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.TabIndex = 61;
+            this.label6.Text = "Duration (s)";
             // 
-            // infoButton1
+            // label14
             // 
-            this.infoButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.infoButton1.InfoText = resources.GetString("infoButton1.InfoText");
-            this.infoButton1.InfoTitle = "Information about CRF / CQP";
-            this.infoButton1.Location = new System.Drawing.Point(298, 20);
-            this.infoButton1.Name = "infoButton1";
-            this.infoButton1.Size = new System.Drawing.Size(20, 20);
-            this.infoButton1.TabIndex = 50;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(236, 262);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(61, 13);
+            this.label14.TabIndex = 65;
+            this.label14.Text = "Duration (s)";
+            // 
+            // txtFadeOutDuration
+            // 
+            this.txtFadeOutDuration.Location = new System.Drawing.Point(239, 278);
+            this.txtFadeOutDuration.Name = "txtFadeOutDuration";
+            this.txtFadeOutDuration.Size = new System.Drawing.Size(60, 20);
+            this.txtFadeOutDuration.TabIndex = 62;
+            // 
+            // cmbFadeOutMode
+            // 
+            this.cmbFadeOutMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFadeOutMode.FormattingEnabled = true;
+            this.cmbFadeOutMode.Items.AddRange(new object[] {
+            "Video",
+            "Audio",
+            "Both"});
+            this.cmbFadeOutMode.Location = new System.Drawing.Point(158, 278);
+            this.cmbFadeOutMode.Name = "cmbFadeOutMode";
+            this.cmbFadeOutMode.Size = new System.Drawing.Size(75, 21);
+            this.cmbFadeOutMode.TabIndex = 64;
+            // 
+            // chkFadeOut
+            // 
+            this.chkFadeOut.AutoSize = true;
+            this.chkFadeOut.Location = new System.Drawing.Point(158, 259);
+            this.chkFadeOut.Name = "chkFadeOut";
+            this.chkFadeOut.Size = new System.Drawing.Size(70, 17);
+            this.chkFadeOut.TabIndex = 63;
+            this.chkFadeOut.Text = "Fade Out";
+            this.chkFadeOut.UseVisualStyleBackColor = true;
             // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(620, 618);
+            this.ClientSize = new System.Drawing.Size(620, 656);
             this.Controls.Add(this.splitOutput);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1334,6 +1428,14 @@
         private System.Windows.Forms.ToolStripMenuItem defaultOutputNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox menuOptionsDefaultOut;
         private System.Windows.Forms.CheckBox chkNormaliseAudio;
+        private System.Windows.Forms.TextBox txtFadeInDuration;
+        private System.Windows.Forms.ComboBox cmbFadeInMode;
+        private System.Windows.Forms.CheckBox chkFadeIn;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtFadeOutDuration;
+        private System.Windows.Forms.ComboBox cmbFadeOutMode;
+        private System.Windows.Forms.CheckBox chkFadeOut;
+        private System.Windows.Forms.Label label6;
     }
 }
 
