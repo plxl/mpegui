@@ -492,6 +492,9 @@ namespace mpegui
                         }
                         if (edits["Audio Delay"])  f.AudioDelaySeconds = c.AudioDelaySeconds;
                         if (edits["Audio Normalisation"]) f.AudioNormalise = c.AudioNormalise;
+
+                        if (edits["Fade In"]) f.FadeIn = c.FadeIn.Clone();
+                        if (edits["Fade Out"]) f.FadeOut = c.FadeOut.Clone();
                         
                         if (edits["Additional Options"]) f.AdditionalOptions = c.AdditionalOptions;
                         if (edits["Output Name"]) f.OutputName = c.OutputName;

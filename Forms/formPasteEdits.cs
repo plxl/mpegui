@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Text.Json;
+using mpegui.Classes;
 
 namespace mpegui
 {
@@ -74,6 +75,9 @@ namespace mpegui
                 ["Audio Delay"]         = $"{c.AudioDelaySeconds.ToString()} seconds",
                 ["Audio Normalisation"] = ynb(c.AudioNormalise),
 
+                ["Fade In"]             = getFadeString(c.FadeIn),
+                ["Fade Out"]            = getFadeString(c.FadeOut),
+
                 ["Additional Options"]  = blnkStr(c.AdditionalOptions),
                 ["Output Name"]         = c.OutputName,
                 ["Overwrite If Exists"] = ynb(c.OverwriteExisting)
@@ -86,6 +90,11 @@ namespace mpegui
         private string ynb(bool b)
         {
             return b ? "YES" : "NO";
+        }
+        private string getFadeString(FadeInfo f)
+        {
+            if (!f.Enabled) return "NO";
+            return $"YES - A/V: {f.Mode}, Duration: {f.Milliseconds}ms";
         }
         private string getTrimString()
         {
