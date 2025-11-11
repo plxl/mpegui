@@ -102,6 +102,7 @@
             this.lblIncompatibility.Size = new System.Drawing.Size(146, 13);
             this.lblIncompatibility.TabIndex = 3;
             this.lblIncompatibility.Text = "Potential Incompatibility!";
+            this.lblIncompatibility.Visible = false;
             // 
             // infoIncompatibility
             // 
@@ -113,6 +114,7 @@
             this.infoIncompatibility.Name = "infoIncompatibility";
             this.infoIncompatibility.Size = new System.Drawing.Size(20, 20);
             this.infoIncompatibility.TabIndex = 4;
+            this.infoIncompatibility.Visible = false;
             // 
             // lnkAll
             // 

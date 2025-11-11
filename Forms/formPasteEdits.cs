@@ -55,6 +55,8 @@ namespace mpegui
             listEdits.Items.Clear();
             foreach (var kvp in options)
                 listEdits.Items.Add($"{kvp.Key}: {kvp.Value}", prevStates[kvp.Key]);
+
+            UpdateIncompatibilityLabel();
         }
 
         Dictionary<string, string> getOptions(FileConversionInfo c)
@@ -111,19 +113,32 @@ namespace mpegui
             Close();
         }
 
-        void UpdateIncompatibilityLabel(ItemCheckEventArgs e)
+        void UpdateIncompatibilityLabel(ItemCheckEventArgs e = null)
         {
-            bool pastingEncoder = listEdits.CheckedIndices.Contains(1);
-            bool pastingPreset = listEdits.CheckedIndices.Contains(8);
+            if (copiedEdits == null) return;
+            var options = getOptions(copiedEdits);
+            if (options.Count != listEdits.Items.Count) return;
+            editsToPaste = options.Keys
+                .Select((key, index) => new { key, isChecked = listEdits.GetItemChecked(index) })
+                .ToDictionary(x => x.key, x => x.isChecked);
+            int encIdx = options.Keys.ToList().IndexOf("Encoder");
+            int preIdx = options.Keys.ToList().IndexOf("Encoder Preset");
+            bool pastingEncoder = editsToPaste["Encoder"];
+            bool pastingPreset = editsToPaste["Encoder Preset"];
+
             // because the ItemCheck event fires before it actually updates the CheckedIndicies, we need to do another check:
-            if (e.Index == 1) pastingEncoder = e.NewValue == CheckState.Checked;
-            if (e.Index == 8) pastingPreset = e.NewValue == CheckState.Checked;
+            if (e != null)
+            {
+                if (e.Index == encIdx) pastingEncoder = e.NewValue == CheckState.Checked;
+                if (e.Index == preIdx) pastingPreset = e.NewValue == CheckState.Checked;
+            }
+            
 
             // check if one is enabled but not the either
             bool incompatibility = pastingEncoder ^ pastingPreset;
             lblIncompatibility.Visible = incompatibility;
             infoIncompatibility.Visible = incompatibility;
-            if (incompatibility) listEdits.SetRed(new int[] { 1, 8 });
+            if (incompatibility) listEdits.SetRed(new int[] { encIdx, preIdx });
             else listEdits.ClearRed();
         }
 
